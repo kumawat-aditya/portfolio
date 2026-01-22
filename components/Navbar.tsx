@@ -66,14 +66,14 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
       <nav
         className={`fixed w-full z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-black/40 backdrop-blur-xl backdrop-saturate-150 py-4"
+            ? "bg-white/5 backdrop-blur-xl backdrop-saturate-180 py-4"
             : "bg-transparent py-6"
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-24 flex items-center justify-between">
           {/* Brand */}
           <div className="cursor-pointer z-50" onClick={scrollToTop}>
-            <span className="text-cream font-bold text-xl tracking-tighter hover:text-accent transition-colors">
+            <span className="text-cream-100 font-bold text-xl tracking-tighter hover:text-accent-400 transition-colors duration-300">
               Aditya.
             </span>
           </div>
@@ -84,10 +84,10 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
               <button
                 key={link.name}
                 onClick={() => scrollToSection(link.id)}
-                className="text-sm font-medium text-cream/60 hover:text-cream transition-colors duration-200 relative group"
+                className="text-sm font-medium text-cream-100/60 hover:text-cream-100 transition-colors duration-200 relative group"
               >
                 {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-accent-400 group-hover:w-full transition-all duration-300" />
               </button>
             ))}
 
@@ -98,7 +98,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-cream/60 hover:text-accent transition-colors"
+                className="text-cream-100/60 hover:text-accent-400 transition-colors duration-300"
               >
                 <Github className="w-5 h-5" />
               </a>
@@ -106,7 +106,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-cream/60 hover:text-accent transition-colors"
+                className="text-cream-100/60 hover:text-accent-400 transition-colors duration-300"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
@@ -121,7 +121,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
               aria-label="Toggle theme"
             >
               <div
-                className={`absolute w-5 h-5 rounded-full bg-accent shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all duration-300 flex items-center justify-center ${
+                className={`absolute w-5 h-5 rounded-full bg-accent-400 shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all duration-300 flex items-center justify-center ${
                   isDarkMode ? "left-1" : "left-8"
                 }`}
               >
@@ -143,7 +143,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
               aria-label="Toggle theme"
             >
               <div
-                className={`absolute w-5 h-5 rounded-full bg-accent shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all duration-300 flex items-center justify-center ${
+                className={`absolute w-5 h-5 rounded-full bg-accent-400 shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all duration-300 flex items-center justify-center ${
                   isDarkMode ? "left-0.5" : "left-6"
                 }`}
               >
@@ -182,7 +182,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
             <button
               key={link.name}
               onClick={() => scrollToSection(link.id)}
-              className={`text-3xl font-semibold text-cream/80 hover:text-cream transition-all duration-300 transform ${
+              className={`text-3xl font-semibold text-cream-100/80 hover:text-cream-100 transition-all duration-300 transform ${
                 isMobileMenuOpen
                   ? "translate-y-0 opacity-100"
                   : "translate-y-4 opacity-0"
@@ -198,7 +198,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cream/60 hover:text-accent transition-colors"
+              className="text-cream-100/60 hover:text-accent-400 transition-colors"
             >
               <Github className="w-6 h-6" />
             </a>
@@ -206,7 +206,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cream/60 hover:text-accent transition-colors"
+              className="text-cream-100/60 hover:text-accent-400 transition-colors"
             >
               <Linkedin className="w-6 h-6" />
             </a>
