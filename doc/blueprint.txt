@@ -1,0 +1,156 @@
+# 🎨 Global Design System
+
+**Vibe:** Minimal, Architectural, “Apple-esque” but engineered for developers.
+**Typography:** Clean Sans-Serif (Inter, Geist, Roboto).
+**Color Palette:** Monochrome (Black/White/Grays) + one subtle accent (deep tech blue or teal) for buttons/links.
+**Sequence:**
+
+**Hero → Selected Projects → Engineering Evolution → Capabilities (Skills) → Professional Experience → Contact**
+
+---
+
+# Section 1: Hero (The Hook)
+
+**Goal:** Instant clarity. No fluff.
+
+**Layout:** Center-aligned or broad Left-aligned.
+
+**Content:**
+
+* Name: **Aditya Kumawat** (Bold, Large)
+* Title: Backend & Automation Engineer (Medium weight)
+* Tagline: *“I build trading systems, automation tools, and scalable backend applications.”*
+* Action Buttons:
+
+  * **[View Projects]** – solid primary CTA
+  * **[GitHub]** – outline or icon
+  * **[Contact]** – simple text or button
+
+**Animation:**
+
+* Text staggered fade-in (Name → Title → Tagline)
+* No heavy background particles
+
+---
+
+# Section 2: Selected Projects (The Proof)
+
+**Goal:** Show technical depth, not “clones or demos.”
+
+**Layout:** Vertical stack of cards, generous whitespace.
+**Visual Style:** Soft-shadow cards, slight contrast.
+
+**Card Structure (per project):**
+
+* **Project Name:** Real-Time Trading Signal Distribution System
+* **Identity:** “A scalable signal broadcasting system used to distribute trading signals in real time.”
+* **Tech Stack:** Spring Boot • WebSocket • MQL5 • Telegram Bot API
+* **Depth:** Bullet points highlighting architecture, latency handling, security, scalability
+* **Action:** [View Code] [Live Demo/Case Study]
+
+**Animation:** Fade-in + slight upward motion on scroll; hover lifts card 2–4px with shadow depth.
+
+---
+
+# Section 3: Engineering Evolution (The Narrative)
+
+**Goal:** Show intentional growth from frontend → backend → trading → AI/ML.
+
+**Layout:** Left-aligned editorial timeline with vertical line + subtle dot markers.
+**Title:** *“From Interfaces to Intelligent Systems”*
+
+**Content Blocks:**
+
+* **Frontend Foundations:** UI systems, layouts, user interaction
+* **Backend & System Thinking:** Java, Spring Boot, REST APIs, architecture
+* **Trading Systems (Trade Amplification Era):** MQL5, real-time automation, signal distribution
+* **Moving Toward Intelligent Systems:** Automation + AI/ML (ELISA, Qwen, research pipelines)
+
+**Animation:**
+
+* Vertical line draws as you scroll
+* Text fades in from right
+* No distracting motion
+
+---
+
+# Section 4: Capabilities (Skills)
+
+**Goal:** Show competence and niche focus.
+
+**Layout:** Clean 2x2 grid, text-first.
+
+**Title:** *Technical Expertise*
+
+**Grid Content:**
+
+* **Backend & APIs:** Java, Spring Boot, WebSocket – *Designing scalable backend systems*
+* **Trading & Automation:** MQL5, signal broadcasting – *Automated trading logic & real-time pipelines*
+* **AI & Intelligent Systems:** Python, ML, data processing – *Transitioning toward intelligent systems*
+* **Systems & Tools:** Linux, Git, Docker – *Development workflow & deployment*
+
+**Animation:** Fade-in per category, subtle hover highlight.
+
+---
+
+# Section 5: Professional Experience (The Record)
+
+**Goal:** Corporate trust + technical responsibility.
+
+**Layout:** Full-width card blocks, distinct from timeline.
+
+**Visual Hierarchy:**
+
+* **Company Name (Bold):** Qubitron Labs / Trade Amplification
+* **Role:** AI Research & Trading Systems Developer
+* **Duration:** Right-aligned/subtle below role
+
+**Key Features:**
+
+* Summary bullets (3–4 max)
+* Expandable “View Technical Details” showing deep engineering work (57 crore rows, pipeline, feature engineering, models, GPU constraints)
+
+**Animation:**
+
+* Fade-in on scroll
+* Smooth accordion expansion
+
+**Constraint Re-framing:**
+
+> “Designed data pipelines for model training and fine-tuning under limited GPU infrastructure.”
+
+---
+
+# Section 6: Contact (The Closing)
+
+**Goal:** Low-friction connection.
+
+**Layout:** Minimal, centered
+
+**Title:** *“Let’s Build Something Meaningful”*
+**Copy:** *“Currently focused on building intelligent backend systems integrating AI-driven decision making.”*
+
+**Actions:**
+
+* Big button: [email@address.com](mailto:email@address.com)
+* Row of icons: LinkedIn | GitHub | Resume
+
+**Animation:** Subtle pulse on hover
+
+---
+
+# ⚡ Summary of Best Practices
+
+* Replace “Skills” with **Technical Expertise**
+* Timeline: *From Interfaces to Intelligent Systems*
+* Experience framing: focus on **responsibility & depth**, not company trust issues
+* Closing: highlight AI/backend trajectory
+* Animations: subtle, smooth, fade-in, no heavy Lottie files or skill bars
+* Visual hierarchy: minimal, architectural, professional, “Apple-esque”
+
+**Design Philosophy:**
+
+> Hero → Projects → Evolution → Skills → Experience → Contact
+> Show who you are → what you can do → how you grew → your capabilities → proof → opportunity to connect
+
+---
