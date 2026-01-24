@@ -237,26 +237,35 @@
       transform: translate(-50%, -50%);
       box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
       transition: all 0.2s ease-out;
+      /* transition: width 0.2s ease-out, height 0.2s ease-out, background 0.2s ease-out, border 0.2s ease-out, box-shadow 0.2s ease-out; */
     }
 
     /* Hover state - lines move farther */
     .custom-cursor.hover .cursor-line-top {
       top: -22px;
-      background: rgba(59, 130, 246, 1);
+      width: 3px;
+      border-radius: 50%;
+      background: #00F5FF;
     }
-
+    
     .custom-cursor.hover .cursor-line-bottom {
       bottom: -22px;
-      background: rgba(59, 130, 246, 1);
+      width: 3px;
+      border-radius: 50%;
+      background: #00F5FF;
     }
-
+    
     .custom-cursor.hover .cursor-line-left {
       left: -22px;
+      height: 3px;
+      border-radius: 50%;
       background: rgba(59, 130, 246, 1);
     }
-
+    
     .custom-cursor.hover .cursor-line-right {
       right: -22px;
+      height: 3px;
+      border-radius: 50%;
       background: rgba(59, 130, 246, 1);
     }
 
