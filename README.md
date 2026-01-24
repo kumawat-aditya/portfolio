@@ -1,20 +1,102 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+  <h1>Aditya Kumawat — Portfolio</h1>
+  <p><b>Backend & Intelligent Systems Engineer</b></p>
+  <p>
+    <a href="https://adikumaw.github.io/portfolio" target="_blank">Live Demo</a> ·
+    <a href="#features">Features</a> ·
+    <a href="#getting-started">Getting Started</a>
+  </p>
 </div>
 
-# Run and deploy your AI Studio app
+---
 
-This contains everything you need to run your app locally.
+## ✨ Overview
 
-View your app in AI Studio: https://ai.studio/apps/drive/18woWmo7qgtTXzHlCbkaFeCQyRtUnAByi
+This is a modern, interactive portfolio website for Aditya Kumawat, showcasing expertise in backend engineering, trading systems, AI/data engineering, and scalable infrastructure. Built with React, TypeScript, and Vite, it features smooth animations, dark/light themes, and a clean, glassmorphic UI.
 
-## Run Locally
+---
 
-**Prerequisites:**  Node.js
+## 🏗️ Structure & Sections
 
+- **Hero:** Name, role, location, and positioning statement.
+- **Projects:** Carousel of major projects with tech stack, highlights, and architecture details.
+- **Evolution:** Timeline of technical growth, skills, and milestones from 2022–2026.
+- **Expertise:** Capabilities across backend, trading, AI/data, infrastructure, and performance.
+- **Experience:** Career history with technical details for each role/internship.
+- **Contact:** Email, social links, and location.
+- **Footer:** Copyright, quick links, and tech credits.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+
+## 🚀 Features
+
+- **Custom Cursor & Glassmorphic Cards:** Interactive UI with mouse tracking and frosted glass effects.
+- **Smooth Scrolling:** Lenis-style smooth scroll for a premium feel.
+- **Dark/Light Theme Toggle:** Seamless theme switching with full style overrides.
+- **Animated Section Reveal:** Fade-in animations as you scroll.
+- **Responsive Design:** Fully mobile-friendly and accessible.
+- **Project Carousel:** Auto-advancing, draggable, and expandable project cards.
+- **Detailed Timeline:** Visual evolution of skills and experience.
+- **Contact & Socials:** Direct email, GitHub, LinkedIn, and resume download.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React 19, TypeScript, Vite
+- **Styling:** Tailwind CSS (custom config), glassmorphism, custom animations
+- **Icons:** Lucide React
+- **Deployment:** GitHub Pages (via `gh-pages`)
+
+---
+
+## 📁 Project Structure
+
+```
+├── App.tsx                # Main app layout and logic
+├── components/            # All major UI sections (Hero, Projects, Evolution, etc.)
+├── index.html             # HTML template with Tailwind and custom styles
+├── index.tsx              # React entry point
+├── package.json           # Scripts and dependencies
+├── tsconfig.json          # TypeScript config
+├── vite.config.ts         # Vite config (with base for GitHub Pages)
+├── types.ts               # Shared types
+├── doc/                   # Planning and content docs
+```
+
+---
+
+## 🧑‍💻 Getting Started
+
+**Prerequisites:** Node.js (v18+ recommended)
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+2. **Run locally:**
+   ```bash
+   npm run dev
+   ```
+3. **Build for production:**
+   ```bash
+   npm run build
+   ```
+4. **Deploy to GitHub Pages:**
+   ```bash
+   npm run deploy
+   ```
+
+---
+
+## 📬 Contact
+
+- **Email:** kumawataditya105@gmail.com
+- **GitHub:** [github.com/adikumaw](https://github.com/adikumaw)
+- **LinkedIn:** [linkedin.com](https://linkedin.com)
+
+---
+
+## 📝 License
+
+This project is open source and available under the [MIT License](LICENSE) (add if applicable).
