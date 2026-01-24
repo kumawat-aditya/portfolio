@@ -235,18 +235,16 @@ const Projects: React.FC = () => {
 
     const isCenter = normalizedDiff === 0;
     const isAdjacent = Math.abs(normalizedDiff) === 1;
-    const isVisible = Math.abs(normalizedDiff) <= 1;
 
     // Use percentage-based translate for responsive side cards
-    const translateAmount = normalizedDiff * 400; // Fixed pixel offset for side cards
+    const translateAmount = normalizedDiff * 380; // Fixed pixel offset for side cards
 
     return {
-      transform: `translateX(${translateAmount}px) scale(${isCenter ? 1 : 0.8})`,
-      opacity: isCenter ? 1 : isAdjacent ? 0.5 : 0,
+      transform: `translateX(${translateAmount}px) scale(${isCenter ? 1 : 0.85})`,
+      opacity: isCenter ? 1 : isAdjacent ? 0.45 : 0,
       zIndex: isCenter ? 30 : isAdjacent ? 20 : 10,
-      filter: isCenter ? "none" : "blur(0.5px)",
+      // filter: isCenter ? "none" : "blur(0.5px)",
       pointerEvents: isCenter ? ("auto" as const) : ("none" as const),
-      display: isVisible ? "block" : "none",
     };
   };
 
@@ -254,10 +252,10 @@ const Projects: React.FC = () => {
     <>
       <section
         id="projects"
-        className="min-h-screen px-6 sm:px-12 lg:px-24 max-w-[1400px] mx-auto pt-32 pb-24 border-t border-white/5"
+        className="min-h-screen pt-32 pb-24 border-t border-white/5 overflow-visible"
       >
         {/* Section Header */}
-        <div className="mb-16">
+        <div className="px-6 sm:px-12 lg:px-24 max-w-[1400px] mx-auto mb-16">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-2 h-2 rounded-full bg-accent-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
             <span className="text-xs font-mono uppercase tracking-[0.2em] text-accent-400">
@@ -273,113 +271,115 @@ const Projects: React.FC = () => {
           </p>
         </div>
 
-        {/* Carousel Container */}
-        <div
-          ref={carouselRef}
-          className="relative cursor-grab active:cursor-grabbing select-none"
-          style={{ height: "520px" }}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-          onMouseEnter={() => setIsPaused(true)}
-        >
-          <div className="absolute inset-0 flex items-center justify-center overflow-visible">
-            {projects.map((project, index) => {
-              const isTechExpanded = expandedTech.has(index);
-              const displayStack = isTechExpanded
-                ? project.stack
-                : project.stack.slice(0, 3);
-              const hasMoreTech = project.stack.length > 3;
-              const isCenter = index === currentIndex;
-              const cardStyle = getCardStyle(index);
+        {/* Carousel Container - Full Width */}
+        <div className="w-full overflow-visible">
+          <div
+            ref={carouselRef}
+            className="relative cursor-grab active:cursor-grabbing select-none max-w-[1400px] mx-auto"
+            style={{ height: "520px" }}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+            onMouseEnter={() => setIsPaused(true)}
+          >
+            <div className="absolute inset-0 flex items-center justify-center overflow-visible">
+              {projects.map((project, index) => {
+                const isTechExpanded = expandedTech.has(index);
+                const displayStack = isTechExpanded
+                  ? project.stack
+                  : project.stack.slice(0, 3);
+                const hasMoreTech = project.stack.length > 3;
+                const isCenter = index === currentIndex;
+                const cardStyle = getCardStyle(index);
 
-              return (
-                <div
-                  key={index}
-                  className="absolute w-[320px] md:w-[400px] lg:w-[480px] transition-all duration-500 ease-out"
-                  style={cardStyle}
-                >
-                  <div className="glass-card group relative rounded-2xl p-6 md:p-8 transition-all duration-500 overflow-hidden hover:border-white/20 h-[460px] flex flex-col">
-                    {/* Glow Effect */}
-                    <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                return (
+                  <div
+                    key={index}
+                    className="absolute w-[320px] md:w-[400px] lg:w-[480px] transition-all duration-500 ease-out"
+                    style={cardStyle}
+                  >
+                    <div className="glass-card group relative rounded-2xl p-6 md:p-8 transition-all duration-500 overflow-hidden hover:border-white/20 h-[460px] flex flex-col">
+                      {/* Glow Effect */}
+                      <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2 mb-5 relative z-10">
-                      {displayStack.map((tech, i) => (
-                        <span
-                          key={i}
-                          className="px-2.5 py-1 text-[10px] uppercase tracking-wider font-mono font-medium text-accent-400 bg-accent-500/10 rounded-md border border-accent-500/20"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {hasMoreTech && isCenter && (
-                        <button
-                          onClick={(e) => toggleTechExpand(index, e)}
-                          className="px-2.5 py-1 text-[10px] uppercase tracking-wider font-mono font-medium text-cream-500/40 bg-white/5 rounded-md border border-white/10 hover:border-accent-500/30 hover:text-accent-400 transition-all duration-300 flex items-center gap-1"
-                        >
-                          {isTechExpanded
-                            ? "Less"
-                            : `+${project.stack.length - 3}`}
-                          <ChevronDown
-                            className={`w-3 h-3 transition-transform duration-300 ${isTechExpanded ? "rotate-180" : ""}`}
-                          />
-                        </button>
-                      )}
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-cream-100 mb-4 tracking-tight leading-tight relative z-10">
-                      {project.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-cream-500/50 text-sm leading-relaxed mb-5 relative z-10 line-clamp-3">
-                      {project.description}
-                    </p>
-
-                    {/* Highlights */}
-                    <ul className="space-y-2 mb-6 relative z-10 flex-1 overflow-hidden">
-                      {project.highlights.slice(0, 3).map((item, idx) => (
-                        <li
-                          key={idx}
-                          className="flex items-start text-sm text-cream-500/40 group-hover:text-cream-500/60 transition-colors duration-300"
-                        >
-                          <span className="mr-3 mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-500/50 group-hover:bg-accent-400 transition-colors duration-300 flex-shrink-0" />
-                          <span className="leading-relaxed line-clamp-2">
-                            {item}
+                      {/* Tech Stack */}
+                      <div className="flex flex-wrap gap-2 mb-5 relative z-10">
+                        {displayStack.map((tech, i) => (
+                          <span
+                            key={i}
+                            className="px-2.5 py-1 text-[10px] uppercase tracking-wider font-mono font-medium text-accent-400 bg-accent-500/10 rounded-md border border-accent-500/20"
+                          >
+                            {tech}
                           </span>
-                        </li>
-                      ))}
-                    </ul>
+                        ))}
+                        {hasMoreTech && isCenter && (
+                          <button
+                            onClick={(e) => toggleTechExpand(index, e)}
+                            className="px-2.5 py-1 text-[10px] uppercase tracking-wider font-mono font-medium text-cream-500/40 bg-white/5 rounded-md border border-white/10 hover:border-accent-500/30 hover:text-accent-400 transition-all duration-300 flex items-center gap-1"
+                          >
+                            {isTechExpanded
+                              ? "Less"
+                              : `+${project.stack.length - 3}`}
+                            <ChevronDown
+                              className={`w-3 h-3 transition-transform duration-300 ${isTechExpanded ? "rotate-180" : ""}`}
+                            />
+                          </button>
+                        )}
+                      </div>
 
-                    {/* Actions */}
-                    <div className="flex items-center gap-4 pt-4 border-t border-white/5 relative z-10 mt-auto">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedProject(project);
-                        }}
-                        className="flex items-center gap-2 text-sm font-medium text-cream-500/50 hover:text-accent-400 transition-colors duration-300"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        <span>View Details</span>
-                      </button>
-                      <button className="flex items-center gap-2 text-sm font-medium text-cream-500/50 hover:text-accent-400 transition-colors duration-300">
-                        <Github className="w-4 h-4" />
-                        <span>Code</span>
-                      </button>
+                      {/* Title */}
+                      <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-cream-100 mb-4 tracking-tight leading-tight relative z-10">
+                        {project.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-cream-500/50 text-sm leading-relaxed mb-5 relative z-10 line-clamp-3">
+                        {project.description}
+                      </p>
+
+                      {/* Highlights */}
+                      <ul className="space-y-2 mb-6 relative z-10 flex-1 overflow-hidden">
+                        {project.highlights.slice(0, 3).map((item, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-start text-sm text-cream-500/40 group-hover:text-cream-500/60 transition-colors duration-300"
+                          >
+                            <span className="mr-3 mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-500/50 group-hover:bg-accent-400 transition-colors duration-300 flex-shrink-0" />
+                            <span className="leading-relaxed line-clamp-2">
+                              {item}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* Actions */}
+                      <div className="flex items-center gap-4 pt-4 border-t border-white/5 relative z-10 mt-auto">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProject(project);
+                          }}
+                          className="flex items-center gap-2 text-sm font-medium text-cream-500/50 hover:text-accent-400 transition-colors duration-300"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          <span>View Details</span>
+                        </button>
+                        <button className="flex items-center gap-2 text-sm font-medium text-cream-500/50 hover:text-accent-400 transition-colors duration-300">
+                          <Github className="w-4 h-4" />
+                          <span>Code</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
         {/* Dot Indicators Only */}
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex justify-center gap-2 mt-8 px-6 sm:px-12 lg:px-24 max-w-[1400px] mx-auto">
           {projects.map((_, index) => (
             <button
               key={index}
