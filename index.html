@@ -244,30 +244,30 @@
       color: #ffffff !important;
     }
 
-    /* Glass card - frosted ice effect */
+    /* Glass card - dark frosted glass effect */
     html.light .glass-card {
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(30, 41, 59, 0.12);
       backdrop-filter: blur(40px) saturate(150%);
       -webkit-backdrop-filter: blur(40px) saturate(150%);
-      border-color: rgba(148, 163, 184, 0.3);
+      border-color: rgba(71, 85, 105, 0.3);
       box-shadow:
-        0 8px 32px rgba(15, 23, 42, 0.08),
-        0 2px 8px rgba(15, 23, 42, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6),
-        inset 0 -1px 0 rgba(148, 163, 184, 0.1);
+        0 8px 32px rgba(15, 23, 42, 0.15),
+        0 2px 8px rgba(15, 23, 42, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(71, 85, 105, 0.2);
     }
 
     html.light .glass-card::before {
-      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(59, 130, 246, 0.15), transparent 40%);
+      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(59, 130, 246, 0.12), transparent 40%);
     }
 
     html.light .glass-card:hover {
-      border-color: rgba(59, 130, 246, 0.3);
+      border-color: rgba(59, 130, 246, 0.4);
       box-shadow:
-        0 12px 40px rgba(15, 23, 42, 0.12),
-        0 4px 12px rgba(59, 130, 246, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        inset 0 -1px 0 rgba(148, 163, 184, 0.15);
+        0 12px 40px rgba(15, 23, 42, 0.18),
+        0 4px 12px rgba(59, 130, 246, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(71, 85, 105, 0.25);
     }
 
     /* Background overlays */
@@ -338,18 +338,79 @@
       --tw-shadow-color: rgba(37, 99, 235, 0.3);
     }
 
-    /* Nav/header backgrounds */
+    /* Nav/header backgrounds - dark frosted glass */
     html.light .bg-black\/80 {
-      background-color: rgba(240, 244, 248, 0.85) !important;
+      background-color: rgba(30, 41, 59, 0.85) !important;
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
     }
 
     html.light .bg-black\/60 {
-      background-color: rgba(240, 244, 248, 0.75) !important;
+      background-color: rgba(30, 41, 59, 0.75) !important;
+    }
+
+    /* Navigation text - light on dark nav */
+    html.light nav .text-cream-100,
+    html.light nav .text-cream-500,
+    html.light header .text-cream-100,
+    html.light header .text-cream-500,
+    html.light .bg-black\/80 .text-cream-100,
+    html.light .bg-black\/80 .text-cream-500 {
+      color: #f1f5f9 !important;
+    }
+
+    html.light nav .text-cream-500\/60,
+    html.light nav .text-cream-500\/70,
+    html.light header .text-cream-500\/60,
+    html.light .bg-black\/80 .text-cream-500\/60 {
+      color: rgba(226, 232, 240, 0.85) !important;
+    }
+
+    html.light nav .hover\:text-cream-100:hover,
+    html.light header .hover\:text-cream-100:hover,
+    html.light .bg-black\/80 .hover\:text-cream-100:hover {
+      color: #ffffff !important;
     }
 
     /* Modal backdrop */
     html.light .bg-black\/80[class*="fixed"] {
-      background-color: rgba(15, 23, 42, 0.6) !important;
+      background-color: rgba(15, 23, 42, 0.7) !important;
+    }
+
+    /* Modal/popup glass card - dark frost for readability */
+    html.light .fixed .glass-card,
+    html.light [style*="z-index"][style*="9999"] .glass-card {
+      background: rgba(30, 41, 59, 0.92) !important;
+      border-color: rgba(71, 85, 105, 0.5) !important;
+    }
+
+    /* Modal text - light text on dark modal */
+    html.light .fixed .glass-card .text-cream-100,
+    html.light .fixed .glass-card .text-cream-500,
+    html.light .fixed .glass-card h3,
+    html.light .fixed .glass-card h4 {
+      color: #f1f5f9 !important;
+    }
+
+    html.light .fixed .glass-card .text-cream-500\/60,
+    html.light .fixed .glass-card p,
+    html.light .fixed .glass-card li {
+      color: rgba(203, 213, 225, 0.9) !important;
+    }
+
+    /* Modal buttons */
+    html.light .fixed .glass-card .bg-cream-100 {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+    }
+
+    html.light .fixed .glass-card .text-black {
+      color: #0f172a !important;
+    }
+
+    html.light .fixed .glass-card .border-white\/10,
+    html.light .fixed .glass-card .border-white\/5 {
+      border-color: rgba(148, 163, 184, 0.3) !important;
     }
 
     /* Tech tags and badges */
@@ -370,6 +431,35 @@
 
     html.light .scroll-container::-webkit-scrollbar-track {
       background-color: rgba(148, 163, 184, 0.1);
+    }
+
+    /* Footer in light mode - dark frost */
+    html.light footer {
+      background-color: rgba(30, 41, 59, 0.95) !important;
+    }
+
+    html.light footer .text-cream-100,
+    html.light footer .text-cream-500,
+    html.light footer h3,
+    html.light footer span {
+      color: #e2e8f0 !important;
+    }
+
+    html.light footer .text-cream-500\/40,
+    html.light footer .text-cream-500\/60,
+    html.light footer p {
+      color: rgba(203, 213, 225, 0.75) !important;
+    }
+
+    html.light footer .border-white\/5,
+    html.light footer .border-white\/10 {
+      border-color: rgba(148, 163, 184, 0.2) !important;
+    }
+
+    /* Theme toggle button in light mode */
+    html.light .bg-white\/5:hover,
+    html.light .bg-white\/10:hover {
+      background-color: rgba(15, 23, 42, 0.12) !important;
     }
   </style>
   <script type="importmap">
