@@ -22,6 +22,19 @@ const Projects: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchEndX, setTouchEndX] = useState(0);
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const projects: Project[] = [
     {
@@ -225,6 +238,35 @@ const Projects: React.FC = () => {
     setIsPaused(false);
   };
 
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+    setTouchEndX(e.touches[0].clientX);
+    setIsPaused(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEndX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX - touchEndX;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(diff) > minSwipeDistance) {
+      if (diff > 0) {
+        // Swipe left - next
+        setCurrentIndex((prev) => (prev + 1) % projects.length);
+      } else {
+        // Swipe right - previous
+        setCurrentIndex(
+          (prev) => (prev - 1 + projects.length) % projects.length,
+        );
+      }
+    }
+    setTimeout(() => setIsPaused(false), 5000);
+  };
+
   // Calculate card position and styles
   const getCardStyle = (index: number) => {
     const diff = index - currentIndex;
@@ -244,6 +286,7 @@ const Projects: React.FC = () => {
       opacity: isCenter ? 1 : isAdjacent ? 0.45 : 0,
       zIndex: isCenter ? 30 : isAdjacent ? 20 : 10,
       pointerEvents: isCenter ? ("auto" as const) : ("none" as const),
+      transition: "transform 0.5s ease-out",
     };
   };
 
@@ -281,6 +324,9 @@ const Projects: React.FC = () => {
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseLeave}
             onMouseEnter={() => setIsPaused(true)}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             <div className="absolute inset-0 flex items-center justify-center overflow-visible">
               {projects.map((project, index) => {
@@ -295,12 +341,17 @@ const Projects: React.FC = () => {
                 return (
                   <div
                     key={index}
-                    className="absolute w-[320px] md:w-[400px] lg:w-[480px] transition-all duration-500 ease-out"
-                    style={cardStyle}
+                    className="absolute w-[320px] md:w-[400px] lg:w-[480px]"
+                    style={{
+                      ...cardStyle,
+                      willChange: "transform",
+                    }}
                   >
-                    <div className="glass-card group relative rounded-2xl p-6 md:p-8 transition-all duration-500 overflow-hidden hover:border-white/20 h-[480px] flex flex-col">
-                      {/* Glow Effect */}
-                      <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="group relative rounded-2xl p-6 md:p-8 transition-all duration-500 overflow-hidden h-[480px] flex flex-col bg-white/5 backdrop-blur-xl backdrop-saturate-150 border border-white/10 hover:border-white/20 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]">
+                      {/* Glow Effect - Hidden on mobile */}
+                      {!isMobile && (
+                        <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      )}
 
                       {/* Tech Stack */}
                       <div className="flex flex-wrap gap-2 mb-5 relative z-10">
@@ -402,11 +453,13 @@ const Projects: React.FC = () => {
             style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0 }}
           >
             <div
-              className="glass-card max-w-3xl w-full max-h-[80vh] rounded-2xl p-8 relative"
+              className="max-w-3xl w-full max-h-[80vh] rounded-2xl p-8 relative bg-white/5 backdrop-blur-xl backdrop-saturate-150 border border-white/10 hover:border-white/20 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Glow Effect - covers whole card, not just scrollable area */}
-              <div className="absolute inset-0 bg-white/5 rounded-2xl blur-3xl pointer-events-none z-0" />
+              {/* Glow Effect - covers whole card, not just scrollable area - Hidden on mobile */}
+              {!isMobile && (
+                <div className="absolute inset-0 bg-white/5 rounded-2xl blur-3xl pointer-events-none z-0" />
+              )}
               {/* Modal Content - scrollable */}
               <div className="relative z-10 overflow-y-auto max-h-[70vh]">
                 {/* Close Button */}

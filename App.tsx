@@ -177,7 +177,7 @@ const App: React.FC = () => {
 
   return (
     <main
-      className={`w-full h-screen relative overflow-hidden transition-colors duration-500 ${isDarkMode ? "bg-black" : "bg-gray-50"}`}
+      className={`w-full h-screen relative overflow-hidden transition-colors duration-500 ${isDarkMode ? "bg-[#030305]" : "bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"}`}
     >
       {/* Custom Cursor */}
       <div
