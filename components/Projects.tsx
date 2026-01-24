@@ -275,7 +275,7 @@ const Projects: React.FC = () => {
           <div
             ref={carouselRef}
             className="relative cursor-grab active:cursor-grabbing select-none max-w-[1400px] mx-auto"
-            style={{ height: "520px" }}
+            style={{ height: "560px" }}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
@@ -298,7 +298,7 @@ const Projects: React.FC = () => {
                     className="absolute w-[320px] md:w-[400px] lg:w-[480px] transition-all duration-500 ease-out"
                     style={cardStyle}
                   >
-                    <div className="glass-card group relative rounded-2xl p-6 md:p-8 transition-all duration-500 overflow-hidden hover:border-white/20 h-[460px] flex flex-col">
+                    <div className="glass-card group relative rounded-2xl p-6 md:p-8 transition-all duration-500 overflow-hidden hover:border-white/20 h-[480px] flex flex-col">
                       {/* Glow Effect */}
                       <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 

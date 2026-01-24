@@ -48,20 +48,12 @@ const SkillBlock: React.FC<SkillBlockProps> = ({
 
       {/* Skills Grid - Smooth Expand */}
       <div
-        className={`grid ${fullWidth ? "grid-cols-2 md:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"} gap-y-3 gap-x-6 relative z-10 overflow-hidden transition-all duration-500 ease-out`}
-        style={{
-          maxHeight: isExpanded
-            ? `${skills.length * 32}px`
-            : `${Math.min(skills.length, 4) * 32}px`,
-        }}
+        className={`grid ${fullWidth ? "grid-cols-2 md:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"} gap-y-3 gap-x-6 relative z-10 transition-all duration-500 ease-out`}
       >
-        {skills.map((skill, idx) => (
+        {(isExpanded ? skills : skills.slice(0, 4)).map((skill, idx) => (
           <div
             key={idx}
-            className={`flex items-center gap-3 text-cream-500/50 group-hover:text-cream-500/70 transition-all duration-300 ${idx >= 4 && !isExpanded ? "opacity-0" : "opacity-100"}`}
-            style={{
-              transitionDelay: idx >= 4 ? `${(idx - 4) * 50}ms` : "0ms",
-            }}
+            className="flex items-center gap-3 text-cream-500/50 group-hover:text-cream-500/70 transition-all duration-300"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-accent-500/50 group-hover:bg-accent-400 transition-colors duration-300 flex-shrink-0" />
             <span className="text-sm font-light tracking-wide">{skill}</span>

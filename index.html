@@ -338,38 +338,55 @@
       --tw-shadow-color: rgba(37, 99, 235, 0.3);
     }
 
-    /* Nav/header backgrounds - dark frosted glass */
+    /* Nav/header backgrounds - light frosted glass */
     html.light .bg-black\/80 {
-      background-color: rgba(30, 41, 59, 0.85) !important;
+      background-color: rgba(241, 245, 249, 0.9) !important;
       backdrop-filter: blur(20px) saturate(150%);
       -webkit-backdrop-filter: blur(20px) saturate(150%);
     }
 
     html.light .bg-black\/60 {
-      background-color: rgba(30, 41, 59, 0.75) !important;
+      background-color: rgba(241, 245, 249, 0.8) !important;
     }
 
-    /* Navigation text - light on dark nav */
+    /* Navigation bar - light frosted glass with subtle border */
+    html.light nav {
+      border-bottom: 1px solid rgba(71, 85, 105, 0.1) !important;
+    }
+
+    /* Navigation text - dark text on light nav */
+    html.light nav .nav-link,
     html.light nav .text-cream-100,
+    html.light nav .text-cream-100\/60,
+    html.light nav .text-cream-100\/70,
     html.light nav .text-cream-500,
     html.light header .text-cream-100,
-    html.light header .text-cream-500,
-    html.light .bg-black\/80 .text-cream-100,
-    html.light .bg-black\/80 .text-cream-500 {
-      color: #f1f5f9 !important;
+    html.light header .text-cream-500 {
+      color: #475569 !important;
     }
 
-    html.light nav .text-cream-500\/60,
-    html.light nav .text-cream-500\/70,
-    html.light header .text-cream-500\/60,
-    html.light .bg-black\/80 .text-cream-500\/60 {
-      color: rgba(226, 232, 240, 0.85) !important;
-    }
-
+    html.light nav .nav-link:hover,
     html.light nav .hover\:text-cream-100:hover,
-    html.light header .hover\:text-cream-100:hover,
-    html.light .bg-black\/80 .hover\:text-cream-100:hover {
-      color: #ffffff !important;
+    html.light header .hover\:text-cream-100:hover {
+      color: #0f172a !important;
+    }
+
+    html.light nav a.text-cream-100\/60 {
+      color: #64748b !important;
+    }
+
+    html.light nav a.hover\:text-accent-400:hover {
+      color: #2563eb !important;
+    }
+
+    /* Navigation divider */
+    html.light nav .bg-white\/10 {
+      background-color: rgba(71, 85, 105, 0.2) !important;
+    }
+
+    /* Navigation border */
+    html.light nav .border-white\/10 {
+      border-color: rgba(71, 85, 105, 0.2) !important;
     }
 
     /* Modal backdrop */

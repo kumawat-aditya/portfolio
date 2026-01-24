@@ -73,7 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-24 flex items-center justify-between">
           {/* Brand */}
           <div className="cursor-pointer z-50" onClick={scrollToTop}>
-            <span className="text-cream-100 font-bold text-xl tracking-tighter hover:text-accent-400 transition-colors duration-300">
+            <span className="nav-logo text-accent-400 font-bold text-xl tracking-tighter hover:text-accent-500 transition-colors duration-300">
               Aditya.
             </span>
           </div>
@@ -84,7 +84,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
               <button
                 key={link.name}
                 onClick={() => scrollToSection(link.id)}
-                className="text-sm font-medium text-cream-100/60 hover:text-cream-100 transition-colors duration-200 relative group"
+                className="nav-link text-sm font-medium text-cream-100/60 hover:text-cream-100 transition-colors duration-200 relative group"
               >
                 {link.name}
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-accent-400 group-hover:w-full transition-all duration-300" />
