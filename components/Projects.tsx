@@ -297,7 +297,7 @@ const Projects: React.FC = () => {
         className="min-h-screen pt-32 pb-24 border-t border-white/5 overflow-visible"
       >
         {/* Section Header */}
-        <div className="px-6 sm:px-12 lg:px-24 2xl:px-32 max-w-[1400px] 2xl:max-w-[1600px] mx-auto mb-16">
+        <div className="px-6 sm:px-12 lg:px-24 2xl:px-32 max-w-[1400px] 2xl:max-w-[1600px] mx-auto mb-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-2 h-2 rounded-full bg-accent-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
             <span className="text-xs font-mono uppercase tracking-[0.2em] text-accent-400">
@@ -429,7 +429,7 @@ const Projects: React.FC = () => {
         </div>
 
         {/* Dot Indicators Only */}
-        <div className="flex justify-center gap-2 mt-8 px-6 sm:px-12 lg:px-24 2xl:px-32 max-w-[1400px] 2xl:max-w-[1600px] mx-auto">
+        <div className="flex justify-center gap-2 mt-4 px-6 sm:px-12 lg:px-24 2xl:px-32 max-w-[1400px] 2xl:max-w-[1600px] mx-auto">
           {projects.map((_, index) => (
             <button
               key={index}
