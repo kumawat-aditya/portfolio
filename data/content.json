@@ -53,7 +53,7 @@
         "Parallel Processing"
       ],
       "description": "A configurable AI data generation and strategy mining pipeline designed for large-scale trading research.",
-      "github": "private",
+      "github": "https://github.com/Adikumaw/trading_strategy_finder",
       "highlights": [
         "Bronze to Diamond layered data architecture for systematic strategy mining",
         "Optimized pipeline from 8-9 hours to ~10 minutes",
@@ -105,7 +105,7 @@
       "title": "Elastic DCA Trading System (Fullstack Automation)",
       "stack": ["MQL5", "Python", "React"],
       "description": "A grid-based automated trading system enabling controlled position scaling and equity-based risk management.",
-      "github": "private",
+      "github": "https://github.com/Adikumaw/elastic-dca-trader",
       "highlights": [
         "Dollar-gap based automated entries with dynamic lot management",
         "Multiple target systems: Equity, Balance, and Fixed dollar exit",
@@ -130,7 +130,7 @@
       "title": "Rubik's Cube 3x3x3 Solver (Multi-Threaded Engine)",
       "stack": ["C++", "OOP", "Multithreading", "Algorithm Optimization"],
       "description": "A CFOP-based high-performance cube-solving engine built with a fully modular C++ architecture.",
-      "github": "https://github.com/Adikumaw/rubiks-cube-solver",
+      "github": "https://github.com/Adikumaw/rubix-cube-solver",
       "highlights": [
         "Custom 3D cube state representation engine",
         "CFOP algorithm implementation (Cross, F2L, OLL, PLL)",
