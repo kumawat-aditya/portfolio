@@ -17,13 +17,12 @@
     {
       "title": "Real-Time Trading Signal Distribution Infrastructure",
       "stack": ["Java", "Spring Boot", "WebSocket", "MQL5", "Telegram Bot API"],
-      "description": "A production-grade distributed trading execution system built for automated signal broadcasting and account-level execution.",
+      "description": "A production-grade trading execution system built for automated signal broadcasting and account-level execution.",
       "github": "private",
       "highlights": [
         "High-performance Java server parsing multi-target trading signals from Telegram groups",
         "Per-user distribution logic with signal deduplication and MetaTrader ID verification",
-        "Execution layer using MetaTrader EA with automated order placement and trailing stop-loss",
-        "Self-healing recovery with persistent state storage after server restarts"
+        "Execution layer using MetaTrader EA with automated order placement and trailing stop-loss"
       ],
       "details": {
         "architecture": [
