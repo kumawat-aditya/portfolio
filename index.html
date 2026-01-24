@@ -96,6 +96,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
+      cursor: none;
     }
 
     body::before {
@@ -164,7 +165,174 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 50px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
-    /* Link and button cursor styles */
+    /* Link and button cursor styles - use custom cursor */
+    a,
+    button,
+    [role="button"],
+    input[type="submit"],
+    input[type="button"],
+    .cursor-pointer,
+    .cursor-grab {
+      cursor: none !important;
+    }
+
+    /* Custom animated scope cursor - container for crosshair lines */
+    .custom-cursor {
+      width: 0;
+      height: 0;
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Four crosshair lines */
+    .cursor-line {
+      position: absolute;
+      background: rgba(147, 197, 253, 0.9);
+      transition: all 0.2s ease-out;
+    }
+
+    .cursor-line-top {
+      width: 1px;
+      height: 8px;
+      left: 50%;
+      top: -14px;
+      transform: translateX(-50%);
+    }
+
+    .cursor-line-bottom {
+      width: 1px;
+      height: 8px;
+      left: 50%;
+      bottom: -14px;
+      transform: translateX(-50%);
+    }
+
+    .cursor-line-left {
+      width: 8px;
+      height: 1px;
+      top: 50%;
+      left: -14px;
+      transform: translateY(-50%);
+    }
+
+    .cursor-line-right {
+      width: 8px;
+      height: 1px;
+      top: 50%;
+      right: -14px;
+      transform: translateY(-50%);
+    }
+
+    /* Center dot */
+    .custom-cursor-dot {
+      width: 6px;
+      height: 6px;
+      background: rgba(96, 165, 250, 1);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+      transition: all 0.2s ease-out;
+    }
+
+    /* Hover state - lines move farther */
+    .custom-cursor.hover .cursor-line-top {
+      top: -22px;
+      background: rgba(59, 130, 246, 1);
+    }
+
+    .custom-cursor.hover .cursor-line-bottom {
+      bottom: -22px;
+      background: rgba(59, 130, 246, 1);
+    }
+
+    .custom-cursor.hover .cursor-line-left {
+      left: -22px;
+      background: rgba(59, 130, 246, 1);
+    }
+
+    .custom-cursor.hover .cursor-line-right {
+      right: -22px;
+      background: rgba(59, 130, 246, 1);
+    }
+
+    /* Grabbing state - lines merge into center, big circle expands */
+    .custom-cursor.grabbing .cursor-line-top {
+      top: -3px;
+      height: 3px;
+      opacity: 0;
+    }
+
+    .custom-cursor.grabbing .cursor-line-bottom {
+      bottom: -3px;
+      height: 3px;
+      opacity: 0;
+    }
+
+    .custom-cursor.grabbing .cursor-line-left {
+      left: -3px;
+      width: 3px;
+      opacity: 0;
+    }
+
+    .custom-cursor.grabbing .cursor-line-right {
+      right: -3px;
+      width: 3px;
+      opacity: 0;
+    }
+
+    .custom-cursor-dot.grabbing {
+      width: 36px;
+      height: 36px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(147, 197, 253, 0.8);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Click animation */
+    .custom-cursor.click .cursor-line {
+      background: rgba(59, 130, 246, 1);
+    }
+
+    .custom-cursor.click .cursor-line-top {
+      top: -18px;
+    }
+
+    .custom-cursor.click .cursor-line-bottom {
+      bottom: -18px;
+    }
+
+    .custom-cursor.click .cursor-line-left {
+      left: -18px;
+    }
+
+    .custom-cursor.click .cursor-line-right {
+      right: -18px;
+    }
+
+    /* Hide custom cursor on touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      body {
+        cursor: auto !important;
+      }
+
+      a,
+      button,
+      [role="button"],
+      .cursor-pointer,
+      .cursor-grab {
+        cursor: auto !important;
+      }
+
+      .custom-cursor,
+      .custom-cursor-dot {
+        display: none !important;
+      }
+    }
 
 
     /* Fade-in animation on scroll */
@@ -521,7 +689,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/portfolio/assets/index-149MI40w.js"></script>
+  <script type="module" crossorigin src="/portfolio/assets/index-DjQJkZFy.js"></script>
 </head>
 
 <body class="bg-black text-cream-500 antialiased">
