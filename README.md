@@ -2,7 +2,7 @@
   <h1>Aditya Kumawat — Portfolio</h1>
   <p><b>Backend & Intelligent Systems Engineer</b></p>
   <p>
-    <a href="https://adikumaw.github.io/portfolio" target="_blank">Live Demo</a> ·
+    <a href="https://kumawat-aditya.github.io/portfolio" target="_blank">Live Demo</a> ·
     <a href="#features">Features</a> ·
     <a href="#getting-started">Getting Started</a>
   </p>
@@ -105,7 +105,7 @@ This is a modern, interactive portfolio website for Aditya Kumawat, showcasing e
 ## 📬 Contact
 
 - **Email:** kumawataditya105@gmail.com
-- **GitHub:** [github.com/adikumaw](https://github.com/adikumaw)
+- **GitHub:** [github.com/kumawat-aditya](https://github.com/kumawat-aditya)
 - **LinkedIn:** [linkedin.com](https://linkedin.com)
 
 ---

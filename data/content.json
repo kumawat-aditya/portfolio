@@ -7,7 +7,7 @@
     "tagline": "I design trading infrastructure, real-time automation systems, and data-driven backend architectures that integrate machine learning with execution reliability.",
     "availability": "Based in Jaipur, India · Open to remote opportunities",
     "links": {
-      "github": "https://github.com/Adikumaw",
+      "github": "https://github.com/kumawat-aditya",
       "linkedin": "https://www.linkedin.com/in/adityakumawat105",
       "resume": "resume.pdf"
     }
@@ -52,7 +52,7 @@
         "Parallel Processing"
       ],
       "description": "A configurable AI data generation and strategy mining pipeline designed for large-scale trading research.",
-      "github": "https://github.com/Adikumaw/trading_strategy_finder",
+      "github": "https://github.com/kumawat-aditya/trading_strategy_finder",
       "highlights": [
         "Bronze to Diamond layered data architecture for systematic strategy mining",
         "Optimized pipeline from 8-9 hours to ~10 minutes",
@@ -79,7 +79,7 @@
       "title": "Stella – Scalable E-Commerce Backend Architecture",
       "stack": ["Java", "Spring Boot", "JWT", "Razorpay", "MySQL"],
       "description": "A multi-role backend architecture inspired by Amazon's seller-user ecosystem with architecture-first design.",
-      "github": "https://github.com/Adikumaw/stella",
+      "github": "https://github.com/kumawat-aditya/stella",
       "highlights": [
         "Separate authentication domains for Users and Sellers (JWT-based)",
         "Seller dashboard APIs with product upload and media handling",
@@ -104,7 +104,7 @@
       "title": "Elastic DCA Trading System (Fullstack Automation)",
       "stack": ["MQL5", "Python", "React"],
       "description": "A grid-based automated trading system enabling controlled position scaling and equity-based risk management.",
-      "github": "https://github.com/Adikumaw/elastic-dca-trader",
+      "github": "https://github.com/kumawat-aditya/elastic-dca-trader",
       "highlights": [
         "Dollar-gap based automated entries with dynamic lot management",
         "Multiple target systems: Equity, Balance, and Fixed dollar exit",
@@ -129,7 +129,7 @@
       "title": "Rubik's Cube 3x3x3 Solver (Multi-Threaded Engine)",
       "stack": ["C++", "OOP", "Multithreading", "Algorithm Optimization"],
       "description": "A CFOP-based high-performance cube-solving engine built with a fully modular C++ architecture.",
-      "github": "https://github.com/Adikumaw/rubix-cube-solver",
+      "github": "https://github.com/kumawat-aditya/rubix-cube-solver",
       "highlights": [
         "Custom 3D cube state representation engine",
         "CFOP algorithm implementation (Cross, F2L, OLL, PLL)",

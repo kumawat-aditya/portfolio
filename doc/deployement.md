@@ -113,7 +113,7 @@ Save.
 Your site will be live at:
 
 ```
-https://adikumaw.github.io/portfolio
+https://kumawat-aditya.github.io/portfolio
 ```
 
 ---
