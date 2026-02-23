@@ -50,7 +50,11 @@ const Experience: React.FC = () => {
           return (
             <div
               key={index}
-              className="group glass-card bg-white/5 backdrop-blur-xl backdrop-saturate-150 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-white/20 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)] transition-all duration-500 relative overflow-hidden"
+              className="group glass-card bg-white/5 backdrop-blur-md backdrop-saturate-150 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-white/20 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)] relative overflow-hidden"
+              style={{
+                transition:
+                  "box-shadow 0.5s ease, border-color 0.3s ease, background 0.5s ease",
+              }}
             >
               {/* Glow Effect - White consistent with other cards */}
               <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

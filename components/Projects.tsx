@@ -23,24 +23,31 @@ const Projects: React.FC = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [touchStartX, setTouchStartX] = useState(0);
-  const [touchEndX, setTouchEndX] = useState(0);
+  const touchStartXRef = useRef(0);
+  const touchEndXRef = useRef(0);
   // Remove popup state
 
   // Load projects from JSON
   const projects: Project[] = content.projects;
   const sectionContent = content.sections.projects;
 
-  // Detect mobile viewport
+  // Detect mobile viewport (debounced)
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 150);
     };
-    checkMobile();
+    // Set initial value immediately
+    setIsMobile(window.innerWidth < 768);
     window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("resize", checkMobile);
+    };
   }, []);
 
   const handleGithubClick = (github: string, e: React.MouseEvent) => {
@@ -112,19 +119,19 @@ const Projects: React.FC = () => {
     setIsPaused(false);
   };
 
-  // Touch handlers for mobile swipe
+  // Touch handlers for mobile swipe (refs — no re-renders)
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
-    setTouchEndX(e.touches[0].clientX);
+    touchStartXRef.current = e.touches[0].clientX;
+    touchEndXRef.current = e.touches[0].clientX;
     setIsPaused(true);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEndX(e.touches[0].clientX);
+    touchEndXRef.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = () => {
-    const diff = touchStartX - touchEndX;
+    const diff = touchStartXRef.current - touchEndXRef.current;
     const minSwipeDistance = 50;
 
     if (Math.abs(diff) > minSwipeDistance) {
@@ -217,10 +224,16 @@ const Projects: React.FC = () => {
                     className="absolute w-[320px] md:w-[400px] lg:w-[480px]"
                     style={{
                       ...cardStyle,
-                      willChange: "transform",
+                      willChange: isCenter ? "transform" : "auto",
                     }}
                   >
-                    <div className="group relative rounded-2xl p-6 md:p-8 transition-all duration-500 overflow-hidden h-[480px] flex flex-col bg-white/5 backdrop-blur-xl backdrop-saturate-150 border border-white/10 hover:border-white/20 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]">
+                    <div
+                      className="group relative rounded-2xl p-6 md:p-8 overflow-hidden h-[480px] flex flex-col bg-white/5 backdrop-blur-md backdrop-saturate-150 border border-white/10 hover:border-white/20 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]"
+                      style={{
+                        transition:
+                          "box-shadow 0.5s ease, border-color 0.3s ease, background 0.5s ease",
+                      }}
+                    >
                       {/* Glow Effect - Hidden on mobile */}
                       {!isMobile && (
                         <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

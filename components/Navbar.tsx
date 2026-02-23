@@ -13,23 +13,31 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    const scrollContainer = document.querySelector(".scroll-container");
+    let rafId: number | null = null;
+
     const handleScroll = () => {
-      const scrollContainer = document.querySelector(".scroll-container");
-      if (scrollContainer) {
-        setIsScrolled(scrollContainer.scrollTop > 10);
-      } else {
-        setIsScrolled(window.scrollY > 10);
-      }
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        if (scrollContainer) {
+          setIsScrolled(scrollContainer.scrollTop > 10);
+        } else {
+          setIsScrolled(window.scrollY > 10);
+        }
+        rafId = null;
+      });
     };
 
-    const scrollContainer = document.querySelector(".scroll-container");
     if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", handleScroll);
+      scrollContainer.addEventListener("scroll", handleScroll, {
+        passive: true,
+      });
     } else {
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll, { passive: true });
     }
 
     return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
       if (scrollContainer) {
         scrollContainer.removeEventListener("scroll", handleScroll);
       } else {
@@ -68,7 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
       <nav
         className={`fixed w-full z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-white/5 backdrop-blur-xl backdrop-saturate-180 py-4"
+            ? "bg-white/5 backdrop-blur-md backdrop-saturate-150 py-4"
             : "bg-transparent py-6"
         }`}
       >

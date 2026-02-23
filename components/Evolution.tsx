@@ -33,26 +33,37 @@ const Evolution: React.FC = () => {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
+    let rafId: number | null = null;
 
-      const rect = containerRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const triggerPoint = viewportHeight * 0.5;
-      const relativeY = triggerPoint - rect.top;
-      const currentHeight = Math.max(0, Math.min(relativeY, rect.height));
-      setLineHeight(currentHeight);
+    const handleScroll = () => {
+      if (rafId !== null) return; // Already scheduled
+      rafId = requestAnimationFrame(() => {
+        if (!containerRef.current) {
+          rafId = null;
+          return;
+        }
+        const rect = containerRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const triggerPoint = viewportHeight * 0.5;
+        const relativeY = triggerPoint - rect.top;
+        const currentHeight = Math.max(0, Math.min(relativeY, rect.height));
+        setLineHeight(currentHeight);
+        rafId = null;
+      });
     };
 
     const scrollContainer = document.querySelector(".scroll-container");
     if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", handleScroll);
+      scrollContainer.addEventListener("scroll", handleScroll, {
+        passive: true,
+      });
     } else {
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll, { passive: true });
     }
     handleScroll();
 
     return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
       if (scrollContainer) {
         scrollContainer.removeEventListener("scroll", handleScroll);
       } else {

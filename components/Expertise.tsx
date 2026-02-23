@@ -39,8 +39,11 @@ const SkillBlock: React.FC<SkillBlockProps> = ({
 
   return (
     <div
-      className={`glass-card group relative rounded-2xl p-6 md:p-8 hover:border-white/20 transition-all duration-500 overflow-hidden ${fullWidth ? "md:col-span-2" : ""}`}
-      style={{ transitionProperty: "all, box-shadow" }}
+      className={`glass-card group relative rounded-2xl p-6 md:p-8 hover:border-white/20 overflow-hidden ${fullWidth ? "md:col-span-2" : ""}`}
+      style={{
+        transition:
+          "box-shadow 0.5s ease, border-color 0.3s ease, background 0.5s ease",
+      }}
     >
       {/* Glow Effect - White */}
       <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
