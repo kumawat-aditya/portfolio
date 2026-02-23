@@ -7,7 +7,7 @@
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0" />
   <title>Aditya Kumawat | Backend & Intelligent Systems Engineer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS now handled by @tailwindcss/vite at build time -->
   <link rel="preconnect"
         href="https://fonts.googleapis.com">
   <link rel="preconnect"
@@ -15,83 +15,10 @@
         crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          screens: {
-            '2xl': '1536px',
-            '3xl': '1920px',
-          },
-          colors: {
-            gray: {
-              50: '#f9fafb',
-              100: '#f3f4f6',
-              200: '#e5e7eb',
-              300: '#d1d5db',
-              400: '#9ca3af',
-              500: '#6b7280',
-              600: '#4b5563',
-              700: '#374151',
-              800: '#1f2937',
-              900: '#111827',
-              950: '#030303',
-            },
-            // Pale cream color for text
-            cream: {
-              50: '#FFFDF5',
-              100: '#FFF9E6',
-              200: '#FFF3CC',
-              300: '#FFEDB3',
-              400: '#FFE799',
-              500: '#F5E6D3',
-            },
-            // Blue accent color
-            accent: {
-              400: '#60A5FA',
-              500: '#3B82F6',
-              600: '#2563EB',
-            }
-          },
-          letterSpacing: {
-            tighter: '-0.04em',
-            tight: '-0.02em',
-            normal: '0',
-            wide: '0.02em',
-          },
-          animation: {
-            'scroll': 'scroll 30s linear infinite',
-            'fade-in-up': 'fadeInUp 0.3s ease-out forwards',
-          },
-          keyframes: {
-            scroll: {
-              '0%': { transform: 'translateX(0)' },
-              '100%': { transform: 'translateX(-50%)' },
-            },
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translate(-50%, 20px)' },
-              '100%': { opacity: '1', transform: 'translate(-50%, 0)' },
-            }
-          }
-        }
-      }
-    }
-  </script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
       background-color: #0a1120;
-      background-image:
-        radial-gradient(ellipse 100% 80% at 50% -30%, rgba(59, 130, 246, 0.22), transparent 60%),
-        radial-gradient(ellipse 80% 60% at 100% 80%, rgba(99, 102, 241, 0.16), transparent 60%),
-        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(139, 92, 246, 0.13), transparent 60%),
-        radial-gradient(ellipse 40% 30% at 80% 20%, rgba(59, 130, 246, 0.10), transparent 50%),
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.18'/%3E%3C/svg%3E");
-      background-blend-mode: normal, normal, normal, normal, soft-light;
-      background-attachment: fixed;
       color: #F5E6D3;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -99,7 +26,23 @@
       cursor: none;
     }
 
+    /* Fixed background layer — avoids background-attachment: fixed repaint penalty */
     body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-color: #0a1120;
+      background-image:
+        radial-gradient(ellipse 100% 80% at 50% -30%, rgba(59, 130, 246, 0.22), transparent 60%),
+        radial-gradient(ellipse 80% 60% at 100% 80%, rgba(99, 102, 241, 0.16), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(139, 92, 246, 0.13), transparent 60%),
+        radial-gradient(ellipse 40% 30% at 80% 20%, rgba(59, 130, 246, 0.10), transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Secondary glow overlay */
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
@@ -125,9 +68,9 @@
       scrollbar-width: none;
     }
 
-    /* Smooth scroll */
+    /* Scroll container */
     .scroll-container {
-      scroll-behavior: smooth;
+      /* smooth scroll handled by Lenis */
     }
 
     /* Custom selection */
@@ -139,10 +82,10 @@
     /* Glass morphic card effect - Apple-style frosted glass */
     .glass-card {
       background: rgba(10, 10, 10, 0.6);
-      backdrop-filter: blur(40px) saturate(180%);
-      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      backdrop-filter: blur(16px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      transition: all 0.5s ease, box-shadow 0.5s ease, border-color 0.3s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease, background 0.5s ease;
+      transition: box-shadow 0.5s ease, border-color 0.3s ease, background 0.5s ease;
     }
 
     .glass-card::before {
@@ -373,20 +316,23 @@
       }
     }
 
-    /* Super smooth scroll behavior */
+    /* Scroll touch behavior */
     .scroll-container {
-      scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
     }
 
     /* Light theme overrides - Frosted ice glass aesthetic */
     html.light body {
       background-color: #f9fafb;
+      color: #1e293b;
+    }
+
+    html.light body::before {
+      background-color: #f9fafb;
       background-image:
         radial-gradient(ellipse 100% 80% at 50% -30%, rgba(59, 130, 246, 0.05), transparent 60%),
         radial-gradient(ellipse 80% 60% at 100% 80%, rgba(99, 102, 241, 0.04), transparent 60%),
         radial-gradient(ellipse 60% 50% at 0% 100%, rgba(139, 92, 246, 0.03), transparent 60%);
-      color: #1e293b;
     }
 
     html.light .bg-black {
@@ -457,8 +403,8 @@
     /* Glass card - dark frosted glass effect */
     html.light .glass-card {
       background: rgba(30, 41, 59, 0.12);
-      backdrop-filter: blur(40px) saturate(150%);
-      -webkit-backdrop-filter: blur(40px) saturate(150%);
+      backdrop-filter: blur(16px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
       border-color: rgba(71, 85, 105, 0.3);
       box-shadow:
         0 8px 32px rgba(15, 23, 42, 0.15),
@@ -795,20 +741,9 @@
       color: #93c5fd !important;
     }
   </style>
-
-  <link rel="stylesheet"
-        href="/index.css">
-  <script type="importmap">
-{
-  "imports": {
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "react/": "https://esm.sh/react@^19.2.3/"
-  }
-}
-</script>
-  <script type="module" crossorigin src="/portfolio/assets/index-BTAkdXIx.js"></script>
+  <!-- Tailwind CSS imported via styles/tailwind.css in index.tsx -->
+  <script type="module" crossorigin src="/portfolio/assets/index-CYsqYes1.js"></script>
+  <link rel="stylesheet" crossorigin href="/portfolio/assets/index-DismdM_B.css">
 </head>
 
 <body class="bg-black text-cream-500 antialiased">
