@@ -9,9 +9,9 @@ const Contact: React.FC = () => {
   return (
     <section
       id="contact"
-      className="min-h-[70vh] px-6 sm:px-12 lg:px-24 2xl:px-32 max-w-[1400px] 2xl:max-w-[1600px] mx-auto pt-32 pb-32 border-t border-white/5 flex flex-col items-center justify-center text-center"
+      className="min-h-[70vh] px-6 sm:px-12 lg:px-24 2xl:px-32 3xl:px-40 max-w-[1400px] 2xl:max-w-[1600px] 3xl:max-w-[2000px] mx-auto pt-32 pb-32 border-t border-white/5 flex flex-col items-center justify-center text-center"
     >
-      <div className="max-w-3xl">
+      <div className="max-w-3xl 3xl:max-w-4xl">
         {/* Section Label */}
         <div className="flex items-center justify-center gap-3 mb-6">
           <div className="w-2 h-2 rounded-full bg-accent-500 shadow-[0_0_10px_rgba(59,130,239,0.5)]"></div>

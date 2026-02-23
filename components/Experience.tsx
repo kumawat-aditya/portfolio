@@ -24,7 +24,7 @@ const Experience: React.FC = () => {
   return (
     <section
       id="experience"
-      className="min-h-screen px-6 sm:px-12 lg:px-24 2xl:px-32 max-w-[1400px] 2xl:max-w-[1600px] mx-auto pt-32 pb-24 border-t border-white/5"
+      className="min-h-screen px-6 sm:px-12 lg:px-24 2xl:px-32 3xl:px-40 max-w-[1400px] 2xl:max-w-[1600px] 3xl:max-w-[2000px] mx-auto pt-32 pb-24 border-t border-white/5"
     >
       {/* Section Header */}
       <div className="mb-16">
@@ -37,7 +37,7 @@ const Experience: React.FC = () => {
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-cream-100 mb-6 tracking-tight">
           {sectionContent.title}
         </h2>
-        <p className="text-cream-500/60 font-light text-lg md:text-xl max-w-2xl leading-relaxed">
+        <p className="text-cream-500/60 font-light text-lg md:text-xl max-w-2xl 3xl:max-w-3xl leading-relaxed">
           {sectionContent.description}
         </p>
       </div>

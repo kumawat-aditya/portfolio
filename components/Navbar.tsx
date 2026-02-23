@@ -80,7 +80,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, onThemeToggle }) => {
             : "bg-transparent py-6"
         }`}
       >
-        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 sm:px-12 lg:px-24 2xl:px-32 flex items-center justify-between">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] 3xl:max-w-[2000px] mx-auto px-6 sm:px-12 lg:px-24 2xl:px-32 3xl:px-40 flex items-center justify-between">
           {/* Brand */}
           <div className="cursor-pointer z-50" onClick={scrollToTop}>
             <span className="nav-logo text-accent-400 font-bold text-xl tracking-tighter hover:text-accent-500 transition-colors duration-300">

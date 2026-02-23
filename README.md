@@ -4,7 +4,8 @@
   <p>
     <a href="https://kumawat-aditya.github.io/portfolio" target="_blank">Live Demo</a> ·
     <a href="#features">Features</a> ·
-    <a href="#getting-started">Getting Started</a>
+    <a href="#getting-started">Getting Started</a> ·
+    <a href="#theming">Theming</a>
   </p>
 </div>
 
@@ -12,7 +13,7 @@
 
 ## ✨ Overview
 
-This is a modern, interactive portfolio website for Aditya Kumawat, showcasing expertise in backend engineering, trading systems, AI/data engineering, and scalable infrastructure. Built with React, TypeScript, and Vite, it features smooth animations, dark/light themes, and a clean, glassmorphic UI.
+A modern, interactive portfolio website for Aditya Kumawat, showcasing expertise in backend engineering, trading systems, AI/data engineering, and scalable infrastructure. Built with React 19, TypeScript, Vite, and Tailwind CSS v4 (build-time), featuring smooth Lenis scrolling, dark/light themes, glassmorphic UI, and full 2K resolution support.
 
 ---
 
@@ -32,22 +33,25 @@ This is a modern, interactive portfolio website for Aditya Kumawat, showcasing e
 ## 🚀 Features
 
 - **JSON-Driven Content:** All portfolio data is loaded from `/data/content.json` for simple content management.
+- **Configurable Theme System:** All colors, gradients, glass effects, and cursor styles are driven by CSS custom properties in `styles/theme.css`. Switch between dark and light themes or create entirely new color schemes by editing one file.
 - **Private/Public GitHub Links:** Each project card shows a GitHub button. If the repo is private, the button is disabled and shows a tooltip.
-- **Custom Cursor & Glassmorphic Cards:** Interactive UI with mouse tracking and frosted glass effects.
-- **Smooth Scrolling:** Lenis-style smooth scroll for a premium feel.
-- **Dark/Light Theme Toggle:** Seamless theme switching with full style overrides.
-- **Animated Section Reveal:** Fade-in animations as you scroll.
-- **Responsive Design:** Fully mobile-friendly and accessible.
-- **Project Carousel:** Auto-advancing, draggable, and expandable project cards.
-- **Detailed Timeline:** Visual evolution of skills and experience.
+- **Custom Cursor & Glassmorphic Cards:** Interactive UI with DOM-ref-based mouse tracking (zero React re-renders) and frosted glass effects.
+- **Smooth Scrolling:** Lenis smooth scroll library with proper rAF lifecycle management.
+- **Dark/Light Theme Toggle:** Seamless theme switching with full style overrides via CSS custom properties.
+- **Animated Section Reveal:** IntersectionObserver-based fade-in animations.
+- **Responsive Design:** Fully mobile-friendly, with dedicated breakpoints for mobile, tablet, desktop, 1440p, and 2K (2560px) displays.
+- **2K Resolution Support:** All containers scale to `max-w-[2000px]` at the `3xl` (1920px+) breakpoint, with wider card/content layouts.
+- **Project Carousel:** Auto-advancing, draggable, touch-friendly, and expandable project cards with responsive sizing.
+- **Performance Optimized:** All components memoized, scroll handlers rAF-throttled, backdrop-filter values tuned, and CSS transitions target specific properties only.
 - **Contact & Socials:** Direct email, GitHub, LinkedIn, and resume download (resume link from JSON, works on GitHub Pages).
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React 19, TypeScript, Vite
-- **Styling:** Tailwind CSS (custom config), glassmorphism, custom animations
+- **Frontend:** React 19, TypeScript, Vite 6
+- **Styling:** Tailwind CSS v4 (build-time via `@tailwindcss/vite`), CSS custom properties for theming
+- **Smooth Scroll:** Lenis
 - **Icons:** Lucide React
 - **Deployment:** GitHub Pages (via `gh-pages`)
 
@@ -56,20 +60,67 @@ This is a modern, interactive portfolio website for Aditya Kumawat, showcasing e
 ## 📁 Project Structure
 
 ```
-├── App.tsx                # Main app layout and logic
-├── components/            # All major UI sections (Hero, Projects, Evolution, etc.)
+├── App.tsx                # Main app layout, cursor, Lenis scroll, theme toggle
+├── index.tsx              # React entry point (imports styles/main.css)
+├── index.html             # Minimal HTML skeleton (no inline CSS)
+├── types.ts               # Shared TypeScript types
+├── components/            # All major UI sections
+│   ├── Hero.tsx           # Landing section
+│   ├── Projects.tsx       # Carousel + project modal
+│   ├── Evolution.tsx      # Growth timeline
+│   ├── Expertise.tsx      # Skills grid
+│   ├── Experience.tsx     # Career history
+│   ├── Contact.tsx        # Contact CTA
+│   ├── Footer.tsx         # Footer
+│   ├── Navbar.tsx         # Navigation bar
+│   └── Button.tsx         # Reusable button component
+├── styles/
+│   ├── main.css           # Master CSS: Tailwind imports, @theme tokens, all custom styles
+│   └── theme.css          # Configurable color theme (CSS custom properties)
+├── theme/
+│   └── colors.ts          # TypeScript reference for all color tokens
 ├── data/
-│   └── content.json       # All portfolio content (bio, projects, skills, links, etc.)
+│   └── content.json       # All portfolio content (bio, projects, skills, links)
 ├── public/
-│   └── resume.pdf         # Resume file (linked from JSON)
-├── index.html             # HTML template with Tailwind and custom styles
-├── index.tsx              # React entry point
+│   └── resume.pdf         # Resume file
+├── doc/                   # Planning, content, and performance analysis docs
 ├── package.json           # Scripts and dependencies
 ├── tsconfig.json          # TypeScript config
-├── vite.config.ts         # Vite config (with base for GitHub Pages)
-├── types.ts               # Shared types
-├── doc/                   # Planning and content docs
+└── vite.config.ts         # Vite config (Tailwind + React plugins, GitHub Pages base)
 ```
+
+---
+
+## 🎨 Theming
+
+The entire color scheme is configurable via **`styles/theme.css`**. This file contains CSS custom properties for both dark and light themes.
+
+### How It Works
+
+1. **`styles/theme.css`** — Edit this file to change any color. Variables include:
+   - Background & gradients (`--bg-primary`, `--gradient-blob-*`)
+   - Glass card appearance (`--card-bg`, `--card-blur`, `--card-shadow`, etc.)
+   - Custom cursor colors (`--cursor-line-color`, `--cursor-dot-bg`, etc.)
+   - Selection styling (`--selection-bg`, `--selection-text`)
+   - Glow effects (`--glow-1`, `--glow-2`, `--glow-3`)
+
+2. **`styles/main.css`** — Contains the `@theme` block that defines Tailwind color tokens (cream, accent, gray) and all custom styles. Imports both Tailwind and `theme.css`.
+
+3. **`theme/colors.ts`** — TypeScript reference documenting all tokens for programmatic use.
+
+### Creating a Custom Theme
+
+Edit `styles/theme.css` and modify the CSS custom properties in the `:root, html.dark {}` block (dark theme) or `html.light {}` block (light theme). No other file changes needed.
+
+### Responsive Breakpoints
+
+| Breakpoint | Width  | Usage             |
+| ---------- | ------ | ----------------- |
+| `sm:`      | 640px  | Mobile landscape  |
+| `md:`      | 768px  | Tablet            |
+| `lg:`      | 1024px | Desktop           |
+| `2xl:`     | 1536px | Large monitors    |
+| `3xl:`     | 1920px | 2K / QHD displays |
 
 ---
 

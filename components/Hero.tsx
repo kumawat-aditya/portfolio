@@ -21,9 +21,9 @@ const Hero: React.FC = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex flex-col justify-center px-6 sm:px-12 lg:px-24 2xl:px-32 max-w-[1400px] 2xl:max-w-[1600px] mx-auto pt-20"
+      className="min-h-screen flex flex-col justify-center px-6 sm:px-12 lg:px-24 2xl:px-32 3xl:px-40 max-w-[1400px] 2xl:max-w-[1600px] 3xl:max-w-[2000px] mx-auto pt-20"
     >
-      <div className="max-w-5xl w-full">
+      <div className="max-w-5xl 3xl:max-w-6xl w-full">
         {/* Name */}
         <h1
           className={`${getTransitionClass("delay-100")} text-6xl sm:text-7xl lg:text-8xl font-semibold tracking-tighter text-cream-100 mb-8`}
@@ -47,7 +47,7 @@ const Hero: React.FC = () => {
 
         {/* Positioning Statement */}
         <p
-          className={`${getTransitionClass("delay-300")} text-xl sm:text-2xl lg:text-3xl text-cream-500/50 leading-relaxed max-w-4xl font-normal mb-14 tracking-tight`}
+          className={`${getTransitionClass("delay-300")} text-xl sm:text-2xl lg:text-3xl text-cream-500/50 leading-relaxed max-w-4xl 3xl:max-w-5xl font-normal mb-14 tracking-tight`}
         >
           I design{" "}
           <span className="text-cream-100">trading infrastructure</span>,

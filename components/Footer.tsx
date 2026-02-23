@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="w-full py-12 bg-gradient-to-t from-gray-950 to-transparent border-t border-white/5">
-      <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 sm:px-12 lg:px-24 2xl:px-32">
+      <div className="max-w-[1400px] 2xl:max-w-[1600px] 3xl:max-w-[2000px] mx-auto px-6 sm:px-12 lg:px-24 2xl:px-32 3xl:px-40">
         {/* Main Footer Content */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Brand & Copyright */}

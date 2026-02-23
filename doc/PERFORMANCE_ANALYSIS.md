@@ -2,6 +2,31 @@
 
 > Comprehensive audit identifying all areas causing lag, jank, excessive CPU/GPU usage, and poor runtime performance.
 
+## ✅ Resolution Status
+
+**All issues identified below have been resolved.** Here is a summary of fixes applied:
+
+| Issue                                 | Resolution                                                                         |
+| ------------------------------------- | ---------------------------------------------------------------------------------- |
+| Infinite rAF loop (smooth scroll)     | Replaced with **Lenis** smooth scroll library with proper rAF lifecycle            |
+| mousemove → setState → full re-render | Cursor now uses **DOM refs** — zero React state updates on mouse move              |
+| Glass card DOM query on mousemove     | Throttled via `requestAnimationFrame`, uses `elementFromPoint` + `.closest()`      |
+| backdrop-filter blur(40px)            | Reduced to `blur(16px)` across all glass elements                                  |
+| CDN Tailwind (runtime JIT)            | Migrated to **Tailwind CSS v4 build-time** via `@tailwindcss/vite` plugin          |
+| Fixed background + SVG noise          | Removed `background-attachment: fixed` and SVG noise texture                       |
+| Dual scroll systems                   | Removed CSS smooth scroll; Lenis handles all scrolling                             |
+| will-change on all carousel cards     | Only applied to the **center card**                                                |
+| Evolution scroll handler              | Wrapped in **rAF throttling** with `{ passive: true }`                             |
+| Navbar scroll handler                 | DOM query cached, wrapped in **rAF throttling** with `{ passive: true }`           |
+| transition: all on glass cards        | Changed to specific properties: `box-shadow, border-color, background`             |
+| No React.memo                         | All child components wrapped in `React.memo()`                                     |
+| Import maps conflicting with Vite     | Import maps **removed** from `index.html`                                          |
+| ~400 lines of !important overrides    | Moved to external CSS files; overrides work **without !important** (unlayered CSS) |
+| Inline SVG noise                      | Removed entirely                                                                   |
+| All CSS inline in index.html          | Externalized to `styles/main.css` + `styles/theme.css`                             |
+| Projects.tsx touch state re-renders   | `touchStartX`/`touchEndX` converted from `useState` to `useRef`                    |
+| Resize listener not debounced         | Added 150ms debounce to resize listener                                            |
+
 ---
 
 ## Table of Contents

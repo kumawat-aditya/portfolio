@@ -159,8 +159,10 @@ const Projects: React.FC = () => {
     const isCenter = normalizedDiff === 0;
     const isAdjacent = Math.abs(normalizedDiff) === 1;
 
-    // Use percentage-based translate for responsive side cards
-    const translateAmount = normalizedDiff * 380; // Fixed pixel offset for side cards
+    // Responsive offset: wider spacing on 3xl+ screens (1920px+)
+    const cardOffset =
+      typeof window !== "undefined" && window.innerWidth >= 1920 ? 440 : 380;
+    const translateAmount = normalizedDiff * cardOffset;
 
     return {
       transform: `translateX(${translateAmount}px) scale(${isCenter ? 1 : 0.85})`,
@@ -178,7 +180,7 @@ const Projects: React.FC = () => {
         className="min-h-screen pt-32 pb-24 border-t border-white/5 overflow-visible"
       >
         {/* Section Header */}
-        <div className="px-6 sm:px-12 lg:px-24 2xl:px-32 max-w-[1400px] 2xl:max-w-[1600px] mx-auto mb-6">
+        <div className="px-6 sm:px-12 lg:px-24 2xl:px-32 3xl:px-40 max-w-[1400px] 2xl:max-w-[1600px] 3xl:max-w-[2000px] mx-auto mb-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-2 h-2 rounded-full bg-accent-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
             <span className="text-xs font-mono uppercase tracking-[0.2em] text-accent-400">
@@ -188,7 +190,7 @@ const Projects: React.FC = () => {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-cream-100 mb-6 tracking-tight">
             {sectionContent.title}
           </h2>
-          <p className="text-cream-500/60 font-light text-lg md:text-xl max-w-2xl leading-relaxed">
+          <p className="text-cream-500/60 font-light text-lg md:text-xl max-w-2xl 3xl:max-w-3xl leading-relaxed">
             {sectionContent.description}
           </p>
         </div>
@@ -197,8 +199,7 @@ const Projects: React.FC = () => {
         <div className="w-full overflow-visible">
           <div
             ref={carouselRef}
-            className="relative cursor-grab active:cursor-grabbing select-none max-w-[1400px] 2xl:max-w-[1600px] mx-auto"
-            style={{ height: "560px" }}
+            className="relative cursor-grab active:cursor-grabbing select-none max-w-[1400px] 2xl:max-w-[1600px] 3xl:max-w-[2000px] mx-auto h-[560px] 3xl:h-[640px]"
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
@@ -221,14 +222,14 @@ const Projects: React.FC = () => {
                 return (
                   <div
                     key={index}
-                    className="absolute w-[320px] md:w-[400px] lg:w-[480px]"
+                    className="absolute w-[320px] md:w-[400px] lg:w-[480px] 3xl:w-[560px]"
                     style={{
                       ...cardStyle,
                       willChange: isCenter ? "transform" : "auto",
                     }}
                   >
                     <div
-                      className="group relative rounded-2xl p-6 md:p-8 overflow-hidden h-[480px] flex flex-col bg-white/5 backdrop-blur-md backdrop-saturate-150 border border-white/10 hover:border-white/20 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]"
+                      className="group relative rounded-2xl p-6 md:p-8 overflow-hidden h-[480px] 3xl:h-[560px] flex flex-col bg-white/5 backdrop-blur-md backdrop-saturate-150 border border-white/10 hover:border-white/20 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]"
                       style={{
                         transition:
                           "box-shadow 0.5s ease, border-color 0.3s ease, background 0.5s ease",
@@ -339,7 +340,7 @@ const Projects: React.FC = () => {
         {/* No popup for private projects. Tooltip on button instead. */}
 
         {/* Dot Indicators Only */}
-        <div className="flex justify-center gap-2 mt-4 px-6 sm:px-12 lg:px-24 2xl:px-32 max-w-[1400px] 2xl:max-w-[1600px] mx-auto">
+        <div className="flex justify-center gap-2 mt-4 px-6 sm:px-12 lg:px-24 2xl:px-32 3xl:px-40 max-w-[1400px] 2xl:max-w-[1600px] 3xl:max-w-[2000px] mx-auto">
           {projects.map((_, index) => (
             <button
               key={index}
@@ -363,7 +364,7 @@ const Projects: React.FC = () => {
             style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0 }}
           >
             <div
-              className="glass-card group relative w-[90vw] max-w-3xl max-h-[80vh] rounded-2xl p-6 md:p-8 border border-white/10 overflow-hidden"
+              className="glass-card group relative w-[90vw] max-w-3xl 3xl:max-w-4xl max-h-[80vh] rounded-2xl p-6 md:p-8 border border-white/10 overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Glow Effect - Hidden on mobile */}
