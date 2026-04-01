@@ -1,0 +1,740 @@
+{
+  "personal": {
+    "name": "Aditya Kumawat",
+    "role": "Backend & Real-Time Systems Engineer",
+    "location": "Jaipur, India",
+    "email": "kumawataditya105@gmail.com",
+    "tagline": "I build real-time trading systems, scalable backend infrastructure, and data-driven platforms that combine machine learning with reliable execution.",
+    "availability": "Based in Jaipur, India · Open to remote opportunities",
+    "links": {
+      "github": "https://github.com/kumawat-aditya",
+      "linkedin": "https://www.linkedin.com/in/adityakumawat105",
+      "resume": "resume.pdf"
+    }
+  },
+
+  "philosophy": {
+    "how_i_think": "I design systems as interacting state machines, not isolated features.",
+    "what_i_optimize_for": "Reliability under real-world conditions.",
+    "what_i_avoid": "Over-engineering before constraints appear.",
+    "current_obsession": "Building systems that stay consistent under partial failure."
+  },
+
+  "labIdeas": [
+    {
+      "title": "Why Most Trading Bots Fail in Live Markets",
+      "angle": "Execution reality vs backtesting assumptions",
+      "relatedProject": "ANT Meta Bots"
+    },
+    {
+      "title": "Speed vs Stability in Real-Time Systems",
+      "angle": "When faster systems become less reliable",
+      "relatedProject": "Elastic DCA"
+    },
+    {
+      "title": "Scaling Data Pipelines Without More RAM",
+      "angle": "Sharding and file architecture over brute force",
+      "relatedProject": "QubiForge"
+    }
+  ],
+
+  "projects": [
+    {
+      "title": "ANT Meta Bots – ML-Powered Options Trading Platform",
+      "stack": ["Python", "FastAPI", "React", "WebSocket", "SQLite", "Docker"],
+      "description": "An end-to-end algorithmic trading platform that generates ML-based signals and autonomously executes and manages options trades in real time.",
+      "github": "private",
+      "highlights": [
+        "Built Lorentzian k-NN based ML system for generating LONG/SHORT signals from futures data",
+        "Automated options execution with dynamic ATM strike selection and Delta Exchange API integration",
+        "Designed unified async engine handling signal processing and trade lifecycle at 1-second intervals",
+        "Implemented full trade management: TP, SL, trailing stops, re-entry, and session-based force-close",
+        "Handled full trade lifecycle across signal → execution → monitoring → exit with strict state control and zero double-execution guarantees"
+      ],
+      "details": {
+        "architecture": [
+          "End-to-end pipeline from futures data → ML signal generation → options execution",
+          "Dual live data feeds for futures (signal) and options (execution monitoring)",
+          "Multi-bot architecture supporting independent strategy instances",
+          "Session-based lifecycle management with controlled trade isolation"
+        ],
+        "engineering": [
+          "Unified async Watchdog engine replacing multi-component architecture",
+          "Fill verification pipeline with fallback and emergency handling",
+          "Persistent state using SQLite with automatic recovery",
+          "React dashboard with WebSocket-based real-time monitoring and control"
+        ]
+      },
+      "insights": {
+        "problem": "Maintaining independence between multiple real-time system layers while still enabling meaningful interaction between them.",
+        "why_it_was_hard": "Each subsystem (data manager, live feed, signal generator, trade monitor) had its own lifecycle, data format, and execution model, making synchronization and communication extremely complex.",
+        "tradeoffs": [
+          "Decoupled architecture vs coordination complexity",
+          "Runtime memory vs persistence (JSON / SQLite)",
+          "Speed vs strict execution guarantees"
+        ],
+        "failure_points": [
+          "State desynchronization across threads",
+          "Duplicate trade execution under rapid signal changes",
+          "Inconsistent data handling across subsystems"
+        ],
+        "real_world_behavior": "System handled multiple bots, each consuming live futures and options data independently, while executing trades in real time without double execution or state corruption.",
+        "what_i_learned": "True system reliability comes from controlling state transitions, not just generating better signals."
+      },
+      "metrics": {
+        "scale": "Supports multiple bots, live feeds, and signal streams concurrently",
+        "latency": "1-second execution cycle across all core systems",
+        "throughput": "Continuous async processing of signals, trades, and live feeds",
+        "impact": "Fully automated end-to-end trading lifecycle with zero manual intervention"
+      },
+      "priority": "flagship",
+      "vibe": "real-time",
+      "tags": [
+        "real-time",
+        "multi-agent",
+        "async",
+        "trading",
+        "state-management",
+        "ml"
+      ],
+      "personality": {
+        "approach": "Break complex systems into independent agents with controlled interaction",
+        "strength": "Handling concurrency and state across multiple live components",
+        "edge": "Thinking in system behavior rather than isolated features"
+      }
+    },
+    {
+      "title": "Real-Time Trading Signal Distribution Infrastructure",
+      "stack": ["Java", "Spring Boot", "WebSocket", "MQL5", "Telegram Bot API"],
+      "description": "A production-grade trading execution system built for automated signal broadcasting and account-level execution.",
+      "github": "private",
+      "highlights": [
+        "High-performance Java server parsing multi-target trading signals from Telegram groups",
+        "Per-user distribution logic with signal deduplication and MetaTrader ID verification",
+        "Execution layer using MetaTrader EA with automated order placement and trailing stop-loss"
+      ],
+      "details": {
+        "architecture": [
+          "High-performance Java server parsing multi-target trading signals from Telegram groups",
+          "Per-user distribution logic with signal deduplication and MetaTrader ID verification",
+          "Controlled broadcast routing to individual users",
+          "Execution layer using MetaTrader EA with automated order placement",
+          "Trailing stop-loss and risk management enforcement",
+          "Structured signal formatting for Telegram channels"
+        ],
+        "engineering": [
+          "Admin-only Telegram bot for client provisioning",
+          "Access control and backup management",
+          "Persistent state storage with self-healing recovery",
+          "Transition from trading bots to distributed trading infrastructure"
+        ]
+      },
+      "insights": {
+        "problem": "Building a reliable system to parse, validate, and distribute trading signals from unstructured Telegram messages.",
+        "why_it_was_hard": "Telegram messages are inconsistent and noisy, requiring robust parsing and strict validation before execution.",
+        "tradeoffs": [
+          "Flexible parsing vs strict signal structure",
+          "Real-time delivery vs validation overhead"
+        ],
+        "failure_points": [
+          "Incorrect signal parsing due to format variation",
+          "Connection drops in Telegram API",
+          "Duplicate signal execution"
+        ],
+        "real_world_behavior": "System continuously listens to Telegram channels, auto-reconnects on failure, and routes validated signals to individual users based on access control.",
+        "what_i_learned": "External APIs are unreliable by default — systems must be built assuming failure at any time."
+      },
+      "metrics": {
+        "scale": "Handles multiple users and signal streams concurrently",
+        "latency": "Near real-time message processing and distribution",
+        "throughput": "Continuous event-driven signal handling",
+        "impact": "Enabled automated trading execution from live Telegram signals"
+      },
+      "priority": "major",
+      "vibe": "infra",
+      "tags": [
+        "event-driven",
+        "telegram",
+        "distributed",
+        "real-time",
+        "backend"
+      ]
+    },
+    {
+      "title": "QubiForge – Multi-Layer Trading Strategy Data Pipeline",
+      "stack": [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "Numba",
+        "XGBoost",
+        "Parallel Processing"
+      ],
+      "description": "A large-scale data pipeline for generating and analyzing trading strategies using machine learning on time-series data.",
+      "github": "https://github.com/kumawat-aditya/trading_strategy_finder",
+      "highlights": [
+        "Built multi-stage pipeline to convert raw trading data into ML-ready datasets",
+        "Optimized processing time from 8–9 hours to ~10 minutes",
+        "Processed ~57 crore rows using parallel computation",
+        "Designed configurable system for large-scale strategy experimentation"
+      ],
+      "details": {
+        "architecture": [
+          "Bronze Layer: SL/TP grid simulation generating millions of trade outcome combinations",
+          "Silver Layer: 200+ technical indicators + advanced support/resistance modeling",
+          "Gold Layer: Rolling-window feature normalization with price-relative scaling",
+          "Platinum Layer: Decision Tree rule mining to XGBoost model experimentation",
+          "Diamond Layer: Strategy evaluation engine (Profit Factor, Max Drawdown, cost modeling)"
+        ],
+        "engineering": [
+          "Optimized pipeline from 8-9 hours to ~10 minutes",
+          "Parallelized processing across large datasets (~57 crore rows)",
+          "Fully configurable via a single centralized configuration file",
+          "Designed for large-scale model training under constrained infrastructure"
+        ]
+      },
+      "insights": {
+        "problem": "Processing massive trading datasets efficiently for ML experimentation under hardware constraints.",
+        "why_it_was_hard": "Traditional CSV-based workflows failed at scale due to memory and performance limitations.",
+        "tradeoffs": [
+          "Memory usage vs computation speed",
+          "Precomputation vs flexibility in experimentation"
+        ],
+        "failure_points": [
+          "Out-of-memory crashes on large datasets",
+          "Slow I/O bottlenecks with CSV files"
+        ],
+        "real_world_behavior": "System processes tens of crores of rows using sharded parquet files and parallel pipelines without loading full datasets into memory.",
+        "what_i_learned": "Data architecture decisions matter more than model selection at scale."
+      },
+      "metrics": {
+        "scale": "~57 crore rows processed",
+        "latency": "Reduced pipeline time from 8–10 hours to under 10 minutes",
+        "throughput": "Parallel multi-layer data processing",
+        "impact": "Enabled large-scale ML experimentation on limited hardware"
+      },
+      "priority": "major",
+      "vibe": "ml",
+      "tags": [
+        "data-engineering",
+        "ml",
+        "big-data",
+        "parallel-processing",
+        "optimization"
+      ],
+      "personality": {
+        "approach": "Fix bottlenecks at data architecture level, not just code level",
+        "strength": "Optimizing under hardware constraints",
+        "edge": "Turning limitations (RAM) into design advantages (sharding)"
+      }
+    },
+    {
+      "title": "Stella – Scalable E-Commerce Backend Architecture",
+      "stack": ["Java", "Spring Boot", "JWT", "Razorpay", "MySQL"],
+      "description": "A multi-role backend architecture inspired by Amazon's seller-user ecosystem with architecture-first design.",
+      "github": "https://github.com/kumawat-aditya/stella",
+      "highlights": [
+        "Separate authentication domains for Users and Sellers (JWT-based)",
+        "Seller dashboard APIs with product upload and media handling",
+        "User-side systems with dynamic search, cart, and order lifecycle",
+        "Razorpay payment gateway integration"
+      ],
+      "details": {
+        "architecture": [
+          "Separate authentication domains for Users and Sellers (JWT-based)",
+          "Seller dashboard APIs: Product upload, Media handling, Review management",
+          "User-side systems: Dynamic search, Cart management, Order lifecycle tracking"
+        ],
+        "engineering": [
+          "Razorpay payment gateway integration",
+          "Clean layered architecture with separation of concerns",
+          "Designed for scalability and modular extension",
+          "Architecture-first backend design approach"
+        ]
+      },
+      "insights": {
+        "problem": "Designing a scalable multi-role backend system similar to real-world e-commerce platforms.",
+        "why_it_was_hard": "Managing separate user roles, authentication, and data flows while keeping the system modular and extensible.",
+        "tradeoffs": [
+          "Flexibility vs complexity in role separation",
+          "Feature richness vs maintainability"
+        ],
+        "failure_points": [
+          "Over-coupled services in early iterations",
+          "Database query inefficiencies"
+        ],
+        "real_world_behavior": "System supports user and seller flows simultaneously with clean separation and smooth transaction handling.",
+        "what_i_learned": "Good backend architecture is about planning before coding, not fixing after."
+      },
+      "metrics": {
+        "scale": "Multi-role system (users + sellers)",
+        "latency": "Fast API response with Spring Boot",
+        "throughput": "Handles concurrent user operations",
+        "impact": "Full e-commerce lifecycle from product upload to order completion"
+      },
+      "priority": "supporting",
+      "vibe": "backend",
+      "tags": ["backend", "architecture", "ecommerce", "api-design", "database"]
+    },
+    {
+      "title": "Elastic DCA – Real-Time Trading Automation System",
+      "stack": ["MQL5", "Python", "FastAPI", "React", "WebSocket", "SQLite"],
+      "description": "A re-architected fullstack trading system with a decoupled execution engine, enabling deterministic trade management, real-time control, and advanced risk handling.",
+      "github": "https://github.com/kumawat-aditya/elastic-dca-trader",
+      "highlights": [
+        "Rebuilt system with decoupled backend engine and MQL5 execution layer for reliability",
+        "WebSocket-based real-time communication between backend and trading dashboard",
+        "Advanced risk controls including loss limits, hedge triggers, and basket-level TP/SL",
+        "Dynamic preset management system with database-backed configuration"
+      ],
+      "details": {
+        "architecture": [
+          "Decoupled FastAPI backend handling trading logic independent of MT5",
+          "Step-based execution pipeline for deterministic trade lifecycle management",
+          "Independent grid systems for buy/sell with full isolation",
+          "Modular services enabling scalable system extension"
+        ],
+        "engineering": [
+          "Database-backed state replacing file-based persistence",
+          "Tick queue processing with staleness checks for real-time consistency",
+          "Bulk action dispatching to EA for optimized execution",
+          "Environment-driven configuration for flexible deployment"
+        ]
+      },
+      "insights": {
+        "problem": "Keeping backend server state perfectly synchronized with MetaTrader execution in real time.",
+        "why_it_was_hard": "Server and trading terminal operate independently, leading to inconsistencies in trade state and PnL calculations.",
+        "tradeoffs": [
+          "Server authority vs terminal authority",
+          "Real-time accuracy vs system complexity"
+        ],
+        "failure_points": [
+          "PnL mismatches between server and MT5",
+          "Incorrect trade mapping across systems"
+        ],
+        "real_world_behavior": "Server processes live ticks, maps trades from MetaTrader, and controls execution decisions in real time.",
+        "what_i_learned": "Synchronization requires shared standards, not direct control."
+      },
+      "metrics": {
+        "scale": "Handles multiple grid systems and trade flows",
+        "latency": "Real-time tick-level processing",
+        "throughput": "Continuous execution + monitoring loop",
+        "impact": "Deterministic and controllable trading automation"
+      },
+      "priority": "major",
+      "vibe": "real-time",
+      "tags": [
+        "real-time",
+        "synchronization",
+        "trading",
+        "distributed",
+        "state-consistency"
+      ],
+      "personality": {
+        "approach": "Design shared contracts instead of forcing direct control between systems",
+        "strength": "Solving synchronization problems across independent runtimes",
+        "edge": "Prioritizing deterministic execution over convenience"
+      }
+    },
+    {
+      "title": "Rubik's Cube 3x3x3 Solver (Multi-Threaded Engine)",
+      "stack": ["C++", "OOP", "Multithreading", "Algorithm Optimization"],
+      "description": "A CFOP-based high-performance cube-solving engine built with a fully modular C++ architecture.",
+      "github": "https://github.com/kumawat-aditya/rubix-cube-solver",
+      "highlights": [
+        "Custom 3D cube state representation engine",
+        "CFOP algorithm implementation (Cross, F2L, OLL, PLL)",
+        "Multi-threaded optimization search with ~2 second solve time",
+        "CLI visualization with color-coded output"
+      ],
+      "details": {
+        "architecture": [
+          "Custom 3D cube state representation engine",
+          "CFOP algorithm implementation (Cross, F2L, OLL, PLL)",
+          "Multi-threaded optimization search",
+          "Polymorphism-driven modular architecture"
+        ],
+        "engineering": [
+          "CLI visualization with color-coded output",
+          "Solves within ~2 seconds on legacy hardware",
+          "Shift from interface-building to computational system design"
+        ]
+      },
+      "insights": {
+        "problem": "Simulating and solving a Rubik’s Cube computationally using real-world solving methods.",
+        "why_it_was_hard": "Representing a 3D cube structure and implementing CFOP logic programmatically required deep algorithmic understanding.",
+        "tradeoffs": [
+          "Search depth vs performance",
+          "Accuracy vs computation time"
+        ],
+        "failure_points": [
+          "Inefficient state transitions in early design",
+          "Slow solve times before optimization"
+        ],
+        "real_world_behavior": "Engine generates thousands of CFOP-based solutions and selects the most optimal one in real time.",
+        "what_i_learned": "Breaking down complex systems into smaller deterministic steps makes them solvable."
+      },
+      "metrics": {
+        "scale": "10k+ solution paths evaluated per solve",
+        "latency": "~2 seconds per solve",
+        "throughput": "Multi-threaded computation",
+        "impact": "Consistently solves cube under 42 moves"
+      },
+      "priority": "supporting",
+      "vibe": "performance",
+      "tags": [
+        "algorithms",
+        "c++",
+        "multithreading",
+        "optimization",
+        "problem-solving"
+      ],
+      "personality": {
+        "approach": "Model real-world systems mathematically and solve via iteration",
+        "strength": "Breaking complex logic into deterministic steps",
+        "edge": "Persistence on long-term problem solving (7 months build)"
+      }
+    }
+  ],
+
+  "expertise": [
+    {
+      "icon": "Server",
+      "title": "Backend & Distributed Systems",
+      "statement": "I design backend systems that stay consistent under real-world load, not just in ideal conditions.",
+      "skills": [
+        "State-driven backend architecture",
+        "Real-time system coordination",
+        "WebSocket-based live systems",
+        "Multi-role system design (user/seller/admin)",
+        "Persistent state & recovery design",
+        "Failure-tolerant API systems",
+        "Service decoupling & modular design",
+        "Database-driven system architecture"
+      ],
+      "fullWidth": false
+    },
+    {
+      "icon": "Activity",
+      "title": "Trading Systems & Automation",
+      "statement": "I build trading systems that execute reliably under latency, volatility, and imperfect data.",
+      "skills": [
+        "End-to-end trading system design",
+        "MetaTrader (MQL4/MQL5) execution engines",
+        "Signal parsing & distribution systems",
+        "Grid / DCA / hedge-based strategies",
+        "Live execution state management",
+        "Risk automation (TP, SL, trailing, basket logic)",
+        "Latency-aware decision pipelines",
+        "Real-time trade lifecycle control"
+      ],
+      "fullWidth": false
+    },
+    {
+      "icon": "Brain",
+      "title": "AI & Data Engineering",
+      "statement": "I build data pipelines that turn raw time-series data into usable decision systems.",
+      "skills": [
+        "Large-scale dataset processing (crores of rows)",
+        "Parquet-based data architecture",
+        "Parallel & multi-threaded pipelines",
+        "Feature engineering from OHLC data",
+        "Decision Trees & XGBoost systems",
+        "Time-series normalization strategies",
+        "Dataset generation for ML training",
+        "Memory-optimized data workflows"
+      ],
+      "fullWidth": false
+    },
+    {
+      "icon": "Cloud",
+      "title": "Infrastructure & Deployment",
+      "statement": "I deploy systems that are meant to stay running, recover, and adapt — not just launch.",
+      "skills": [
+        "Docker-based deployment pipelines",
+        "Linux server management",
+        "Cloud VM setup (AWS EC2)",
+        "Process monitoring & recovery systems",
+        "Backup & restore architecture",
+        "Environment-based configuration systems",
+        "Production system lifecycle handling"
+      ],
+      "fullWidth": false
+    },
+    {
+      "icon": "Zap",
+      "title": "Performance & Systems Thinking",
+      "statement": "I optimize systems by fixing bottlenecks at the architecture level, not just code level.",
+      "skills": [
+        "Multithreaded system design (C++/Python)",
+        "Execution time optimization",
+        "Memory-aware architecture decisions",
+        "Data sharding strategies",
+        "Low-latency system design",
+        "Config-driven system behavior",
+        "Scalable pipeline optimization",
+        "Throughput vs reliability tradeoff handling"
+      ],
+      "fullWidth": true
+    }
+  ],
+
+  "experience": [
+    {
+      "company": "Trade Amplification",
+      "role": "Trading Systems Developer",
+      "duration": "Aug 2024 – Present",
+      "summary": [
+        "Built and operated real-time trading systems handling live market execution",
+        "Designed distributed signal infrastructure from ingestion to execution",
+        "Engineered backend systems for stateful, latency-aware decision pipelines",
+        "Worked on systems that required consistency under volatile market conditions"
+      ],
+      "impact": [
+        "Enabled fully automated trading workflows with minimal manual intervention",
+        "Improved execution reliability under live market volatility",
+        "Transitioned from isolated bots to connected trading infrastructure"
+      ],
+      "environment": "Live trading environment with real-time market data, latency sensitivity, and execution risk",
+      "signals": [
+        "Works with real money systems",
+        "Designs for failure and recovery",
+        "Understands latency and execution constraints"
+      ],
+      "details": [
+        {
+          "title": "Trading Automation",
+          "items": [
+            "Designed Elastic DCA logic with dynamic recovery models",
+            "Implemented execution control using MqlTradeRequest / MqlTradeResult",
+            "Optimized trade lifecycle under live market latency conditions"
+          ]
+        },
+        {
+          "title": "Signal Infrastructure",
+          "items": [
+            "Built Telegram-based signal ingestion and distribution system",
+            "Designed subscription validation and access control systems",
+            "Implemented WebSocket-based real-time broadcasting"
+          ]
+        },
+        {
+          "title": "Backend Systems",
+          "items": [
+            "Built Spring Boot services for automation workflows",
+            "Integrated persistent storage for state recovery",
+            "Designed system architecture for paid trading infrastructure"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Qubitron Labs",
+      "role": "AI Research & Data Engineering Intern",
+      "duration": "Sept 2025 – Jan 2026",
+      "summary": [
+        "Built large-scale data pipelines for trading strategy experimentation",
+        "Engineered feature extraction systems for time-series ML models",
+        "Worked on model experimentation and training workflows"
+      ],
+      "impact": [
+        "Reduced pipeline processing time from hours to minutes",
+        "Enabled large-scale experimentation under limited hardware",
+        "Improved dataset quality for model training"
+      ],
+      "environment": "Research-driven environment with large datasets, compute constraints, and experimental ML workflows",
+      "signals": [
+        "Handles large-scale data",
+        "Optimizes under hardware constraints",
+        "Bridges data engineering with ML systems"
+      ],
+      "details": [
+        {
+          "title": "Data Engineering",
+          "items": [
+            "Processed ~57 crore OHLC records",
+            "Engineered feature pipelines with TA-Lib and custom S/R logic",
+            "Implemented close-relative scaling normalization"
+          ]
+        },
+        {
+          "title": "Model Research",
+          "items": [
+            "Trained Decision Tree models for strategy discovery",
+            "Migrated experiments to XGBoost for better generalization",
+            "Designed level-based trade probability pipeline"
+          ]
+        },
+        {
+          "title": "Vision Model Fine-Tuning",
+          "items": [
+            "Prepared 27GB chart image dataset",
+            "Researched Qwen 3VL fine-tuning workflow",
+            "Designed dataset structure for GPU-based training"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "WorinWell",
+      "role": "Java Spring Boot Intern",
+      "duration": "May 2024 – July 2024",
+      "summary": [
+        "Built backend systems using Java and Spring Boot",
+        "Designed REST APIs with database integration",
+        "Worked on structured application architecture and system design basics"
+      ],
+      "impact": [
+        "Delivered functional backend systems with clean architecture",
+        "Gained foundation in scalable API design",
+        "Built first production-style backend system"
+      ],
+      "environment": "Early-stage backend development with focus on learning architecture and structured system design",
+      "signals": [
+        "Strong foundation in backend systems",
+        "Learns through building real systems",
+        "Focuses on structure before scale"
+      ],
+      "details": [
+        {
+          "title": "Backend Architecture",
+          "items": [
+            "Designed scalable REST endpoints",
+            "Implemented clean MVC architecture",
+            "Optimized API response performance"
+          ]
+        },
+        {
+          "title": "Database Integration",
+          "items": [
+            "Designed MySQL schema using Hibernate ORM",
+            "Wrote efficient queries",
+            "Handled database migrations"
+          ]
+        },
+        {
+          "title": "Security & Access",
+          "items": [
+            "Implemented authentication for admin systems",
+            "Designed role-based access control (RBAC)"
+          ]
+        }
+      ]
+    }
+  ],
+
+  "evolution": [
+    {
+      "year": "2022",
+      "title": "Foundations in Structured Systems",
+      "subtitle": null,
+      "description": "Started with frontend, but the real focus was structure — understanding how systems are organized, not just how they look.",
+      "points": [
+        "Built structured layouts using Grid & Flexbox with strict component separation",
+        "Completed multiple real-world UI builds (Omnifood, Frontend Mentor challenges)",
+        "Simultaneously explored C++ for memory-level understanding",
+        "Developed early discipline for clean architecture and predictable structure"
+      ],
+      "tech": ["HTML/CSS", "Grid/Flexbox", "jQuery", "Git", "C++"]
+    },
+    {
+      "year": "2023",
+      "title": "Shift to Computational Systems",
+      "subtitle": "Rubik’s Cube Solver",
+      "description": "Moved from UI to logic-heavy systems. First exposure to building something where correctness and efficiency mattered more than visuals.",
+      "points": [
+        "Built full 3D cube engine using array-based state modeling",
+        "Implemented CFOP solving algorithm end-to-end",
+        "Designed modular architecture using OOP and polymorphism",
+        "Ran ~10,000+ solve attempts per execution to optimize move count",
+        "Achieved sub-2 second solves on low-end hardware"
+      ],
+      "tech": ["C++", "Algorithms", "Multithreading", "Data Structures"]
+    },
+    {
+      "year": "Early 2024",
+      "title": "Backend Architecture Thinking",
+      "subtitle": "WorinWell + Stella",
+      "description": "Shifted into backend engineering. Learned that systems fail not because of code, but because of bad structure.",
+      "points": [
+        "Built REST APIs with proper separation of concerns",
+        "Designed JWT-based authentication systems",
+        "Developed 'Stella' with multi-role architecture (users vs sellers)",
+        "Integrated real payment flows and order lifecycle handling",
+        "Understood importance of database-first thinking in scalable systems"
+      ],
+      "tech": ["Java", "Spring Boot", "REST APIs", "JWT", "MySQL"]
+    },
+    {
+      "year": "Late 2024",
+      "title": "Real-Time Systems & Trading Infrastructure",
+      "subtitle": "Trade Amplification",
+      "description": "Entered live systems where timing, reliability, and failure handling actually matter.",
+      "points": [
+        "Built trading bots using MQL4/MQL5 with real capital execution",
+        "Designed Telegram-based signal ingestion and distribution systems",
+        "Implemented auto-reconnect and failure recovery pipelines",
+        "Built admin-controlled systems with strict access control",
+        "Shifted mindset from 'code runs' → 'system survives live conditions'"
+      ],
+      "tech": ["MQL5", "WebSockets", "Telegram API", "Distributed Systems"]
+    },
+    {
+      "year": "2025",
+      "title": "Large-Scale Data & ML Systems",
+      "subtitle": "QubiForge Pipeline",
+      "description": "Started working with data at scale. Faced real constraints: RAM limits, processing time, and system bottlenecks.",
+      "points": [
+        "Built multi-layer pipeline from raw OHLC → ML-ready datasets",
+        "Optimized processing from 8–10 hours to under 10 minutes",
+        "Processed ~57 crore rows using parallel computation",
+        "Introduced sharding to avoid memory bottlenecks",
+        "Switched from CSV to Parquet for efficient IO",
+        "Engineered feature pipelines including S/R and relational features"
+      ],
+      "tech": ["Python", "Pandas", "NumPy", "Numba", "XGBoost"]
+    },
+    {
+      "year": "2025–2026",
+      "title": "System Synchronization & Execution Control",
+      "subtitle": "Elastic DCA",
+      "description": "Faced the problem of keeping two independent systems in sync — backend logic and live trading execution.",
+      "points": [
+        "Rebuilt system with decoupled backend + MetaTrader execution layer",
+        "Solved state mismatch between server and live trades",
+        "Designed shared contract model to synchronize both systems",
+        "Implemented real-time PnL tracking using live tick data",
+        "Created deterministic execution pipeline with strict state control"
+      ],
+      "tech": ["MQL5", "Python", "FastAPI", "WebSockets", "System Design"]
+    },
+    {
+      "year": "2026",
+      "title": "Multi-Agent Trading Systems",
+      "subtitle": "ANT Meta Bots",
+      "description": "Moved into complex system orchestration — multiple independent components working together without breaking each other.",
+      "points": [
+        "Designed system with independent modules: data manager, live feed engine, signal generator, trade monitor",
+        "Handled cross-component communication without tight coupling",
+        "Built async multi-threaded architecture with 1-second execution cycles",
+        "Maintained mixed state systems (in-memory, JSON, SQLite) across components",
+        "Solved coordination problem between autonomy and shared system awareness",
+        "Enabled multiple bots, feeds, and strategies to run concurrently without conflict"
+      ],
+      "tech": [
+        "Python",
+        "FastAPI",
+        "Async Systems",
+        "WebSockets",
+        "System Architecture"
+      ]
+    }
+  ],
+
+  "contactIntent": [
+    "System Design",
+    "Trading Infrastructure",
+    "Backend Engineering",
+    "Performance Optimization"
+  ]
+}
