@@ -1,0 +1,52 @@
+/* ============================================================
+ * THEME CONFIGURATION — New Portfolio
+ * ============================================================
+ * Dark + alive. Hacker meets thinker.
+ * ============================================================ */
+
+:root {
+  /* --- Core Palette --- */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #0f0f1a;
+  --bg-elevated: #141422;
+
+  /* --- Text --- */
+  --text-primary: #e8e6e3;
+  --text-secondary: #8a8a9a;
+  --text-muted: #5a5a6e;
+  --text-accent: #6c9fff;
+
+  /* --- Accent Colors --- */
+  --accent-blue: #4d8eff;
+  --accent-purple: #8b5cf6;
+  --accent-cyan: #22d3ee;
+  --accent-glow: rgba(77, 142, 255, 0.15);
+
+  /* --- Gradients --- */
+  --gradient-accent: linear-gradient(135deg, #4d8eff, #8b5cf6);
+  --gradient-subtle: linear-gradient(
+    135deg,
+    rgba(77, 142, 255, 0.08),
+    rgba(139, 92, 246, 0.08)
+  );
+  --gradient-hero-blob-1: rgba(77, 142, 255, 0.12);
+  --gradient-hero-blob-2: rgba(139, 92, 246, 0.08);
+  --gradient-hero-blob-3: rgba(34, 211, 238, 0.06);
+
+  /* --- Glass Card --- */
+  --card-bg: rgba(20, 20, 34, 0.6);
+  --card-border: rgba(255, 255, 255, 0.06);
+  --card-border-hover: rgba(77, 142, 255, 0.3);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --card-shadow-hover:
+    0 8px 40px rgba(77, 142, 255, 0.12), 0 4px 24px rgba(0, 0, 0, 0.4);
+  --card-glow: rgba(77, 142, 255, 0.08);
+
+  /* --- Cursor --- */
+  --cursor-color: rgba(77, 142, 255, 0.9);
+  --cursor-glow: rgba(77, 142, 255, 0.4);
+
+  /* --- Selection --- */
+  --selection-bg: rgba(77, 142, 255, 0.3);
+  --selection-text: #e8e6e3;
+}
