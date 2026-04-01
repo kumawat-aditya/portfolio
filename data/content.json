@@ -1,10 +1,10 @@
 {
   "personal": {
     "name": "Aditya Kumawat",
-    "role": "Backend & Intelligent Systems Engineer",
+    "role": "Backend & Real-Time Systems Engineer",
     "location": "Jaipur, India",
     "email": "kumawataditya105@gmail.com",
-    "tagline": "I design trading infrastructure, real-time automation systems, and data-driven backend architectures that integrate machine learning with execution reliability.",
+    "tagline": "I build real-time trading systems, scalable backend infrastructure, and data-driven platforms that combine machine learning with reliable execution.",
     "availability": "Based in Jaipur, India · Open to remote opportunities",
     "links": {
       "github": "https://github.com/kumawat-aditya",
@@ -14,6 +14,33 @@
   },
 
   "projects": [
+    {
+      "title": "ANT Meta Bots – ML-Powered Options Trading Platform",
+      "stack": ["Python", "FastAPI", "React", "WebSocket", "SQLite", "Docker"],
+      "description": "An end-to-end algorithmic trading platform that generates ML-based signals and autonomously executes and manages options trades in real time.",
+      "github": "private",
+      "highlights": [
+        "Built Lorentzian k-NN based ML system for generating LONG/SHORT signals from futures data",
+        "Automated options execution with dynamic ATM strike selection and Delta Exchange API integration",
+        "Designed unified async engine handling signal processing and trade lifecycle at 1-second intervals",
+        "Implemented full trade management: TP, SL, trailing stops, re-entry, and session-based force-close",
+        "Handled full trade lifecycle across signal → execution → monitoring → exit with strict state control and zero double-execution guarantees"
+      ],
+      "details": {
+        "architecture": [
+          "End-to-end pipeline from futures data → ML signal generation → options execution",
+          "Dual live data feeds for futures (signal) and options (execution monitoring)",
+          "Multi-bot architecture supporting independent strategy instances",
+          "Session-based lifecycle management with controlled trade isolation"
+        ],
+        "engineering": [
+          "Unified async Watchdog engine replacing multi-component architecture",
+          "Fill verification pipeline with fallback and emergency handling",
+          "Persistent state using SQLite with automatic recovery",
+          "React dashboard with WebSocket-based real-time monitoring and control"
+        ]
+      }
+    },
     {
       "title": "Real-Time Trading Signal Distribution Infrastructure",
       "stack": ["Java", "Spring Boot", "WebSocket", "MQL5", "Telegram Bot API"],
@@ -51,13 +78,13 @@
         "XGBoost",
         "Parallel Processing"
       ],
-      "description": "A configurable AI data generation and strategy mining pipeline designed for large-scale trading research.",
+      "description": "A large-scale data pipeline for generating and analyzing trading strategies using machine learning on time-series data.",
       "github": "https://github.com/kumawat-aditya/trading_strategy_finder",
       "highlights": [
-        "Bronze to Diamond layered data architecture for systematic strategy mining",
-        "Optimized pipeline from 8-9 hours to ~10 minutes",
-        "Parallelized processing across ~57 crore rows of trading data",
-        "Fully configurable via centralized configuration file"
+        "Built multi-stage pipeline to convert raw trading data into ML-ready datasets",
+        "Optimized processing time from 8–9 hours to ~10 minutes",
+        "Processed ~57 crore rows using parallel computation",
+        "Designed configurable system for large-scale strategy experimentation"
       ],
       "details": {
         "architecture": [
@@ -101,27 +128,28 @@
       }
     },
     {
-      "title": "Elastic DCA Trading System (Fullstack Automation)",
-      "stack": ["MQL5", "Python", "React"],
-      "description": "A grid-based automated trading system enabling controlled position scaling and equity-based risk management.",
+      "title": "Elastic DCA – Real-Time Trading Automation System",
+      "stack": ["MQL5", "Python", "FastAPI", "React", "WebSocket", "SQLite"],
+      "description": "A re-architected fullstack trading system with a decoupled execution engine, enabling deterministic trade management, real-time control, and advanced risk handling.",
       "github": "https://github.com/kumawat-aditya/elastic-dca-trader",
       "highlights": [
-        "Dollar-gap based automated entries with dynamic lot management",
-        "Multiple target systems: Equity, Balance, and Fixed dollar exit",
-        "Hedge-loss recovery logic with start-limit entry system",
-        "Real-time UI for monitoring P&L and trade states"
+        "Rebuilt system with decoupled backend engine and MQL5 execution layer for reliability",
+        "WebSocket-based real-time communication between backend and trading dashboard",
+        "Advanced risk controls including loss limits, hedge triggers, and basket-level TP/SL",
+        "Dynamic preset management system with database-backed configuration"
       ],
       "details": {
         "architecture": [
-          "Dollar-gap based automated entries",
-          "Dynamic lot management system",
-          "Equity, Balance, and Fixed dollar exit targets",
-          "Hedge-loss recovery logic"
+          "Decoupled FastAPI backend handling trading logic independent of MT5",
+          "Step-based execution pipeline for deterministic trade lifecycle management",
+          "Independent grid systems for buy/sell with full isolation",
+          "Modular services enabling scalable system extension"
         ],
         "engineering": [
-          "Start-limit entry system for controlled positioning",
-          "Real-time UI for monitoring P&L and trade states",
-          "Bridged backend automation with interactive trading control"
+          "Database-backed state replacing file-based persistence",
+          "Tick queue processing with staleness checks for real-time consistency",
+          "Bulk action dispatching to EA for optimized execution",
+          "Environment-driven configuration for flexible deployment"
         ]
       }
     },
@@ -156,7 +184,7 @@
     {
       "icon": "Server",
       "title": "Backend & Distributed Systems",
-      "statement": "Designing scalable backend architectures and real-time infrastructure.",
+      "statement": "Designing scalable backend systems and real-time execution infrastructure.",
       "skills": [
         "Java (Spring Boot)",
         "REST API Design",
@@ -239,7 +267,8 @@
       "summary": [
         "Built automated trading systems using MQL4/MQL5",
         "Developed real-time signal broadcasting infrastructure",
-        "Designed backend services using Java, Spring Boot, and Python"
+        "Designed backend services using Java, Spring Boot, and Python",
+        "Designed and deployed production trading systems handling live market execution and real-time decision pipelines"
       ],
       "details": [
         {
