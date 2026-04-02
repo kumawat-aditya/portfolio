@@ -1,0 +1,56 @@
+22:40:57INFOBotInstanceManager initialized
+22:40:57INFORestored 0 bots from disk
+23:19:45INFOBot created: BTCUSD @ 1m
+23:21:25INFOGlobal PnL reset (was $0.00)
+23:26:55INFOBot deleted: 6b03ae32
+23:47:05INFOBot created: BTCUSD @ 5m
+23:47:07INFOBot started - building history
+23:47:12INFO✓ History built: 2750 bars
+23:47:12INFO📊 Stored 200 initial signals
+23:47:45INFOBot created: ETHUSD @ 5m
+23:48:13INFOSignals cleared (bot updated)
+23:48:14INFOBot started - building history
+23:48:18INFO✓ History built: 2750 bars
+23:48:19INFO📊 Stored 200 initial signals
+18:10:16INFO🔴 SHORT signal detected at 1775046900
+18:10:17INFOSignal detected: SHORT | Entry target: 67567.50 | Expiry: 2026-04-02 | Status: CREATED | Session: S-20260401 (awaiting breakout confirmation)
+18:10:22INFO🔴 SHORT signal detected at 1775046900
+18:10:22INFOSignal detected: SHORT | Entry target: 2079.30 | Expiry: 2026-04-02 | Status: CREATED | Session: S-20260401 (awaiting breakout confirmation)
+21:00:22INFO🟢 LONG signal detected at 1775057100
+21:00:22INFOSignal detected: LONG | Entry target: 69560.21 | Expiry: 2026-04-02 | Status: CREATED | Session: S-20260401 (awaiting breakout confirmation)
+22:15:29INFO🟢 LONG signal detected at 1775061600
+22:15:29INFOSignal detected: LONG | Entry target: 2173.52 | Expiry: 2026-04-02 | Status: CREATED | Session: S-20260401 (awaiting breakout confirmation)
+23:10:26INFO🔴 SHORT signal detected at 1775064900
+23:10:27INFOReplaced EXPIRED trade 352ed08d7a14 (SHORT) with better signal
+23:10:27INFOSignal detected: SHORT | Entry target: 67584.82 | Expiry: 2026-04-02 | Status: CREATED (replaced old trade) | Session: S-20260401 (awaiting breakout confirmation)
+23:35:04INFO🔴 SHORT signal detected at 1775066400
+23:35:04INFOReplaced EXPIRED trade 2772a39137de (SHORT) with better signal
+23:35:04INFOSignal detected: SHORT | Entry target: 2101.52 | Expiry: 2026-04-02 | Status: CREATED (replaced old trade) | Session: S-20260401 (awaiting breakout confirmation)
+02:40:10INFO🟢 LONG signal detected at 1775077500
+02:40:11INFOReplaced EXPIRED trade ebecee49b4b2 (LONG) with better signal
+02:40:11INFOSignal detected: LONG | Entry target: 2173.52 | Expiry: 2026-04-02 | Status: CREATED (replaced old trade) | Session: S-20260401 (awaiting breakout confirmation)
+03:00:05INFO🟢 LONG signal detected at 1775078700
+03:00:05INFOReplaced EXPIRED trade 3c0ad52abdbf (LONG) with better signal
+03:00:05INFOSignal detected: LONG | Entry target: 69195.10 | Expiry: 2026-04-02 | Status: CREATED (replaced old trade) | Session: S-20260401 (awaiting breakout confirmation)
+06:40:12INFO🔴 SHORT signal detected at 1775091900
+06:40:13INFOReplaced EXPIRED trade a487dbf13a05 (SHORT) with better signal
+06:40:13INFOSignal detected: SHORT | Entry target: 67584.82 | Expiry: 2026-04-03 | Status: CREATED (replaced old trade) | Session: S-20260402 (awaiting breakout confirmation)
+06:48:34INFOBreakout confirmed for SHORT at 67584.82 | Executing order...
+06:48:35INFOTrade OPENED: SHORT P-BTC-67500-030426 @ 917.00 | TP: 2109.10 | SL: 687.75
+06:50:19INFO🔴 SHORT signal detected at 1775092500
+06:50:20INFOReplaced EXPIRED trade da126cf2d34c (SHORT) with better signal
+06:50:20INFOSignal detected: SHORT | Entry target: 2101.52 | Expiry: 2026-04-03 | Status: CREATED (replaced old trade) | Session: S-20260402 (awaiting breakout confirmation)
+07:01:43INFOBreakout confirmed for SHORT at 2101.52 | Executing order...
+07:01:45INFOTrade OPENED: SHORT P-ETH-2100-030426 @ 36.30 | TP: 83.49 | SL: 27.22
+18:45:38INFOTrade CLOSED (WIN): TP_HIT | Net PnL: +0.46 | Actual Exit: 81.80
+19:30:14INFO🟢 LONG signal detected at 1775138100
+19:30:15INFOSignal detected: LONG | Entry target: 2062.27 | Expiry: 2026-04-03 | Status: CREATED | Session: S-20260402 (awaiting breakout confirmation)
+20:06:04INFOTrade CLOSED (WIN): TRAILING_HIT | Net PnL: +0.20 | Actual Exit: 1120.00
+20:06:29INFOBreakout confirmed for LONG at 2062.27 | Executing order...
+20:06:31INFOTrade OPENED: LONG C-ETH-2060-030426 @ 28.00 | TP: 64.40 | SL: 21.00
+20:10:10INFO🟢 LONG signal detected at 1775140500
+20:10:10INFOSignal detected: LONG | Entry target: 67678.59 | Expiry: 2026-04-03 | Status: CREATED | Session: S-20260402 (awaiting breakout confirmation)
+20:50:22WARNINGTrade SL HIT | PnL: -0.08 | Awaiting re-entry (1/1)
+22:10:18INFORe-entry crossover confirmed for LONG (option premium recovered above 28.00) | Executing re-entry...
+22:10:20INFORe-entry #1 OPENED: C-ETH-2060-030426 @ 29.00 | TP: 66.70 | SL: 21.75
+22:30:46ERRORTrade CLOSED (LOSS): REENTRY_EXHAUSTED | Total PnL: -0.16

@@ -1,0 +1,217 @@
+You are continuing a high-level portfolio system design discussion.
+
+Context:
+
+We are building a **top 1% developer portfolio website** for a backend + real-time systems engineer focused on:
+
+* trading systems
+* distributed systems
+* performance/data pipelines
+
+This is NOT a normal portfolio.
+
+The goal is:
+“A bold, cyber-technical, editorial-style system builder portfolio that feels alive, confident, and intellectually engaging.”
+
+---
+
+## 🔥 CORE PHILOSOPHY
+
+The site must feel:
+
+* Open and conversational (not corporate)
+* Technically deep (not surface-level)
+* Confident (not boastful)
+* Slightly raw but controlled
+
+This is a **systems engineer identity site**, not a resume.
+
+---
+
+## ⚠️ CRITICAL BALANCE (VERY IMPORTANT)
+
+We already identified a key risk:
+
+* Too much polish → feels fake
+* Too much proof rewrite → becomes boring
+* Too little proof → feels untrustworthy
+
+So the rule is:
+
+👉 **Hook first → then prove**
+
+Meaning:
+
+* Keep strong, curiosity-driven hooks
+* Immediately support them with real evidence:
+
+  * logs
+  * metrics
+  * architecture
+  * system behavior
+
+DO NOT turn the site into a dry technical document.
+
+---
+
+## 🧩 CURRENT STATE
+
+We already:
+
+* Designed a multi-page system:
+
+  * Home
+  * Systems
+  * SystemDetail
+  * Lab
+  * About
+  * Contact
+
+* Defined UI direction:
+
+  * cyber-technical + editorial + brutalist typography
+  * medium motion (framer-motion)
+  * strong hierarchy
+  * NOT template-like
+
+* Built initial version (React-based)
+
+---
+
+## 🚨 MAJOR PROBLEMS IDENTIFIED (FROM CRITICAL REVIEW)
+
+1. **Trust Gap**
+
+   * Claims feel strong but not sufficiently proven
+   * Private repos reduce credibility
+   * Need visible operational evidence
+
+2. **Equal Weight Problem**
+
+   * All projects look equally important
+   * Weak projects dilute strong ones
+
+3. **Too Polished Content**
+
+   * Reads like curated portfolio, not real system work
+
+4. **Lack of Artifacts**
+
+   * Missing:
+
+     * logs
+     * dashboards
+     * architecture visuals
+     * incident-style breakdowns
+
+5. **Weak Large-Screen Experience**
+
+   * Layout stuck in 1280px mindset
+   * Poor scaling on 2K / 4K displays
+
+---
+
+## 📁 NEW APPROACH (IMPORTANT)
+
+We are now restructuring input data into:
+
+raw_data/
+
+* content.json → main structured content
+* project folders:
+
+  * architecture.md
+  * readme.md
+  * images/videos (logs, dashboards, etc.)
+
+This data includes:
+
+* real logs
+* bot states
+* architecture diagrams
+* execution flows
+* system behavior evidence
+
+---
+
+## 🔐 CONSTRAINTS
+
+* NO client-sensitive data
+* NO exposing secrets, API keys, or identities
+* Only:
+
+  * redacted logs
+  * anonymized metrics
+  * system-level behavior
+
+---
+
+## 🎯 YOUR TASK NOW
+
+You are NOT designing from scratch.
+
+You are:
+
+1. Helping refine **content.json**
+
+2. Ensuring:
+
+   * strong hooks are preserved
+   * proof is added correctly
+   * no credibility gaps remain
+
+3. Suggesting:
+
+   * what to ADD
+   * what to REMOVE
+   * what to REWRITE (with better versions)
+
+4. Ensuring:
+
+   * each project shows:
+
+     * problem
+     * constraint
+     * system design
+     * failure/edge cases
+     * outcome
+
+5. Keeping content:
+
+   * sharp
+   * non-generic
+   * non-corporate
+   * technically meaningful
+
+---
+
+## ⚠️ DO NOT
+
+* Do NOT make content boring
+* Do NOT over-formalize language
+* Do NOT remove personality
+* Do NOT invent fake metrics
+* Do NOT weaken strong hooks
+
+---
+
+## 🧠 THINK LIKE
+
+* Senior systems engineer
+* Hiring manager for backend / infra roles
+* Someone skeptical of portfolio claims
+
+---
+
+## OUTPUT EXPECTATION
+
+* Structured improvements to content.json
+* Specific rewrites (not vague advice)
+* Clear reasoning for changes
+* Focus on credibility + engagement balance
+
+---
+
+We will now provide project data one by one.
+
+You must refine and structure it properly for the portfolio system.
