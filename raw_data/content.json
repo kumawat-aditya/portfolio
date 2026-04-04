@@ -25,18 +25,18 @@
         "algorithmic-trading",
         "state-machine",
         "ml",
-        "monolith"
+        "single-process architecture"
       ],
       "highlights": [
         "Implemented Lorentzian k-NN ML classification with Rational Quadratic and Gaussian kernel regression for directional signal generation",
         "Automated options execution with dynamic ATM strike selection based on a 5:30 AM IST boundary and HMAC-SHA256 signed API requests",
-        "Engineered a monolithic async backend running four concurrent subsystems on strict 1-second cooperative loops",
+        "Engineered a cohesive async backend architecture running four concurrent subsystems on strict 1-second cooperative loops",
         "Implemented deterministic trade lifecycle management including crossover-verified entries, TP/SL/trailing stops, re-entry logic, and session-based force-close",
         "Designed a Best-of-N signal scanner and strict direction-slot enforcement to prevent duplicate execution and manage overlapping trade states"
       ],
       "details": {
         "architecture": [
-          "Monolithic async Python backend with a React SPA frontend, communicating via REST and native WebSockets",
+          "cohesive async Python backend with a React SPA frontend, communicating via REST and native WebSockets",
           "Four concurrent async subsystems (API, BotManager, LiveFeedManager, Watchdog) executing cooperative concurrency on a single event loop",
           "Dual live data feeds separating futures tick streams (for breakout verification) from options tick streams (for TP/SL monitoring)",
           "Layered persistence model combining SQLite for high-frequency signal/trade logs and JSON for bot configuration state"
@@ -57,7 +57,7 @@
         "problem": "Maintaining independence between multiple real-time system layers while still enabling meaningful and deterministic interaction between them.",
         "why_it_was_hard": "Each subsystem (data manager, live feed, signal generator, trade monitor) had its own independent lifecycle, data format, and execution model, making state synchronization and communication extremely complex to manage without introducing race conditions.",
         "tradeoffs": [
-          "Monolithic async cooperative concurrency vs. microservices (chosen to minimize inter-process communication latency)",
+          "Cohesive async cooperative concurrency vs. microservices (chosen to minimize inter-process communication latency)",
           "SQLite + JSON persistence vs. PostgreSQL (chosen for zero-setup deployment and sufficient performance for per-bot rolling windows)",
           "Best-of-N signal selection vs. immediate execution (trading slight entry latency for significant noise reduction)"
         ],
@@ -220,7 +220,7 @@
     },
     {
       "title": "Stella – Transactional E-Commerce Backend System",
-      "description": "A production-style RESTful e-commerce monolith implementing a fully transactional order lifecycle, stateless JWT authentication, and strict 3-tier architectural separation.",
+      "description": "A production-style RESTful e-commerce implementing a fully transactional order lifecycle, stateless JWT authentication, and strict 3-tier architectural separation.",
       "github": "https://github.com/kumawat-aditya/stella",
       "stack": [
         "Java 17",
@@ -233,7 +233,7 @@
       ],
       "tags": [
         "backend",
-        "monolith",
+        "single-process architecture",
         "transactions",
         "payments",
         "api-design",
@@ -248,7 +248,7 @@
       ],
       "details": {
         "architecture": [
-          "Monolithic, 3-tier layered Spring Boot application strictly separating Presentation, Business Logic, and Data Access layers",
+          "3-tier layered Spring Boot application strictly separating Presentation, Business Logic, and Data Access layers",
           "Stateless backend relying exclusively on a custom JWTAuthenticationFilter and SecurityContextHolder for identity resolution",
           "Local filesystem-based static resource server for media storage, persisting absolute directory paths in the MariaDB database"
         ],
