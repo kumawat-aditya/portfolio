@@ -16,10 +16,24 @@
   "projects": [
     {
       "title": "ANT Meta Bots – ML-Powered Options Trading Platform",
-      "stack": ["Python", "FastAPI", "React", "WebSocket", "SQLite", "Docker"],
       "description": "An end-to-end algorithmic trading platform that generates ML-based signals and autonomously executes and manages options trades in real time.",
       "github": "private",
-
+      "stack": [
+        "Python",
+        "FastAPI",
+        "React",
+        "WebSocket",
+        "SQLite",
+        "Docker"
+      ],
+      "tags": [
+        "real-time",
+        "multi-agent",
+        "async",
+        "trading",
+        "state-management",
+        "ml"
+      ],
       "highlights": [
         "Built Lorentzian k-NN based ML system for generating LONG/SHORT signals from futures data",
         "Automated options execution with dynamic ATM strike selection and Delta Exchange API integration",
@@ -27,7 +41,6 @@
         "Implemented full trade management: TP, SL, trailing stops, re-entry, and session-based force-close",
         "Handled full trade lifecycle across signal → execution → monitoring → exit with strict state control and zero double-execution guarantees"
       ],
-
       "details": {
         "architecture": [
           "End-to-end pipeline from futures data → ML signal generation → options execution",
@@ -40,9 +53,13 @@
           "Fill verification pipeline with fallback and emergency handling",
           "Persistent state using SQLite with automatic recovery",
           "React dashboard with WebSocket-based real-time monitoring and control"
+        ],
+        "system_design": [
+          "Decoupled multi-agent system coordinating via Watchdog engine without race conditions",
+          "State-driven execution model ensuring fail-safe continuity across system restarts",
+          "Separation of concerns between data ingestion, signal evaluation, and order execution"
         ]
       },
-
       "insights": {
         "problem": "Maintaining independence between multiple real-time system layers while still enabling meaningful interaction between them.",
         "why_it_was_hard": "Each subsystem (data manager, live feed, signal generator, trade monitor) had its own lifecycle, data format, and execution model, making synchronization and communication extremely complex.",
@@ -59,47 +76,17 @@
         "real_world_behavior": "System handled multiple bots, each consuming live futures and options data independently, while executing trades in real time without double execution or state corruption.",
         "what_i_learned": "True system reliability comes from controlling state transitions, not just generating better signals."
       },
-
       "metrics": {
         "scale": "Supports multiple bots, live feeds, and signal streams concurrently",
         "latency": "1-second execution cycle across all core systems",
         "throughput": "Continuous async processing of signals, trades, and live feeds",
         "impact": "Fully automated end-to-end trading lifecycle with zero manual intervention"
-      },
-
-      "proof": {
-        "mode": "auto",
-        "artifacts": [],
-        "priority_order": [],
-        "labels": {}
-      },
-
-      "artifacts_source": {
-        "mode": "folder_based",
-        "instruction": "Plan agent must read available files inside project folder (README.md, ARCHITECTURE.md, images, logs, videos) and derive presentation dynamically instead of relying only on content.json.",
-        "guarantee": "content.json provides structure, but actual depth and proof must be extracted from project files."
-      },
-
-      "priority": "flagship",
-      "vibe": "real-time",
-
-      "tags": [
-        "real-time",
-        "multi-agent",
-        "async",
-        "trading",
-        "state-management",
-        "ml"
-      ],
-
-      "personality": {
-        "approach": "Break complex systems into independent agents with controlled interaction",
-        "strength": "Handling concurrency and state across multiple live components",
-        "edge": "Thinking in system behavior rather than isolated features"
       }
     },
     {
       "title": "Telegram Signal Distribution System – Event-Driven Trade Execution Pipeline",
+      "description": "An event-driven trading infrastructure that ingests unstructured Telegram signals, validates them, and distributes them to individual MetaTrader accounts via a pull-based execution model.",
+      "github": "private",
       "stack": [
         "Java",
         "Spring Boot",
@@ -108,84 +95,6 @@
         "MariaDB",
         "AWS EC2"
       ],
-      "description": "An event-driven trading infrastructure that ingests unstructured Telegram signals, validates them, and distributes them to individual MetaTrader accounts via a pull-based execution model.",
-
-      "github": "private",
-
-      "highlights": [
-        "Built event-driven pipeline: Telegram ingestion → validation → per-user signal queues → MT5 execution",
-        "Designed pull-based execution system where MT5 clients poll signals to avoid push-related failures",
-        "Implemented per-account in-memory queues enabling isolated signal delivery at scale",
-        "Handled real-time signal parsing, validation, modification, and cancellation flows",
-        "Deployed production system on AWS EC2 with systemd-managed service lifecycle"
-      ],
-
-      "details": {
-        "architecture": [
-          "Event-driven system bridging Telegram (signal source) and MetaTrader (execution layer)",
-          "Producer-consumer model using in-memory queues (ConcurrentHashMap + ConcurrentLinkedQueue)",
-          "Pull-based delivery via REST polling endpoint for MT5 clients",
-          "Stateless execution layer on MT5 with server-controlled signal lifecycle",
-          "No frontend — full system operated via Telegram bot commands"
-        ],
-
-        "engineering": [
-          "Regex-based signal parsing and strict validation before execution",
-          "TTL-based signal expiry (10s for market orders, 10min for pending orders)",
-          "Admin state machine for multi-step user provisioning via Telegram chat",
-          "Monthly automated JSON backups via scheduled jobs",
-          "Broker-specific symbol normalization inside MT5 EA for cross-broker compatibility"
-        ],
-
-        "system_design": [
-          "Solved unreliable push delivery by designing a pull-based execution model",
-          "Ensured per-user isolation using independent signal queues per MetaTrader ID",
-          "Handled signal lifecycle events: CREATE → MODIFY → CANCEL",
-          "Designed idempotent polling mechanism preventing duplicate trade execution",
-          "Balanced real-time delivery with system simplicity (no external message broker)"
-        ]
-      },
-
-      "insights": {
-        "problem": "Distributing real-time trading signals from an unreliable external source (Telegram) to multiple independent trading accounts without duplication or loss.",
-
-        "why_it_was_hard": "Telegram messages are unstructured and execution happens on independent MT5 terminals, requiring strict validation, synchronization, and delivery guarantees.",
-
-        "tradeoffs": [
-          "Push-based delivery vs polling-based reliability",
-          "In-memory queues vs persistent message brokers",
-          "Strict validation vs flexible signal formats"
-        ],
-
-        "failure_points": [
-          "Duplicate execution due to repeated polling",
-          "Invalid signals causing incorrect trades",
-          "Signal delays causing stale execution",
-          "Client desynchronization across multiple MT5 instances"
-        ],
-
-        "real_world_behavior": "System continuously listens to Telegram groups, parses valid trading signals, distributes them to all registered accounts, and ensures each MT5 client executes trades independently via polling.",
-
-        "what_i_learned": "In distributed systems, delivery guarantees and execution control matter more than raw speed — especially when external systems are unreliable."
-      },
-
-      "metrics": {
-        "scale": "Supports multiple MT5 accounts with isolated signal pipelines",
-        "latency": "Near real-time ingestion with ~10 second polling execution cycle",
-        "throughput": "Continuous event-driven signal processing and distribution",
-        "impact": "Enabled automated trade execution across multiple accounts from a single signal source"
-      },
-
-      "proof": {
-        "mode": "auto",
-        "artifacts": [],
-        "priority_order": [],
-        "labels": {}
-      },
-
-      "priority": "major",
-      "vibe": "distributed-infra",
-
       "tags": [
         "distributed-systems",
         "event-driven",
@@ -194,15 +103,64 @@
         "trading",
         "backend"
       ],
-
-      "personality": {
-        "approach": "Design reliable pipelines around unreliable external systems",
-        "strength": "Building event-driven systems with controlled execution flow",
-        "edge": "Choosing simplicity (polling + in-memory queues) over over-engineered infrastructure"
+      "highlights": [
+        "Built event-driven pipeline: Telegram ingestion → validation → per-user signal queues → MT5 execution",
+        "Designed pull-based execution system where MT5 clients poll signals to avoid push-related failures",
+        "Implemented per-account in-memory queues enabling isolated signal delivery at scale",
+        "Handled real-time signal parsing, validation, modification, and cancellation flows",
+        "Deployed production system on AWS EC2 with systemd-managed service lifecycle"
+      ],
+      "details": {
+        "architecture": [
+          "Event-driven system bridging Telegram (signal source) and MetaTrader (execution layer)",
+          "Producer-consumer model using in-memory queues (ConcurrentHashMap + ConcurrentLinkedQueue)",
+          "Pull-based delivery via REST polling endpoint for MT5 clients",
+          "Stateless execution layer on MT5 with server-controlled signal lifecycle",
+          "No frontend — full system operated via Telegram bot commands"
+        ],
+        "engineering": [
+          "Regex-based signal parsing and strict validation before execution",
+          "TTL-based signal expiry (10s for market orders, 10min for pending orders)",
+          "Admin state machine for multi-step user provisioning via Telegram chat",
+          "Monthly automated JSON backups via scheduled jobs",
+          "Broker-specific symbol normalization inside MT5 EA for cross-broker compatibility"
+        ],
+        "system_design": [
+          "Solved unreliable push delivery by designing a pull-based execution model",
+          "Ensured per-user isolation using independent signal queues per MetaTrader ID",
+          "Handled signal lifecycle events: CREATE → MODIFY → CANCEL",
+          "Designed idempotent polling mechanism preventing duplicate trade execution",
+          "Balanced real-time delivery with system simplicity (no external message broker)"
+        ]
+      },
+      "insights": {
+        "problem": "Distributing real-time trading signals from an unreliable external source (Telegram) to multiple independent trading accounts without duplication or loss.",
+        "why_it_was_hard": "Telegram messages are unstructured and execution happens on independent MT5 terminals, requiring strict validation, synchronization, and delivery guarantees.",
+        "tradeoffs": [
+          "Push-based delivery vs polling-based reliability",
+          "In-memory queues vs persistent message brokers",
+          "Strict validation vs flexible signal formats"
+        ],
+        "failure_points": [
+          "Duplicate execution due to repeated polling",
+          "Invalid signals causing incorrect trades",
+          "Signal delays causing stale execution",
+          "Client desynchronization across multiple MT5 instances"
+        ],
+        "real_world_behavior": "System continuously listens to Telegram groups, parses valid trading signals, distributes them to all registered accounts, and ensures each MT5 client executes trades independently via polling.",
+        "what_i_learned": "In distributed systems, delivery guarantees and execution control matter more than raw speed — especially when external systems are unreliable."
+      },
+      "metrics": {
+        "scale": "Supports multiple MT5 accounts with isolated signal pipelines",
+        "latency": "Near real-time ingestion with ~10 second polling execution cycle",
+        "throughput": "Continuous event-driven signal processing and distribution",
+        "impact": "Enabled automated trade execution across multiple accounts from a single signal source"
       }
     },
     {
       "title": "Quant Discovery Pipeline – Automated Strategy Mining System",
+      "description": "A high-performance, multi-layer pipeline that discovers statistically validated trading strategies by simulating millions of trades and learning patterns from enriched market data.",
+      "github": "https://github.com/kumawat-aditya/Quant-Discovery-Pipeline",
       "stack": [
         "Python",
         "NumPy",
@@ -213,16 +171,20 @@
         "Parquet",
         "Multiprocessing"
       ],
-      "description": "A high-performance, multi-layer pipeline that discovers statistically validated trading strategies by simulating millions of trades and learning patterns from enriched market data.",
-      "github": "https://github.com/kumawat-aditya/trading_strategy_finder",
-
+      "tags": [
+        "machine-learning",
+        "data-engineering",
+        "quant",
+        "big-data",
+        "pipeline",
+        "optimization"
+      ],
       "highlights": [
         "Simulates millions of SL/TP trade combinations using Numba-accelerated engines",
         "Generates 300+ market context features including indicators, patterns, and regime signals",
         "Supports dual output: human-readable strategy rules or machine-learned XGBoost models",
         "Processes massive datasets efficiently using sharded Parquet pipelines and multiprocessing"
       ],
-
       "details": {
         "architecture": [
           "Layered data pipeline (Bronze → Silver → Gold → Platinum → Diamond) separating compute concerns",
@@ -232,16 +194,19 @@
           "Platinum layer splits into Decision Tree rule mining or ML dataset generation",
           "Diamond layer trains XGBoost models using full-memory or streaming datasets"
         ],
-
         "engineering": [
           "Numba JIT used to accelerate inner simulation loops to near-C performance",
           "Multiprocessing architecture for parallel chunk-based execution",
           "Parquet-based storage replacing CSV for high-throughput I/O",
           "Config-driven pipeline enabling full system tuning without code changes",
           "Streaming dataset support for low-RAM environments using iterative loading"
+        ],
+        "system_design": [
+          "Sequential multi-layer processing pipeline isolating raw compute (Bronze) from statistical modeling (Gold) and ML (Diamond)",
+          "Chunk-based state management to prevent memory overflow during massive dataset ingestion",
+          "Dynamic scaling pipeline tailored to bypass hardware constraints natively"
         ]
       },
-
       "insights": {
         "problem": "Extracting statistically reliable trading strategies from massive raw OHLCV datasets.",
         "why_it_was_hard": "Trade simulation, feature engineering, and ML training each require different compute models and memory strategies.",
@@ -258,41 +223,17 @@
         "real_world_behavior": "Pipeline processes large-scale historical market data, simulates trade outcomes, and extracts statistically significant strategies for real trading environments.",
         "what_i_learned": "At scale, data architecture and pipeline design matter more than model complexity."
       },
-
       "metrics": {
         "scale": "Processes tens of crores of rows across multiple pipeline stages",
         "latency": "Reduced full pipeline runtime from hours to minutes via parallelization",
         "throughput": "Parallel multi-layer processing with chunked data flow",
         "impact": "Enables large-scale quantitative strategy discovery on limited hardware"
-      },
-
-      "priority": "major",
-      "vibe": "ml",
-
-      "tags": [
-        "machine-learning",
-        "data-engineering",
-        "quant",
-        "big-data",
-        "pipeline",
-        "optimization"
-      ],
-
-      "personality": {
-        "approach": "Design pipelines that align computation with data scale instead of forcing generic solutions",
-        "strength": "Building high-performance systems under real hardware constraints",
-        "edge": "Combining quantitative finance, ML, and systems engineering into one unified pipeline"
-      },
-
-      "proof": {
-        "mode": "auto",
-        "artifacts": [],
-        "priority_order": [],
-        "labels": {}
       }
     },
     {
       "title": "Stella – Transactional E-Commerce Backend System",
+      "description": "A production-style e-commerce backend implementing a fully transactional order lifecycle, stateless authentication, and strict separation of system layers.",
+      "github": "https://github.com/kumawat-aditya/stella",
       "stack": [
         "Java",
         "Spring Boot",
@@ -302,84 +243,6 @@
         "MariaDB",
         "Razorpay"
       ],
-      "description": "A production-style e-commerce backend implementing a fully transactional order lifecycle, stateless authentication, and strict separation of system layers.",
-
-      "github": "https://github.com/kumawat-aditya/stella",
-
-      "highlights": [
-        "Designed a full transactional order lifecycle with Razorpay two-phase payment verification",
-        "Implemented stateless JWT authentication enforced via Spring Security filter chain",
-        "Built complete buyer-seller ecosystem with strict role-based access control",
-        "Handled real-world flows: cart → order creation → payment → verification → fulfillment",
-        "Designed layered architecture with strict separation between controllers, services, and repositories"
-      ],
-
-      "details": {
-        "architecture": [
-          "Layered monolithic architecture (Controller → Service → Repository → DB)",
-          "Stateless backend using JWTAuthenticationFilter and SecurityContext",
-          "Strict DTO-based API boundary to isolate database models from external exposure",
-          "External integrations: Razorpay (payments), SMTP (email verification), filesystem (media storage)",
-          "Two-step verification system for account activation and sensitive updates"
-        ],
-
-        "engineering": [
-          "Two-phase payment system ensuring orders are only confirmed after signature verification",
-          "Order state machine (creating → created → paid → processing → shipped → delivered)",
-          "Global exception handling with structured API error responses",
-          "Multipart file handling with controlled upload limits and validation",
-          "Repository-driven data access using Spring Data JPA with zero raw SQL"
-        ],
-
-        "system_design": [
-          "Ensured consistency between payment gateway state and internal order state",
-          "Designed idempotent payment callback handling to avoid duplicate processing",
-          "Handled trust boundaries between client, backend, and Razorpay API",
-          "Balanced stateless authentication with persistent user/session data",
-          "Maintained separation between buyer and seller flows without duplicating logic"
-        ]
-      },
-
-      "insights": {
-        "problem": "Designing a reliable e-commerce backend where payments, orders, and user actions remain consistent across external systems.",
-
-        "why_it_was_hard": "The system interacts with external services (Razorpay, SMTP) while maintaining internal consistency, requiring strict validation, state management, and trust boundaries.",
-
-        "tradeoffs": [
-          "Stateless JWT auth vs server-side session control",
-          "Monolithic simplicity vs microservice scalability",
-          "Strict validation vs API flexibility"
-        ],
-
-        "failure_points": [
-          "Payment success but order not updated due to callback failure",
-          "Duplicate payment callbacks causing inconsistent order state",
-          "Unauthorized access due to improper role validation",
-          "File upload vulnerabilities without strict validation"
-        ],
-
-        "real_world_behavior": "Users register, verify via email, add products to cart, create orders, complete payment via Razorpay, and the system validates and updates order state before triggering fulfillment.",
-
-        "what_i_learned": "In real systems, correctness of state transitions matters more than feature completeness — especially when money is involved."
-      },
-
-      "metrics": {
-        "scale": "Supports full buyer-seller ecosystem with multiple concurrent users",
-        "latency": "Low-latency REST APIs with stateless request handling",
-        "throughput": "Handles concurrent order creation, payment callbacks, and cart operations",
-        "impact": "Implements a complete real-world e-commerce transaction lifecycle"
-      },
-
-      "proof": {
-        "mode": "auto",
-        "artifacts": [],
-        "priority_order": [],
-        "labels": {}
-      },
-
-      "priority": "supporting",
-      "vibe": "backend-system",
-
       "tags": [
         "backend",
         "system-design",
@@ -388,33 +251,86 @@
         "api-design",
         "spring-boot"
       ],
-
-      "personality": {
-        "approach": "Design systems around real-world flows and failure cases, not just APIs",
-        "strength": "Building reliable transactional systems with external integrations",
-        "edge": "Thinking in terms of state transitions and trust boundaries"
+      "highlights": [
+        "Designed a full transactional order lifecycle with Razorpay two-phase payment verification",
+        "Implemented stateless JWT authentication enforced via Spring Security filter chain",
+        "Built complete buyer-seller ecosystem with strict role-based access control",
+        "Handled real-world flows: cart → order creation → payment → verification → fulfillment",
+        "Designed layered architecture with strict separation between controllers, services, and repositories"
+      ],
+      "details": {
+        "architecture": [
+          "Layered monolithic architecture (Controller → Service → Repository → DB)",
+          "Stateless backend using JWTAuthenticationFilter and SecurityContext",
+          "Strict DTO-based API boundary to isolate database models from external exposure",
+          "External integrations: Razorpay (payments), SMTP (email verification), filesystem (media storage)",
+          "Two-step verification system for account activation and sensitive updates"
+        ],
+        "engineering": [
+          "Two-phase payment system ensuring orders are only confirmed after signature verification",
+          "Order state machine (creating → created → paid → processing → shipped → delivered)",
+          "Global exception handling with structured API error responses",
+          "Multipart file handling with controlled upload limits and validation",
+          "Repository-driven data access using Spring Data JPA with zero raw SQL"
+        ],
+        "system_design": [
+          "Ensured consistency between payment gateway state and internal order state",
+          "Designed idempotent payment callback handling to avoid duplicate processing",
+          "Handled trust boundaries between client, backend, and Razorpay API",
+          "Balanced stateless authentication with persistent user/session data",
+          "Maintained separation between buyer and seller flows without duplicating logic"
+        ]
+      },
+      "insights": {
+        "problem": "Designing a reliable e-commerce backend where payments, orders, and user actions remain consistent across external systems.",
+        "why_it_was_hard": "The system interacts with external services (Razorpay, SMTP) while maintaining internal consistency, requiring strict validation, state management, and trust boundaries.",
+        "tradeoffs": [
+          "Stateless JWT auth vs server-side session control",
+          "Monolithic simplicity vs microservice scalability",
+          "Strict validation vs API flexibility"
+        ],
+        "failure_points": [
+          "Payment success but order not updated due to callback failure",
+          "Duplicate payment callbacks causing inconsistent order state",
+          "Unauthorized access due to improper role validation",
+          "File upload vulnerabilities without strict validation"
+        ],
+        "real_world_behavior": "Users register, verify via email, add products to cart, create orders, complete payment via Razorpay, and the system validates and updates order state before triggering fulfillment.",
+        "what_i_learned": "In real systems, correctness of state transitions matters more than feature completeness — especially when money is involved."
+      },
+      "metrics": {
+        "scale": "Supports full buyer-seller ecosystem with multiple concurrent users",
+        "latency": "Low-latency REST APIs with stateless request handling",
+        "throughput": "Handles concurrent order creation, payment callbacks, and cart operations",
+        "impact": "Implements a complete real-world e-commerce transaction lifecycle"
       }
     },
     {
       "title": "Elastic DCA Engine – Deterministic Trading State Machine",
-      "stack": ["Python", "FastAPI", "MQL5", "React", "WebSocket", "SQLite"],
       "description": "A server-centric trading engine that transforms MetaTrader into a stateless execution layer, enabling deterministic grid trading, real-time control, and fault-tolerant trade lifecycle management.",
       "github": "https://github.com/kumawat-aditya/elastic-dca-trader",
-
-      "proof": {
-        "mode": "auto",
-        "artifacts": [],
-        "priority_order": [],
-        "labels": {}
-      },
-
+      "stack": [
+        "Python",
+        "FastAPI",
+        "MQL5",
+        "React",
+        "WebSocket",
+        "SQLite"
+      ],
+      "tags": [
+        "distributed-systems",
+        "real-time-processing",
+        "state-machine",
+        "trading-systems",
+        "synchronization",
+        "backend-architecture"
+      ],
       "highlights": [
         "Built a server-authoritative trading engine where MetaTrader acts as a stateless executor",
         "Designed deterministic execution pipeline processing every tick into validated trade actions",
         "Implemented dual independent trading systems (buy/sell) with isolated state machines",
         "Achieved real-time synchronization across trading terminal, backend engine, and UI"
       ],
-
       "details": {
         "architecture": [
           "Server-centric architecture with FastAPI controlling all trading logic",
@@ -435,7 +351,6 @@
           "Balanced real-time responsiveness with system stability"
         ]
       },
-
       "insights": {
         "problem": "Maintaining a consistent and reliable trading state across an external execution system (MetaTrader) and a backend engine.",
         "why_it_was_hard": "Both systems operate independently, causing desynchronization, incorrect PnL mapping, and trade duplication risks.",
@@ -451,37 +366,30 @@
         "real_world_behavior": "The system continuously processes live ticks, validates state, generates actions, and reconciles results from the trading terminal.",
         "what_i_learned": "Reliable distributed systems require shared contracts and deterministic state transitions, not assumptions."
       },
-
       "metrics": {
         "scale": "Runs parallel independent trading systems (buy & sell grids)",
         "latency": "Processes trading decisions every second (tick-driven loop)",
         "throughput": "Continuous real-time evaluation + execution pipeline",
         "impact": "Transforms an unreliable trading flow into a deterministic system"
-      },
-
-      "priority": "flagship",
-      "vibe": "distributed-real-time",
-
-      "tags": [
-        "distributed-systems",
-        "real-time-processing",
-        "state-machine",
-        "trading-systems",
-        "synchronization",
-        "backend-architecture"
-      ],
-
-      "personality": {
-        "approach": "Convert unreliable external systems into deterministic pipelines using strict state control",
-        "strength": "Designing real-time systems that stay consistent under uncertainty",
-        "edge": "Thinking in state machines, not scripts"
       }
     },
     {
       "title": "Rubik's Cube Solver — State-Space Search & Optimization Engine",
-      "stack": ["C++", "OOP", "Algorithms", "Search Optimization"],
       "description": "A high-performance Rubik’s Cube solving engine that models the cube as a constrained state space and applies a hybrid deterministic-stochastic search strategy using CFOP.",
       "github": "https://github.com/kumawat-aditya/rubix-cube-solver",
+      "stack": [
+        "C++",
+        "OOP",
+        "Algorithms",
+        "Search Optimization"
+      ],
+      "tags": [
+        "c++",
+        "algorithms",
+        "search",
+        "optimization",
+        "systems-design"
+      ],
       "highlights": [
         "Designed a state-space search engine evaluating 10k+ candidate solutions per solve",
         "Implemented multi-start optimization across 6 cube orientations",
@@ -501,6 +409,12 @@
           "ANSI-based CLI visualization for step-by-step solving",
           "Designed without external libraries using pure STL",
           "Built with extensibility for alternative solving strategies"
+        ],
+        "system_design": [
+          "Designed hybrid deterministic-stochastic solving pipeline",
+          "Used multi-start search to approximate global optimum",
+          "Balanced search space exploration vs computation time",
+          "Separated state mutation from solution tracking for correctness"
         ]
       },
       "insights": {
@@ -520,26 +434,14 @@
       "metrics": {
         "scale": "10k+ candidate solutions evaluated per solve",
         "latency": "~2 seconds per solve",
+        "throughput": "Evaluates state transitions rapidly, processing thousands of nodes per second during search phase",
         "impact": "Consistently solves cube under 42 moves"
-      },
-      "priority": "supporting",
-      "vibe": "algorithms",
-      "tags": ["c++", "algorithms", "search", "optimization", "systems-design"],
-      "system_design": [
-        "Designed hybrid deterministic-stochastic solving pipeline",
-        "Used multi-start search to approximate global optimum",
-        "Balanced search space exploration vs computation time",
-        "Separated state mutation from solution tracking for correctness"
-      ],
-      "proof": {
-        "mode": "auto",
-        "artifacts": [],
-        "priority_order": [],
-        "labels": {}
       }
     },
     {
       "title": "Lorentzian ML Engine – Cross-Platform Signal Generation System",
+      "description": "A cross-language implementation of a Lorentzian distance-based KNN trading strategy, designed as a reusable signal-generation engine for real-time trading systems.",
+      "github": "https://github.com/kumawat-aditya/lorentzian_strategy",
       "stack": [
         "Python",
         "MQL5",
@@ -547,80 +449,6 @@
         "Algorithm Design",
         "Quantitative Finance"
       ],
-      "description": "A cross-language implementation of a Lorentzian distance-based KNN trading strategy, designed as a reusable signal-generation engine for real-time trading systems.",
-
-      "github": "https://github.com/kumawat-aditya/lorentzian-strategy",
-
-      "highlights": [
-        "Implemented Lorentzian-distance KNN model for financial time-series prediction",
-        "Built cross-language parity across Python, MQL5, and Pine Script",
-        "Designed hybrid ML + kernel regression signal generation pipeline",
-        "Used as core signal engine in production trading systems (ANT Meta Bots)",
-        "Processes 2750+ candle history with multi-phase training and real-time inference"
-      ],
-
-      "details": {
-        "architecture": [
-          "Three parallel implementations: Pine Script (reference), MQL5 (live indicator), Python (core engine)",
-          "Self-contained ring buffer storing full historical state per bar",
-          "Three-phase pipeline: Warmup → Training → Backtest/Live prediction",
-          "Modular feature + kernel + filter pipeline for extensibility"
-        ],
-
-        "engineering": [
-          "Custom Lorentzian distance metric replacing Euclidean for time-series similarity",
-          "KNN search optimized with modulo filtering and bounded neighbor set",
-          "Nadaraya-Watson kernel regression for trend confirmation",
-          "Zero external ML dependencies — full algorithm implemented from scratch"
-        ],
-
-        "system_design": [
-          "Ensured deterministic cross-language parity for validation across platforms",
-          "Designed for streaming real-time data (incremental candle processing)",
-          "Separated signal generation from execution layer (clean system boundary)",
-          "Built reusable API layer for integration into trading bots and pipelines"
-        ]
-      },
-
-      "insights": {
-        "problem": "Generating reliable trading signals from noisy financial time-series data without relying on heavy ML frameworks.",
-
-        "why_it_was_hard": "Financial data is non-linear, noisy, and non-stationary, making traditional distance metrics and models unreliable without careful feature engineering and filtering.",
-
-        "tradeoffs": [
-          "Model simplicity vs predictive power",
-          "Real-time inference vs historical accuracy",
-          "Deterministic pipeline vs adaptive ML models"
-        ],
-
-        "failure_points": [
-          "Initial Euclidean distance produced unstable neighbor selection",
-          "Feature scaling inconsistencies affected prediction quality",
-          "Cross-language mismatch bugs during early porting stages"
-        ],
-
-        "real_world_behavior": "Engine continuously processes incoming candles, updates internal state, performs KNN search over historical patterns, and emits directional signals in real time.",
-
-        "what_i_learned": "Building reliable ML systems for real-time use requires controlling data representation and algorithm behavior more than model complexity."
-      },
-
-      "metrics": {
-        "scale": "Processes 2750+ historical candles per initialization",
-        "latency": "Real-time inference per candle with optimized search",
-        "throughput": "Continuous streaming signal generation",
-        "impact": "Serves as core signal engine powering live trading systems"
-      },
-
-      "proof": {
-        "mode": "auto",
-        "artifacts": [],
-        "priority_order": [],
-        "labels": {}
-      },
-
-      "priority": "major",
-      "vibe": "ml-algorithm",
-
       "tags": [
         "machine-learning",
         "quant",
@@ -629,11 +457,54 @@
         "knn",
         "trading"
       ],
-
-      "personality": {
-        "approach": "Rebuild complex ML algorithms from first principles for full control and transparency",
-        "strength": "Designing mathematical systems that work in real-time environments",
-        "edge": "Bridging theory (ML) with production-grade execution systems"
+      "highlights": [
+        "Implemented Lorentzian-distance KNN model for financial time-series prediction",
+        "Built cross-language parity across Python, MQL5, and Pine Script",
+        "Designed hybrid ML + kernel regression signal generation pipeline",
+        "Used as core signal engine in production trading systems (ANT Meta Bots)",
+        "Processes 2750+ candle history with multi-phase training and real-time inference"
+      ],
+      "details": {
+        "architecture": [
+          "Three parallel implementations: Pine Script (reference), MQL5 (live indicator), Python (core engine)",
+          "Self-contained ring buffer storing full historical state per bar",
+          "Three-phase pipeline: Warmup → Training → Backtest/Live prediction",
+          "Modular feature + kernel + filter pipeline for extensibility"
+        ],
+        "engineering": [
+          "Custom Lorentzian distance metric replacing Euclidean for time-series similarity",
+          "KNN search optimized with modulo filtering and bounded neighbor set",
+          "Nadaraya-Watson kernel regression for trend confirmation",
+          "Zero external ML dependencies — full algorithm implemented from scratch"
+        ],
+        "system_design": [
+          "Ensured deterministic cross-language parity for validation across platforms",
+          "Designed for streaming real-time data (incremental candle processing)",
+          "Separated signal generation from execution layer (clean system boundary)",
+          "Built reusable API layer for integration into trading bots and pipelines"
+        ]
+      },
+      "insights": {
+        "problem": "Generating reliable trading signals from noisy financial time-series data without relying on heavy ML frameworks.",
+        "why_it_was_hard": "Financial data is non-linear, noisy, and non-stationary, making traditional distance metrics and models unreliable without careful feature engineering and filtering.",
+        "tradeoffs": [
+          "Model simplicity vs predictive power",
+          "Real-time inference vs historical accuracy",
+          "Deterministic pipeline vs adaptive ML models"
+        ],
+        "failure_points": [
+          "Initial Euclidean distance produced unstable neighbor selection",
+          "Feature scaling inconsistencies affected prediction quality",
+          "Cross-language mismatch bugs during early porting stages"
+        ],
+        "real_world_behavior": "Engine continuously processes incoming candles, updates internal state, performs KNN search over historical patterns, and emits directional signals in real time.",
+        "what_i_learned": "Building reliable ML systems for real-time use requires controlling data representation and algorithm behavior more than model complexity."
+      },
+      "metrics": {
+        "scale": "Processes 2750+ historical candles per initialization",
+        "latency": "Real-time inference per candle with optimized search",
+        "throughput": "Continuous streaming signal generation",
+        "impact": "Serves as core signal engine powering live trading systems"
       }
     }
   ],
