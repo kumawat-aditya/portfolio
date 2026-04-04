@@ -1,22 +1,18 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import PageTransition from "../components/PageTransition";
 import ScrollReveal from "../components/ScrollReveal";
 import { labPosts } from "../data/lab";
+import { projects } from "../data/projects";
 
 const featured = labPosts[0];
 const rest = labPosts.slice(1);
-
-const difficultyColor: Record<string, string> = {
-  intermediate: "text-accent-amber",
-  advanced: "text-accent-rose",
-  beginner: "text-accent-green",
-};
 
 export default function Lab() {
   return (
     <PageTransition>
       <section className="pt-32 pb-24 md:pb-32">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -47,11 +43,16 @@ export default function Lab() {
                   <span className="text-[10px] text-text-muted font-mono">
                     {featured.readTime}
                   </span>
-                  <span
-                    className={`text-[10px] font-mono ${difficultyColor[featured.difficulty] || "text-text-muted"}`}
-                  >
-                    {featured.difficulty}
-                  </span>
+                  {featured.relatedProject && (
+                    <Link
+                      to={`/systems/${featured.relatedProject}`}
+                      className="text-[10px] text-accent-blue/70 font-mono hover:text-accent-blue transition-colors"
+                    >
+                      →{" "}
+                      {projects.find((p) => p.slug === featured.relatedProject)
+                        ?.title || featured.relatedProject}
+                    </Link>
+                  )}
                 </div>
 
                 <h2 className="text-headline font-bold tracking-tight text-text-primary mb-3">
@@ -96,11 +97,6 @@ export default function Lab() {
                       <span className="text-[10px] text-text-muted font-mono">
                         {post.readTime}
                       </span>
-                      <span
-                        className={`text-[10px] font-mono ${difficultyColor[post.difficulty] || "text-text-muted"}`}
-                      >
-                        {post.difficulty}
-                      </span>
                     </div>
 
                     <h3 className="text-base font-semibold text-text-primary mb-2">
@@ -122,6 +118,19 @@ export default function Lab() {
                           </p>
                         ))}
                     </div>
+
+                    {post.relatedProject && (
+                      <div className="mt-4 pt-3 border-t border-border-subtle">
+                        <Link
+                          to={`/systems/${post.relatedProject}`}
+                          className="text-[10px] text-accent-blue/70 font-mono hover:text-accent-blue transition-colors"
+                        >
+                          → Related system:{" "}
+                          {projects.find((p) => p.slug === post.relatedProject)
+                            ?.title || post.relatedProject}
+                        </Link>
+                      </div>
+                    )}
 
                     <div className="flex flex-wrap gap-2 mt-4 pt-3 border-t border-border-subtle">
                       {post.tags.map((tag) => (

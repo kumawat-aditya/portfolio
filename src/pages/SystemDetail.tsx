@@ -8,10 +8,14 @@ import { labPosts } from "../data/lab";
 
 const sections = [
   { id: "overview", label: "Overview" },
+  { id: "constraints", label: "Constraints" },
   { id: "architecture", label: "Architecture" },
+  { id: "why-this-architecture", label: "Why This Architecture" },
   { id: "engineering", label: "Engineering" },
   { id: "challenges", label: "Challenges" },
-  { id: "failures", label: "Failures" },
+  { id: "failures", label: "What Broke" },
+  { id: "incidents", label: "Incidents" },
+  { id: "proof", label: "Proof" },
   { id: "tradeoffs", label: "Tradeoffs" },
   { id: "improvements", label: "What I'd Rebuild" },
 ];
@@ -45,11 +49,19 @@ export default function SystemDetail() {
     project.relatedLab.includes(p.slug),
   );
 
+  const visibleSections = sections.filter((s) => {
+    if (s.id === "constraints" && project.constraints.length === 0)
+      return false;
+    if (s.id === "incidents" && project.incidents.length === 0) return false;
+    if (s.id === "proof" && project.proofCapsules.length === 0) return false;
+    return true;
+  });
+
   return (
     <PageTransition>
       {/* Header */}
       <section className="pt-28 pb-12 md:pt-32 md:pb-16">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -109,12 +121,12 @@ export default function SystemDetail() {
 
       {/* Body */}
       <section className="pb-24 md:pb-32">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           <div className="grid lg:grid-cols-12 gap-12">
             {/* Sidebar */}
             <aside className="lg:col-span-3 hidden lg:block">
               <div className="sticky top-24 space-y-1">
-                {sections.map((s) => (
+                {visibleSections.map((s) => (
                   <a
                     key={s.id}
                     href={`#${s.id}`}
@@ -170,6 +182,34 @@ export default function SystemDetail() {
                 </div>
               </ScrollReveal>
 
+              {/* Constraint Table */}
+              {project.constraints.length > 0 && (
+                <ScrollReveal>
+                  <div id="constraints" className="scroll-mt-24 space-y-4">
+                    <SectionLabel>System Constraints</SectionLabel>
+                    <div className="border border-border-subtle rounded-lg overflow-hidden">
+                      {project.constraints.map((c, i) => (
+                        <div
+                          key={i}
+                          className={`grid grid-cols-12 gap-4 p-4 ${i !== project.constraints.length - 1 ? "border-b border-border-subtle" : ""}`}
+                        >
+                          <div className="col-span-4 md:col-span-3">
+                            <span className="text-xs font-mono text-accent-blue font-medium">
+                              {c.dimension}
+                            </span>
+                          </div>
+                          <div className="col-span-8 md:col-span-9">
+                            <span className="text-sm text-text-secondary leading-relaxed">
+                              {c.value}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              )}
+
               {/* Architecture */}
               <ScrollReveal>
                 <div id="architecture" className="scroll-mt-24 space-y-4">
@@ -187,6 +227,21 @@ export default function SystemDetail() {
                       </li>
                     ))}
                   </ul>
+                </div>
+              </ScrollReveal>
+
+              {/* Why This Architecture */}
+              <ScrollReveal>
+                <div
+                  id="why-this-architecture"
+                  className="scroll-mt-24 space-y-4"
+                >
+                  <SectionLabel>Why This Architecture</SectionLabel>
+                  <div className="p-5 md:p-6 rounded-xl border border-border-subtle bg-bg-surface/30">
+                    <p className="text-sm text-text-secondary leading-relaxed">
+                      {project.whyThisArchitecture}
+                    </p>
+                  </div>
                 </div>
               </ScrollReveal>
 
@@ -247,6 +302,88 @@ export default function SystemDetail() {
                   </div>
                 </div>
               </ScrollReveal>
+
+              {/* Incidents */}
+              {project.incidents.length > 0 && (
+                <ScrollReveal>
+                  <div id="incidents" className="scroll-mt-24 space-y-6">
+                    <SectionLabel>Incident Reports</SectionLabel>
+                    {project.incidents.map((incident, i) => (
+                      <div key={i} className="glass-card p-6 md:p-8 space-y-5">
+                        <h3 className="text-base font-semibold text-text-primary font-mono">
+                          {incident.title}
+                        </h3>
+
+                        <div>
+                          <span className="text-[9px] uppercase tracking-widest text-accent-rose/80 font-mono block mb-2">
+                            Timeline
+                          </span>
+                          <ol className="space-y-2">
+                            {incident.timeline.map((step, j) => (
+                              <li
+                                key={j}
+                                className="flex gap-3 text-sm text-text-secondary leading-relaxed"
+                              >
+                                <span className="text-accent-rose/60 font-mono text-xs mt-0.5 shrink-0">
+                                  {String(j + 1).padStart(2, "0")}
+                                </span>
+                                {step}
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
+
+                        <div className="border-l-2 border-accent-green/40 pl-4">
+                          <span className="text-[9px] uppercase tracking-widest text-accent-green/70 font-mono block mb-1">
+                            Fix
+                          </span>
+                          <p className="text-sm text-text-secondary leading-relaxed">
+                            {incident.fix}
+                          </p>
+                        </div>
+
+                        <div className="border-l-2 border-accent-blue/40 pl-4">
+                          <span className="text-[9px] uppercase tracking-widest text-accent-blue/70 font-mono block mb-1">
+                            Outcome
+                          </span>
+                          <p className="text-sm text-text-secondary leading-relaxed">
+                            {incident.outcome}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {/* Proof Capsules */}
+              {project.proofCapsules.length > 0 && (
+                <ScrollReveal>
+                  <div id="proof" className="scroll-mt-24 space-y-4">
+                    <SectionLabel>Proof</SectionLabel>
+                    <div className="space-y-4">
+                      {project.proofCapsules.map((proof, i) => (
+                        <div
+                          key={i}
+                          className="glass-card p-5 md:p-6 space-y-3"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-[9px] uppercase tracking-widest text-accent-green/70 font-mono">
+                              {proof.source}
+                            </span>
+                          </div>
+                          <p className="text-sm text-text-primary font-medium">
+                            {proof.claim}
+                          </p>
+                          <div className="font-mono text-xs text-text-muted leading-relaxed p-3 rounded-lg bg-bg-surface/50 border border-border-subtle">
+                            {proof.evidence}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              )}
 
               {/* Tradeoffs */}
               <ScrollReveal>

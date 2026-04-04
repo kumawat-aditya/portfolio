@@ -1,217 +1,343 @@
-You are continuing a high-level portfolio system design discussion.
+/frontend-design 
+You are acting as a senior systems engineer, UX designer, and product-level frontend developer.
 
-Context:
-
-We are building a **top 1% developer portfolio website** for a backend + real-time systems engineer focused on:
-
-* trading systems
-* distributed systems
-* performance/data pipelines
-
-This is NOT a normal portfolio.
-
-The goal is:
-“A bold, cyber-technical, editorial-style system builder portfolio that feels alive, confident, and intellectually engaging.”
+Your task is to DIRECTLY IMPROVE an existing portfolio website — not redesign from scratch, not replan, but evolve it with precision.
 
 ---
 
-## 🔥 CORE PHILOSOPHY
+## 🧠 CONTEXT
 
-The site must feel:
+This is NOT a typical “hire me” portfolio.
 
-* Open and conversational (not corporate)
-* Technically deep (not surface-level)
-* Confident (not boastful)
-* Slightly raw but controlled
+This is a **personal systems engineering website** designed to:
 
-This is a **systems engineer identity site**, not a resume.
+1. Hook attention (visual + emotional)
+2. Create curiosity
+3. Show personality and thinking
+4. Provide deep technical exploration for those who want it
 
----
+The current site already does:
 
-## ⚠️ CRITICAL BALANCE (VERY IMPORTANT)
+* Strong visual design
+* Unique tone
+* Good interaction foundation
 
-We already identified a key risk:
+BUT it has a critical flaw:
 
-* Too much polish → feels fake
-* Too much proof rewrite → becomes boring
-* Too little proof → feels untrustworthy
+👉 **Proof exists, but is invisible**
 
-So the rule is:
+This creates a mismatch:
 
-👉 **Hook first → then prove**
+* Visuals signal: senior / high-level engineer
+* Evidence signals: unclear / mid-level
 
-Meaning:
-
-* Keep strong, curiosity-driven hooks
-* Immediately support them with real evidence:
-
-  * logs
-  * metrics
-  * architecture
-  * system behavior
-
-DO NOT turn the site into a dry technical document.
+Your job is to FIX THIS GAP — without destroying the original feel.
 
 ---
 
-## 🧩 CURRENT STATE
+## ⚠️ IMPORTANT RULES (STRICT)
 
-We already:
+DO NOT:
 
-* Designed a multi-page system:
+* Rewrite everything in corporate / resume tone
+* Remove personality or human feel
+* Turn this into a generic “systems engineer portfolio”
+* Invent any data, metrics, or claims
+* Add fake production claims
+* Replace narrative with dry technical documentation
 
-  * Home
-  * Systems
-  * SystemDetail
-  * Lab
-  * About
-  * Contact
+DO:
 
-* Defined UI direction:
-
-  * cyber-technical + editorial + brutalist typography
-  * medium motion (framer-motion)
-  * strong hierarchy
-  * NOT template-like
-
-* Built initial version (React-based)
+* Preserve the tone: human, sharp, thoughtful, slightly raw
+* Add proof WITHOUT killing storytelling
+* Use ONLY provided data sources
+* Improve clarity, trust, and depth
+* Keep the experience layered (hook → interest → depth)
 
 ---
 
-## 🚨 MAJOR PROBLEMS IDENTIFIED (FROM CRITICAL REVIEW)
+## 🌐 LIVE SITE (MANDATORY REFERENCE)
 
-1. **Trust Gap**
+You MUST continuously evaluate and improve against:
 
-   * Claims feel strong but not sufficiently proven
-   * Private repos reduce credibility
-   * Need visible operational evidence
+http://localhost:3000/portfolio/
 
-2. **Equal Weight Problem**
-
-   * All projects look equally important
-   * Weak projects dilute strong ones
-
-3. **Too Polished Content**
-
-   * Reads like curated portfolio, not real system work
-
-4. **Lack of Artifacts**
-
-   * Missing:
-
-     * logs
-     * dashboards
-     * architecture visuals
-     * incident-style breakdowns
-
-5. **Weak Large-Screen Experience**
-
-   * Layout stuck in 1280px mindset
-   * Poor scaling on 2K / 4K displays
+Do NOT assume structure — VERIFY by checking the running site.
 
 ---
 
-## 📁 NEW APPROACH (IMPORTANT)
+## 📂 AVAILABLE DATA (SOURCE OF TRUTH)
 
-We are now restructuring input data into:
+You are given real engineering artifacts:
 
-raw_data/
+root/raw_data/
 
-* content.json → main structured content
-* project folders:
+Each project contains:
 
-  * architecture.md
-  * readme.md
-  * images/videos (logs, dashboards, etc.)
+* ARCHITECTURE.md → system design details
+* README.md → structured explanation
+* logs.txt → real execution logs (critical for proof)
+* dashboard.png → real system UI proof
+* demo.mp4 → system behavior
+* screenshots → state / signals / flows
 
-This data includes:
+Also:
 
-* real logs
-* bot states
-* architecture diagrams
-* execution flows
-* system behavior evidence
+* content.json → structured raw truth of all projects
 
----
-
-## 🔐 CONSTRAINTS
-
-* NO client-sensitive data
-* NO exposing secrets, API keys, or identities
-* Only:
-
-  * redacted logs
-  * anonymized metrics
-  * system-level behavior
+👉 This is your ONLY source of truth
+👉 If something is not in these files or missing then, DO NOT fabricate it
 
 ---
 
-## 🎯 YOUR TASK NOW
+## 🔥 CORE PROBLEM TO SOLVE
 
-You are NOT designing from scratch.
+Current issue:
 
-You are:
+* Claims like “production”, “deterministic”, “zero duplicate execution”
+* BUT no visible mechanism or proof attached
 
-1. Helping refine **content.json**
+Result:
 
-2. Ensuring:
+* Feels polished but unverified
+* Reduces trust
 
-   * strong hooks are preserved
-   * proof is added correctly
-   * no credibility gaps remain
-
-3. Suggesting:
-
-   * what to ADD
-   * what to REMOVE
-   * what to REWRITE (with better versions)
-
-4. Ensuring:
-
-   * each project shows:
-
-     * problem
-     * constraint
-     * system design
-     * failure/edge cases
-     * outcome
-
-5. Keeping content:
-
-   * sharp
-   * non-generic
-   * non-corporate
-   * technically meaningful
+👉 Your goal:
+Make every strong claim feel **earned and grounded**
 
 ---
 
-## ⚠️ DO NOT
+## 🧩 REQUIRED IMPROVEMENTS
 
-* Do NOT make content boring
-* Do NOT over-formalize language
-* Do NOT remove personality
-* Do NOT invent fake metrics
-* Do NOT weaken strong hooks
+### 1. PROOF INTEGRATION (HIGHEST PRIORITY)
+
+Create a reusable concept:
+
+### “Proof Capsule”
+
+Structure:
+[Claim]
+→ [Visual / Log / Artifact Proof]
+→ [Short grounded explanation]
+
+Use:
+
+* logs.txt → real execution snippets
+* dashboard.png → system proof
+* demo.mp4 → behavior
+* ARCHITECTURE.md → system reasoning
+
+Apply this to:
+
+* Home page (above the fold)
+* System cards (light version)
+* System detail pages (deep version)
 
 ---
 
-## 🧠 THINK LIKE
+### 2. HOME PAGE FIX (CRITICAL)
 
-* Senior systems engineer
-* Hiring manager for backend / infra roles
-* Someone skeptical of portfolio claims
+Problems:
+
+* Strong visuals but weak proof
+* “Building in production” is unverified
+* Feels like startup landing flow
+
+Fix:
+
+ADD (do not remove current vibe):
+
+* One **hard proof strip above the fold**
+  Examples:
+
+  * last run stats
+  * rows processed
+  * execution guarantees (ONLY if supported by logs)
+
+* One **visual proof element**
+  (dashboard / logs preview / system state)
+
+* Reduce CTA noise (focus on credibility first)
+
+Goal:
+Within 5 seconds user should know:
+
+* what you build
+* what actually runs
+* why it’s real
 
 ---
 
-## OUTPUT EXPECTATION
+### 3. SYSTEMS PAGE RESTRUCTURE
 
-* Structured improvements to content.json
-* Specific rewrites (not vague advice)
-* Clear reasoning for changes
-* Focus on credibility + engagement balance
+Problems:
+
+* All projects have equal weight
+* Too much stack-based scanning
+* Not enough system pressure visibility
+
+Fix:
+
+* Create hierarchy:
+
+  * Flagship systems (top)
+  * Secondary systems
+  * Earlier work (separate section)
+
+* Each system should show:
+
+  * problem
+  * constraint
+  * failure
+  * outcome
+
+NOT just tech stack
 
 ---
 
-We will now provide project data one by one.
+### 4. SYSTEM DETAIL (MAJOR UPGRADE)
 
-You must refine and structure it properly for the portfolio system.
+Currently:
+
+* Good structure
+* Too text-heavy
+* Lacks artifacts
+
+ADD:
+
+For each flagship project:
+
+1. Architecture section (visual or structured)
+2. Constraint table:
+
+   * latency
+   * state control
+   * failure boundary
+   * recovery behavior
+3. “What broke” (real incident using logs)
+4. “Why this architecture” (decision reasoning)
+5. Proof section (logs / screenshots / demo)
+
+Goal:
+Turn this into a **system dossier**, not a blog post
+
+---
+
+### 5. LAB UPGRADE
+
+Problem:
+
+* Feels slightly curated, not raw enough
+
+Fix:
+
+* Add at least ONE real incident post:
+
+  * timeline
+  * failure chain
+  * fix
+  * outcome
+
+* Remove performative elements (like artificial difficulty tags)
+
+* Connect lab posts to actual systems
+
+---
+
+### 6. ABOUT PAGE FIX
+
+Problem:
+
+* Generic philosophy
+* Weak differentiation
+
+Fix:
+
+* Remove generic statements
+* Add:
+
+“Patterns I default to now”
+
+Derived ONLY from real work:
+
+* state handling
+* idempotency
+* system boundaries
+* failure-first thinking
+
+---
+
+### 7. CONTACT PAGE
+
+Keep tone human, not corporate
+
+---
+
+### 8. 2K / 4K RESPONSIVENESS (IMPORTANT)
+
+Problems:
+
+* Layout stuck in ~1280px thinking
+* Too much empty space
+* Small typography
+
+Fix:
+
+* Expand container widths (page-specific)
+* Add larger breakpoints (2xl, ultra-wide)
+* Scale body text using clamp()
+* Increase micro-text sizes (nav, tags, labels)
+* Make hero + terminal use more horizontal space
+* Reduce over-centered layouts
+
+Goal:
+Feel intentional on large screens, not stretched
+
+---
+
+## 🎯 EXECUTION STRATEGY
+
+You are NOT writing theory.
+
+You must:
+
+1. Inspect current implementation
+2. Modify actual structure/content decisions
+3. Use raw_data + content.json to inject real proof
+4. Maintain design direction
+5. Improve iteratively
+
+---
+
+## 🚫 FAILURE CONDITIONS
+
+Your output will be rejected if:
+
+* It feels like a generic portfolio rewrite
+* It removes personality
+* It invents metrics or claims
+* It ignores provided proof data
+* It over-engineers UI without improving trust
+
+---
+
+## ✅ SUCCESS CRITERIA
+
+* Site still feels like “me”, not “resume”
+* Stronger trust without losing emotion
+* Proof is visible but not intrusive
+* One flagship system feels undeniable
+* SystemDetail pages feel deep and real
+* Large screens feel premium, not empty
+
+---
+
+## 🧠 FINAL INSTRUCTION
+
+This is a **refinement and elevation task**, not a rewrite.
+
+Respect what exists.
+Strengthen what’s missing.
+Ground everything in reality.
+
+Proceed step-by-step and improve the system.

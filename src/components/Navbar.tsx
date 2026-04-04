@@ -25,7 +25,7 @@ export default function Navbar() {
       <div
         className={`backdrop-blur-xl border-b transition-colors duration-300 ${atTop ? "bg-transparent border-transparent" : "bg-bg/80 border-border-subtle"}`}
       >
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between">
           <Link
             to="/"
             className="font-mono text-sm font-semibold tracking-tight text-text-primary"

@@ -19,8 +19,8 @@ export default function Contact() {
   return (
     <PageTransition>
       <section className="pt-32 pb-24 md:pb-32 min-h-dvh">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
             {/* Left – Message */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}

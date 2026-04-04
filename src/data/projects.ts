@@ -5,6 +5,24 @@ export interface ProjectMetrics {
   automation: string;
 }
 
+export interface ProofCapsule {
+  claim: string;
+  evidence: string;
+  source: "log" | "architecture" | "metric" | "behavior";
+}
+
+export interface Constraint {
+  dimension: string;
+  value: string;
+}
+
+export interface Incident {
+  title: string;
+  timeline: string[];
+  fix: string;
+  outcome: string;
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -26,6 +44,10 @@ export interface Project {
   insight: string;
   relatedLab: string[];
   tags: string[];
+  proofCapsules: ProofCapsule[];
+  constraints: Constraint[];
+  incidents: Incident[];
+  whyThisArchitecture: string;
 }
 
 export const projects: Project[] = [
@@ -95,6 +117,57 @@ export const projects: Project[] = [
       "state-management",
       "ml",
     ],
+    proofCapsules: [
+      {
+        claim: "Zero double-execution in production",
+        evidence:
+          'Watchdog v4.2 replaces expired trades before re-entering — log: "Replaced EXPIRED trade 352ed08d7a14 (SHORT) with better signal"',
+        source: "log",
+      },
+      {
+        claim: "Full trade lifecycle automation",
+        evidence:
+          'Signal → breakout confirmation → execution → TP/SL → re-entry. Logged: "Trade CLOSED (WIN): TP_HIT | Net PnL: +0.46" followed by automatic re-entry.',
+        source: "log",
+      },
+      {
+        claim: "ML signal generation from 2750 candle history",
+        evidence:
+          'History built on startup: "✓ History built: 2750 bars" → "📊 Stored 200 initial signals"',
+        source: "log",
+      },
+    ],
+    constraints: [
+      { dimension: "Execution cycle", value: "1-second async loop" },
+      {
+        dimension: "State control",
+        value: "Explicit state machine — no implicit transitions",
+      },
+      {
+        dimension: "Failure boundary",
+        value: "Per-bot isolation — one bot crash doesn't affect others",
+      },
+      {
+        dimension: "Recovery",
+        value: "SQLite persistence + automatic crash recovery",
+      },
+    ],
+    incidents: [
+      {
+        title: "Duplicate execution under rapid signal changes",
+        timeline: [
+          "ML model generated SHORT signal at 18:10:16",
+          "Within seconds, another SHORT signal arrived at 18:10:22",
+          "Early version would execute both — opening duplicate positions",
+          "No deduplication existed for same-direction signals in same session",
+        ],
+        fix: "Built Unified Watchdog v4.2 with explicit session-based state machine. Each signal gets a unique trade ID. Before execution, watchdog checks for existing ACTIVE/AWAITING trades in same direction — replaces expired signals instead of stacking them.",
+        outcome:
+          "Zero duplicate executions since Watchdog v4.2 deployment. Logs confirm: expired trades are replaced, not duplicated.",
+      },
+    ],
+    whyThisArchitecture:
+      "Four concurrent async subsystems in a single process — BotInstanceManager, LiveFeedManager, Watchdog, and API server. The alternative was microservices, but the overhead of inter-service communication at 1-second cycles would have added latency that matters in live trading. Single process with strict async isolation gives the reliability of separation without network hops.",
   },
   {
     slug: "signal-distribution",
@@ -154,6 +227,48 @@ export const projects: Project[] = [
       "External APIs are unreliable by default. Systems must be built assuming failure at any point.",
     relatedLab: [],
     tags: ["event-driven", "telegram", "distributed", "real-time", "backend"],
+    proofCapsules: [
+      {
+        claim: "Pull-based execution prevents delivery failures",
+        evidence:
+          "MT5 EAs poll GET /api/poll/{metaTraderId} every 10 seconds. Server never pushes — eliminates push failure modes entirely.",
+        source: "architecture",
+      },
+      {
+        claim: "Per-account signal isolation",
+        evidence:
+          "ConcurrentHashMap<String, ConcurrentLinkedQueue> — each MT5 account gets an independent signal queue. One account's failure can't block others.",
+        source: "architecture",
+      },
+      {
+        claim: "TTL-based signal expiry prevents stale execution",
+        evidence:
+          "Market orders expire after 10 seconds, pending orders after 10 minutes. Prevents executing outdated signals in volatile markets.",
+        source: "architecture",
+      },
+    ],
+    constraints: [
+      { dimension: "Delivery model", value: "Pull-based polling (10s cycles)" },
+      { dimension: "State isolation", value: "Per-account in-memory queues" },
+      { dimension: "Signal TTL", value: "10s market / 10min pending orders" },
+      { dimension: "Recovery", value: "systemd-managed process on AWS EC2" },
+    ],
+    incidents: [
+      {
+        title: "Duplicate execution from repeated polling",
+        timeline: [
+          "MT5 EA polled server and received signal",
+          "Network timeout caused EA to not acknowledge receipt",
+          "EA polled again — received same signal again",
+          "Placed duplicate trade on account",
+        ],
+        fix: "Implemented idempotent polling with message ID tracking. Signal is dequeued on first poll, subsequent polls return empty.",
+        outcome:
+          "Zero duplicate trades after implementing message-ID-based dequeue mechanism.",
+      },
+    ],
+    whyThisArchitecture:
+      "Push-based delivery to MT5 was unreliable — connection drops during high activity, no delivery confirmation. Pull-based polling with in-memory queues was simpler and more reliable. No external message broker needed — ConcurrentLinkedQueue handles the throughput at this scale.",
   },
   {
     slug: "qubiforge",
@@ -226,6 +341,48 @@ export const projects: Project[] = [
       "parallel-processing",
       "optimization",
     ],
+    proofCapsules: [
+      {
+        claim: "570M+ rows processed in under 10 minutes",
+        evidence:
+          "Previous version took 8-9 hours. Numba JIT + multiprocessing + Parquet I/O brought it under 10 minutes — same data, same output.",
+        source: "metric",
+      },
+      {
+        claim: "Runs on hardware that can't hold the full dataset in memory",
+        evidence:
+          "Pipeline restructured as a stream — each layer processes and flushes chunks instead of loading everything. Parquet replaced CSV to eliminate I/O bottlenecks.",
+        source: "architecture",
+      },
+    ],
+    constraints: [
+      { dimension: "Data volume", value: "570M+ rows (~57 crore records)" },
+      {
+        dimension: "Memory model",
+        value: "Chunk-based streaming — never loads full dataset",
+      },
+      { dimension: "I/O format", value: "Parquet (replaced CSV)" },
+      {
+        dimension: "Compute",
+        value: "Numba JIT + multiprocessing across cores",
+      },
+    ],
+    incidents: [
+      {
+        title: "Out-of-memory crash at Silver layer",
+        timeline: [
+          "Full dataset loaded into memory at Bronze layer",
+          "Silver layer added 200+ technical indicators per row",
+          "Memory usage spiked beyond available RAM",
+          "Process killed by OS — entire pipeline lost",
+        ],
+        fix: "Restructured pipeline as a stream. Each layer processes chunks independently and flushes to Parquet before next layer reads. Switched from CSV to Parquet for 10x I/O improvement.",
+        outcome:
+          "Pipeline completes reliably on limited hardware. No memory-related crashes since restructure.",
+      },
+    ],
+    whyThisArchitecture:
+      "Five-layer separation (Bronze → Diamond) isolates compute concerns. Bronze does raw simulation, Silver adds features, Gold normalizes, Platinum mines rules, Diamond trains models. Each layer has different memory/compute profiles — separating them allows per-layer optimization without affecting others.",
   },
   {
     slug: "stella",
@@ -283,6 +440,31 @@ export const projects: Project[] = [
       "Good backend architecture is about planning before coding, not fixing after.",
     relatedLab: [],
     tags: ["backend", "architecture", "ecommerce", "api-design", "database"],
+    proofCapsules: [
+      {
+        claim: "Two-phase payment verification with Razorpay",
+        evidence:
+          "Orders are only confirmed after HMAC signature verification from Razorpay callback. Prevents payment-state mismatch.",
+        source: "architecture",
+      },
+    ],
+    constraints: [
+      {
+        dimension: "Auth model",
+        value: "Stateless JWT with dual domains (buyer/seller)",
+      },
+      {
+        dimension: "Payment safety",
+        value: "Two-phase Razorpay signature verification",
+      },
+      {
+        dimension: "Architecture",
+        value: "Strict Controller → Service → Repository layering",
+      },
+    ],
+    incidents: [],
+    whyThisArchitecture:
+      "Monolithic with strict layer separation — clean enough for single-team development, simple enough for single-database consistency. Microservices would add distributed transaction complexity for a payment flow that needs atomicity.",
   },
   {
     slug: "elastic-dca",
@@ -348,6 +530,54 @@ export const projects: Project[] = [
       "distributed",
       "state-consistency",
     ],
+    proofCapsules: [
+      {
+        claim: "Deterministic execution — crash-recoverable",
+        evidence:
+          "Step-based pipeline: receive tick → evaluate conditions → generate actions → dispatch to EA → verify execution. Each step is atomic. If system crashes mid-step, it resumes exactly where it left off.",
+        source: "architecture",
+      },
+      {
+        claim: "Server-centric architecture — MetaTrader is stateless",
+        evidence:
+          "EA polls POST /api/v1/ea/tick every second, receives {actions: [...]} back. All trading intelligence lives in Python DcaEngine singleton, not in MT5.",
+        source: "architecture",
+      },
+    ],
+    constraints: [
+      {
+        dimension: "Execution model",
+        value: "Tick-driven step pipeline (1s cycles)",
+      },
+      {
+        dimension: "State authority",
+        value: "Server is source of truth, EA is stateless executor",
+      },
+      {
+        dimension: "Failure recovery",
+        value: "SQLite-backed state — survives crashes",
+      },
+      {
+        dimension: "Isolation",
+        value: "Independent buy/sell grid systems with isolated state machines",
+      },
+    ],
+    incidents: [
+      {
+        title: "CSV state corruption during volatile market",
+        timeline: [
+          "Version 1 stored all state in CSV files on disk",
+          "Market spiked — system needed to update state rapidly",
+          "Crash during write left CSV in corrupted state",
+          "System thought it had positions it didn't — manual cleanup, lost money",
+        ],
+        fix: "Complete rebuild: replaced CSV with SQLite database, added transactional state updates, built automatic orphan trade detection and cleanup.",
+        outcome:
+          "Zero state corruption incidents since migration to SQLite. System recovers automatically from crashes.",
+      },
+    ],
+    whyThisArchitecture:
+      "Server-centric because MT5 EAs have severe limitations — no persistent state, no reliable networking, no debugging tools. Moving all intelligence to Python/FastAPI gives full control over state, logging, and recovery. EA becomes a thin HTTP client that just executes instructions.",
   },
   {
     slug: "rubiks-solver",
@@ -412,5 +642,21 @@ export const projects: Project[] = [
       "optimization",
       "problem-solving",
     ],
+    proofCapsules: [
+      {
+        claim: "Solves any valid configuration in under 2 seconds",
+        evidence:
+          "Multi-start search across 6 cube orientations. Evaluates 10,000+ candidate paths per solve using CFOP pipeline.",
+        source: "metric",
+      },
+    ],
+    constraints: [
+      { dimension: "State space", value: "~43 quintillion possible states" },
+      { dimension: "Solve time", value: "<2 seconds on legacy hardware" },
+      { dimension: "Move optimality", value: "Consistently under 42 moves" },
+    ],
+    incidents: [],
+    whyThisArchitecture:
+      "CFOP breaks the massive state space into four constrained sub-problems (Cross → F2L → OLL → PLL). Each phase has a bounded search space. Multi-start across orientations approximates global optimum without exhaustive search.",
   },
 ];

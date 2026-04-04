@@ -324,3 +324,45 @@ body::before {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ═══════════════════════════════════════════
+   2K / 4K RESPONSIVE
+   ═══════════════════════════════════════════ */
+
+/* 2K (2560px+) */
+@media (min-width: 2560px) {
+  body {
+    font-size: 18px;
+  }
+
+  .text-display {
+    font-size: clamp(4rem, 6vw, 8rem);
+  }
+
+  .text-headline {
+    font-size: clamp(2.4rem, 3.5vw, 4.5rem);
+  }
+
+  .text-title {
+    font-size: clamp(1.6rem, 2vw, 2.8rem);
+  }
+}
+
+/* 4K (3840px+) */
+@media (min-width: 3840px) {
+  body {
+    font-size: 22px;
+  }
+
+  .text-display {
+    font-size: clamp(5rem, 5vw, 10rem);
+  }
+
+  .text-headline {
+    font-size: clamp(3rem, 3vw, 6rem);
+  }
+
+  .text-title {
+    font-size: clamp(2rem, 2vw, 3.5rem);
+  }
+}

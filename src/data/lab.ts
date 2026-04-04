@@ -4,7 +4,6 @@ export interface LabPost {
   preview: string;
   date: string;
   readTime: string;
-  difficulty: "Beginner" | "Intermediate" | "Advanced";
   tags: string[];
   content: string[];
   status: "published" | "wip";
@@ -20,7 +19,6 @@ export const labPosts: LabPost[] = [
       "Started with 8 hours runtime. Ended at 10 minutes. The fix wasn't one thing — it was understanding how data flows.",
     date: "2025",
     readTime: "6 min",
-    difficulty: "Advanced",
     tags: ["Performance", "Data Engineering", "Python"],
     status: "published",
     relatedProject: "qubiforge",
@@ -41,7 +39,6 @@ export const labPosts: LabPost[] = [
       "Backtesting is a comfortable lie. Here's what actually breaks when real money is on the line.",
     date: "2025",
     readTime: "7 min",
-    difficulty: "Intermediate",
     tags: ["Trading", "Systems", "Architecture"],
     status: "published",
     relatedProject: "ant-meta-bots",
@@ -56,13 +53,35 @@ export const labPosts: LabPost[] = [
     ],
   },
   {
+    slug: "csv-state-corruption-incident",
+    title: "The day CSV state corruption lost me money",
+    preview:
+      "Elastic DCA v1 crashed during a volatile market. State files corrupted. The system thought it had positions it didn't. Manual cleanup. Real money lost.",
+    date: "2025",
+    readTime: "5 min",
+    tags: ["Incident", "Trading", "Lessons"],
+    status: "published",
+    relatedProject: "elastic-dca",
+    series: null,
+    content: [
+      "This is a real incident from Elastic DCA v1. Not a hypothetical — this happened, and it cost me.",
+      "Timeline: 2025, volatile market session. Elastic DCA v1 was running — a 2000+ line MQL5 monolith with CSV files for state persistence. Buy-side and sell-side logic were tangled together in one file.",
+      "14:32 — Market spiked sharply. The system needed to update state for multiple grid rows simultaneously. The EA crashed mid-write to the CSV state file.",
+      "14:33 — EA restarted automatically. But the CSV file was partially written. Some rows had correct data, others had truncated values. The system read this corrupted state and believed it held positions that no longer existed.",
+      "14:35 — The system attempted to close phantom positions. MetaTrader returned errors. The system interpreted these errors as temporary failures and queued retries. Meanwhile, new grid entries were being placed based on the corrupted state.",
+      "14:41 — I noticed the anomalies manually. Stopped the system. Spent 20 minutes reconciling actual positions against what the system believed. Closed everything manually. Net loss from the incident: real money, plus two hours of cleanup.",
+      "Root cause: CSV files have no transaction guarantees. A crash during write leaves the file in an inconsistent state. The system had no integrity checks, no checksums, no recovery mechanism. It trusted the file blindly.",
+      "The fix wasn't incremental. I rebuilt the entire system. Replaced CSV with SQLite — atomic writes, transaction support, crash recovery built in. Moved all trading logic from MQL5 to a Python/FastAPI backend. The EA became a stateless executor that just polls for instructions.",
+      "The rebuild took weeks. But since the migration to SQLite and server-centric architecture: zero state corruption incidents. Zero phantom positions. The system recovers from crashes automatically by replaying the last committed state.",
+    ],
+  },
+  {
     slug: "deterministic-execution",
     title: "Designing a deterministic execution engine",
     preview:
       'When your system manages real money, "it usually works" isn\'t good enough.',
     date: "2025",
     readTime: "8 min",
-    difficulty: "Advanced",
     tags: ["Architecture", "Trading", "Engineering"],
     status: "published",
     relatedProject: "elastic-dca",
@@ -83,7 +102,6 @@ export const labPosts: LabPost[] = [
       "The first version was held together with duct tape and hope. Then the market moved.",
     date: "2025",
     readTime: "5 min",
-    difficulty: "Intermediate",
     tags: ["Lessons", "Trading", "Refactoring"],
     status: "published",
     relatedProject: "elastic-dca",

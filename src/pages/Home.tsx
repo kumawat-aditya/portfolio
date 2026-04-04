@@ -38,7 +38,7 @@ export default function Home() {
           }}
         />
 
-        <div className="max-w-7xl mx-auto px-6 w-full py-32">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 w-full py-32">
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
             {/* Left – Content */}
             <motion.div
@@ -50,7 +50,12 @@ export default function Home() {
               <motion.div variants={item} className="flex items-center gap-2">
                 <span className="status-dot bg-accent-green" />
                 <span className="text-[11px] uppercase tracking-[0.2em] text-text-muted font-medium font-mono">
-                  Building in production
+                  Last signal:{" "}
+                  {new Date().toLocaleDateString("en-IN", {
+                    month: "short",
+                    day: "numeric",
+                  })}{" "}
+                  — systems active
                 </span>
               </motion.div>
 
@@ -71,9 +76,9 @@ export default function Home() {
                 variants={item}
                 className="text-lg md:text-xl text-text-secondary max-w-xl leading-relaxed"
               >
-                Real-time trading infrastructure. ML pipelines processing 570M+
-                rows. Backend systems built for production pressure — not demo
-                day.
+                Real-time trading engines with 1-second execution cycles. ML
+                pipelines processing 570M+ rows. State machines that don't
+                double-execute, even when everything else fails.
               </motion.p>
 
               <motion.div variants={item} className="flex flex-wrap gap-4 pt-2">
@@ -82,12 +87,6 @@ export default function Home() {
                   className="glow-btn inline-flex items-center gap-2 text-sm font-medium"
                 >
                   Explore Systems <ArrowRight size={16} />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-text-secondary border border-border-subtle rounded-lg hover:border-border-hover hover:text-text-primary transition-all duration-300"
-                >
-                  Let's Talk
                 </Link>
               </motion.div>
             </motion.div>
@@ -114,7 +113,7 @@ export default function Home() {
 
       {/* ─── Flagship System ─── */}
       <section className="py-24 md:py-32">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-12">
               <div className="h-px flex-1 max-w-[60px] bg-accent-blue/40" />
@@ -144,25 +143,67 @@ export default function Home() {
                     <p className="text-text-secondary leading-relaxed">
                       {flagship.thesis}
                     </p>
+
+                    {/* Proof capsule — inline */}
+                    {flagship.proofCapsules[0] && (
+                      <div className="border-l-2 border-accent-green/40 pl-3 py-1">
+                        <span className="text-[9px] uppercase tracking-widest text-accent-green/70 font-mono block mb-1">
+                          Proof — {flagship.proofCapsules[0].source}
+                        </span>
+                        <p className="text-xs text-text-muted leading-relaxed">
+                          {flagship.proofCapsules[0].evidence}
+                        </p>
+                      </div>
+                    )}
+
                     <div className="inline-flex items-center gap-2 text-sm text-accent-blue font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                       Deep dive <ArrowUpRight size={14} />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    {Object.entries(flagship.metrics).map(([key, val]) => (
-                      <div
-                        key={key}
-                        className="space-y-1 p-4 rounded-lg bg-bg-surface/50"
-                      >
-                        <div className="text-[10px] uppercase tracking-widest text-text-muted font-mono">
-                          {key}
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      {Object.entries(flagship.metrics).map(([key, val]) => (
+                        <div
+                          key={key}
+                          className="space-y-1 p-4 rounded-lg bg-bg-surface/50"
+                        >
+                          <div className="text-[10px] uppercase tracking-widest text-text-muted font-mono">
+                            {key}
+                          </div>
+                          <div className="text-sm text-text-primary leading-snug">
+                            {val}
+                          </div>
                         </div>
-                        <div className="text-sm text-text-primary leading-snug">
-                          {val}
+                      ))}
+                    </div>
+
+                    {/* Constraint preview */}
+                    {flagship.constraints.length > 0 && (
+                      <div className="p-4 rounded-lg bg-bg-surface/30 border border-border-subtle">
+                        <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono mb-2">
+                          System constraints
+                        </div>
+                        <div className="space-y-1.5">
+                          {flagship.constraints.slice(0, 3).map((c, i) => (
+                            <div
+                              key={i}
+                              className="flex items-start gap-2 text-xs"
+                            >
+                              <span className="text-accent-blue font-mono shrink-0">
+                                →
+                              </span>
+                              <span className="text-text-muted">
+                                <span className="text-text-secondary">
+                                  {c.dimension}:
+                                </span>{" "}
+                                {c.value}
+                              </span>
+                            </div>
+                          ))}
                         </div>
                       </div>
-                    ))}
+                    )}
                   </div>
                 </div>
               </div>
@@ -173,7 +214,7 @@ export default function Home() {
 
       {/* ─── More Systems ─── */}
       <section className="pb-24 md:pb-32">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-12">
               <div className="h-px flex-1 max-w-[60px] bg-border-subtle" />
@@ -204,13 +245,27 @@ export default function Home() {
                       {project.title}
                     </h3>
                     <p className="text-sm text-text-secondary leading-relaxed flex-1">
-                      {project.subtitle}
+                      {project.thesis.length > 140
+                        ? project.thesis.slice(0, 140) + "…"
+                        : project.thesis}
                     </p>
-                    <div className="mt-6 pt-4 border-t border-border-subtle">
-                      <p className="text-xs text-text-muted font-mono">
-                        {project.stack.slice(0, 4).join(" · ")}
-                      </p>
-                    </div>
+
+                    {/* Key constraint */}
+                    {project.constraints[0] && (
+                      <div className="mt-4 pt-3 border-t border-border-subtle">
+                        <div className="flex items-start gap-2 text-xs">
+                          <span className="text-accent-blue font-mono shrink-0">
+                            →
+                          </span>
+                          <span className="text-text-muted">
+                            <span className="text-text-secondary font-medium">
+                              {project.constraints[0].dimension}:
+                            </span>{" "}
+                            {project.constraints[0].value}
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Link>
               </ScrollReveal>
@@ -232,7 +287,7 @@ export default function Home() {
 
       {/* ─── Lab Teaser ─── */}
       <section className="border-t border-border-subtle py-24 md:py-32 bg-bg-secondary/30">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 max-w-[60px] bg-accent-purple/40" />
@@ -281,7 +336,7 @@ export default function Home() {
 
       {/* ─── CTA ─── */}
       <section className="py-24 md:py-32">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 text-center">
           <ScrollReveal>
             <h2 className="text-headline font-bold tracking-tight text-text-primary mb-5">
               Got a system that needs building?
