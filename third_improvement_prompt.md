@@ -6,7 +6,7 @@ This is a high-precision upgrade to push the site into top 1% quality.
 The website already has:
 - Strong personality
 - Real system depth
-- Good structure (flagship / major / supporting)
+- Good structure
 - Honest tone
 
 Your job is to:
@@ -28,27 +28,42 @@ All truth comes from:
 /raw_data/
 
 Structure:
-- content.json → full structured raw project data
+
+- content.json → complete structured raw project data
 - project_{project_name}/
     - README.md
     - ARCHITECTURE.md (contains mermaid diagrams)
-    - images/ (dashboard, demo, etc)
-    - videos/
-    - logs/
+    - images/videos/logs directly in folder (no fixed subfolder structure)
+
+Example:
+project_ant_meta_bots/
+    - ARCHITECTURE.md
+    - dashboard.png
+    - logs.txt
+    - running_bot_details_along_with_trades.png
+
+project_elastic_dca/
+    - demo.mp4
+    - dashboard.png
 
 RULES:
 - DO NOT invent anything
 - DO NOT create fake proof
-- ONLY use what exists in raw_data
-- If proof not found → SKIP that proof type
-- System must gracefully handle missing artifacts
+- ONLY use what exists
+- File names describe their content → use them intelligently
+- If something is missing → SKIP gracefully
+
+System must support:
+- partial proof (some projects have more, some less)
+- future extensibility (new files may be added later)
 
 ---
 
 🧠 CORE GOAL
 
 The site should feel like:
-> “This person builds real systems. I can SEE it.”
+
+“This person builds real systems. I can SEE it.”
 
 NOT:
 - blog
@@ -61,302 +76,255 @@ NOT:
 
 DO NOT:
 - Kill personality
-- Remove human tone
 - Make it corporate
 - Over-polish language
-- Replace strong lines with generic resume text
+- Replace strong human lines
 
 MAINTAIN:
 - Curious tone
-- Honest failure language
+- Honest failures
 - Slight mystery
 - System-first thinking
 
 ---
 
-## 🔥 TASK 1: FULL CONTENT REWRITE (IMPORTANT)
+## 🔥 TASK 1: FULL CONTENT REWRITE
 
 Rewrite ALL website content using updated raw_data/content.json.
 
-Goals:
+Requirements:
 - Reflect updated projects
-- Add newly added project automatically
-- Keep same personality style
-- Reduce repetition
-- Improve clarity slightly (but not simplify too much)
+- Include newly added project automatically
+- Remove outdated claims
+- Keep same human + engineering tone
 
 IMPORTANT:
-- Do NOT exaggerate claims
-- Do NOT highlight unverifiable metrics aggressively
+- Do NOT exaggerate
+- Do NOT aggressively highlight unverifiable metrics
 
 Specifically:
-- Reduce emphasis on "570M rows"
-- If used → mention as contextual detail, not headline
-- Mention real timeline:
-  - initial: ~1.5 days
-  - optimized: ~30 minutes
-  - hardware: Ryzen 5 5600X, 16GB RAM
+- De-emphasize “570M rows”
+- If mentioned → contextual only
+- Use real timeline:
+    - initial: ~1.5 days
+    - optimized: ~30 minutes
+    - hardware: Ryzen 5 5600X, 16GB RAM
 
 ---
 
-## 🎯 TASK 2: HERO REPOSITIONING (VERY IMPORTANT)
+## 🎯 TASK 2: HERO REPOSITIONING
 
-Current issue:
-Too trading-focused → wrong first impression
+Problem:
+Site feels trading-focused → wrong first impression
 
 Fix:
 
-Hero should communicate:
-"Backend / Systems Engineer"
+Primary identity:
+→ Backend Engineer / Systems Engineer / Software Developer
 
-NOT:
-"Trading engineer"
+Trading:
+→ Secondary (badge / subtle signal)
 
-Implementation:
+Goal:
+User should NOT think:
+“He only does trading”
 
-- Primary identity:
-  Backend Engineer / Systems Engineer / Software Developer
-
-- Trading:
-  Secondary signal (badge / subtle mention)
-
-Example direction:
-- Main headline → systems/backend
-- Subtext → mentions real-time systems, infra, etc
-- Trading → appears as one of domains, not identity
+But instead:
+“He builds systems (trading is one domain)”
 
 ---
 
-## 🧱 TASK 3: VISUAL PROOF SYSTEM (CRITICAL)
+## 🧱 TASK 3: VISUAL PROOF INTEGRATION
 
-You must implement a reusable proof system across projects.
+Extract and use:
 
-### Data Extraction Logic:
+1. ARCHITECTURE.md
+→ parse mermaid diagrams → render clean visuals
 
-From each project folder:
+2. Images / Screenshots
+→ dashboard, charts, bot details, CLI outputs
 
-1. DIAGRAMS:
-- Extract mermaid diagrams from ARCHITECTURE.md
-- Render them cleanly (styled, readable)
-- Show at:
-  - SystemDetail → Architecture section (top)
+3. Videos
+→ demos where available
 
-2. IMAGES:
-- Use files like:
-  dashboard.png, demo.png, bot_details.png, etc
-- Display as:
-  - Screenshot gallery OR inline sections
+4. Logs
+→ short, meaningful snippets only
 
-3. VIDEOS:
-- Embed if available (demo clips)
-
-4. LOGS:
-- Use selectively (not too long)
-- Highlight key lines only
+Guidelines:
+- Show visuals where they add clarity
+- Avoid dumping everything
+- Let each project present what it actually has
+- Missing elements should NOT break layout
 
 ---
 
-### Display Pattern (IMPORTANT)
+## 🔴 TASK 4: PROOFBAND REBUILD
 
-For each system:
-
-If available, show in this order:
-
-1. Diagram (top)
-2. Screenshot / UI visual
-3. Key logs (short)
-4. Optional video
-
-If missing → skip gracefully
-
----
-
-## 🔴 TASK 4: FIX PROOFBAND (REBUILD FROM SCRATCH)
-
-Current problem:
+Current issues:
 - Breaks momentum
-- Contains unverified claims
-- Poor spacing in 2K
+- Contains weak/unverified claims
+- Feels disconnected visually (especially on 2K)
 
 You MUST:
+- Remove current implementation
+- Rebuild using ONLY real, verifiable data
 
-- Remove current ProofBand logic
-- Rebuild using ONLY verified data from raw_data
-
-New approach:
-
-- Show 2–4 REAL proof snippets
-- Each must map to:
-  - actual logs
-  - real system behavior
-
-Avoid:
-- Fake metrics
-- Overclaiming
-
-Design:
-- Tighter spacing
-- No large empty gap after hero
-- Immediate transition
+New direction:
+- Few strong proof moments (not many weak ones)
+- Must map to real artifacts (logs, outputs, etc)
+- Tight spacing → no dead gap after hero
 
 ---
 
-## 🟠 TASK 5: ELIMINATE DEAD ZONES (2K+ FIX)
+## 🟠 TASK 5: DEAD ZONE REMOVAL (2K+ ONLY)
 
 Important:
-Issue exists mainly on large screens (2K / 4K)
-
-Fix ONLY for large breakpoints.
-
-### Fix these areas:
-
-1. Hero bottom gap
-→ Reduce vertical spacing
-
-2. Section gaps
-→ Tighten spacing between sections
-
-3. Contact page
-→ No empty bottom half
-
----
-
-### CONTACT PAGE SOLUTION (IMPORTANT)
-
-Problem:
-- Not enough content for full height
-- Removing height breaks footer
+Problem exists mainly on large screens
 
 Fix:
+- Reduce excessive vertical/horizontal gaps
+- Improve section transitions
+- Avoid large empty dark areas
 
-Implement layout:
-
-- Page wrapper = flex column
-- min-h-screen
-- main content = flex-grow
-- footer sticks to bottom
-
-Add subtle filler (non-noisy):
-- “Currently building” line
-- OR small system status note
+DO NOT:
+- Break mobile layouts
+- Over-compress smaller screens
 
 ---
 
-## 🟡 TASK 6: SYSTEM DETAIL REWORK (HIGH IMPACT)
+## 🟡 TASK 6: SYSTEM DETAIL REWORK
 
 Problem:
-- Too text heavy
-- Low engagement
-- Sidebar wasted
+Too text-heavy → low engagement
 
-Fix:
+Fix direction:
+- Structure rewrite
 
-### 1. Structure rewrite
+- Lead with visuals where possible
+- Break long text into structured blocks
+- Avoid large paragraphs
 
-Break sections into:
-
-- Visual → then explanation
-- Not explanation → then visuals
-
-Use:
-- diagrams first
-- then explanation
-
----
-
-### 2. Reduce text fatigue
-
-Convert:
-- large paragraphs → smaller blocks
-- bullet dumps → structured insights
-
----
-
-### 3. Add “hooks” in sections
-
-Examples:
+Add engagement:
 - “What broke”
-- “The moment it failed”
-- “Why this was hard”
+- “Why it was hard”
+- “Failure moments”
 
-Keep human tone.
-
----
-
-### 4. Sidebar upgrade
-
-- Add scroll spy (active section highlight)
-- Smooth scroll (no jump)
-- Optional:
-  - system snapshot (latency, scale, etc)
+Sidebar:
+- Improve interaction (smooth scroll, active state if useful)
+- Use space better if possible
+- BUT do not force unnecessary content
 
 ---
 
-## 🟢 TASK 7: LAB PAGE REBUILD (VERY IMPORTANT)
+## 🟢 TASK 7: LAB PAGE REBUILD
 
-Replace current lab content.
+Replace current Lab content.
 
 New source:
-raw_data → insights section
+→ insights from content.json
 
-Each lab post should be based on:
+Each post should reflect:
+- real problem
+- why it was difficult
+- what failed
+- what changed
 
-- problem
-- why it was hard
-- failure / lesson
+NOT:
+- generic blogs
 
-Format:
-- Real incidents
-- Not generic articles
-
----
-
-### Visual Fix:
-
-- Break 2x2 identical grid
-- Add variation:
-  - size differences
-  - tags (incident / system / failure / scaling)
-  - icons
+Visual improvements:
+- Avoid identical card repetition
+- Add variation (size, tags, structure)
 
 ---
 
-## 🔵 TASK 8: ADD VISUAL DENSITY (ONLY FOR LARGE SCREENS)
+## 🔵 TASK 8: VISUAL DENSITY (LARGE SCREENS ONLY)
 
 Important:
-Do NOT affect mobile / small screens
+Low density issue is only on 2K / 4K
 
-For ≥ 1440px:
-
-- Increase content width usage
+Fix:
+- Better horizontal usage
 - Reduce empty margins
-- Fill space with:
-  - diagrams
-  - visuals
-  - structured blocks
+- Use visuals + structured blocks to fill space meaningfully
 
 ---
 
-## 🟣 TASK 9: SMALL BUT CRITICAL FIXES
+## 🟣 TASK 9: SYSTEM LIST INTERACTION (NEW IDEA)
 
-- Improve Proof text readability (increase size slightly)
-- Improve section transitions (less “floating” feeling)
-- Make flagship vs others more visually distinct
-- Keep hierarchy intact
+Enhance systems list (home/systems page):
+
+Current:
+- Left = title + description + proof
+- Right = metrics
+
+Upgrade:
+
+When hovering a system card:
+→ Show related image/video from project folder
+→ Slide/overlay into right side
+→ Smooth, premium motion
+→ Disappear on hover out
+
+Rules:
+- Use actual project visuals
+- Do NOT disrupt readability
+- Keep interaction subtle, not flashy
+
+Goal:
+Make systems feel alive without changing structure
+
+---
+
+## 🟤 TASK 10: PROJECT HIERARCHY (AUTO DECISION)
+
+Priority is NOT provided.
+
+You must infer:
+
+- flagship
+- core
+- supporting
+
+Based on:
+- depth
+- complexity
+- system impact
+- evolution timeline in content.json
+
+---
+
+## ⚪ TASK 11: CONTACT PAGE FIX
+
+Problem:
+- Empty space on large screens
+- Footer positioning issues
+
+Fix:
+- Improve visual balance
+- Ensure page does not feel incomplete
+
+DO NOT:
+- Force rigid layout instructions
+- Break existing layout system
+
+You may:
+- Add subtle content (status, note, etc)
+- Adjust spacing intelligently
 
 ---
 
 ## 🧪 FINAL VALIDATION CHECK
 
-Before finishing, ensure:
+Ensure:
 
-1. No fake data introduced
-2. All proof comes from raw_data
-3. Visual elements exist where possible
-4. No large empty spaces on 2K
-5. Hero clearly says “backend/systems engineer”
-6. Trading is secondary, not dominant
-7. Site still feels human, not corporate
+- No fake data
+- All proof comes from raw_data
+- Visuals used where available
+- No large empty zones on 2K
+- Hero shows backend/system identity first
+- Trading is secondary
+- Site still feels human
 
 ---
 
@@ -365,7 +333,7 @@ Before finishing, ensure:
 The final site should:
 
 - Hook instantly
-- Feel alive (not static)
+- Feel alive
 - Show real systems visually
 - Maintain personality
 - Remove skepticism
@@ -373,63 +341,13 @@ The final site should:
 
 If done correctly:
 
-HR → Shortlist confidently  
+HR → Shortlist  
 Engineer → Trust + Interview  
 Visitor → Explore deeply  
 
 ---
 
-Do NOT rush.
+Take your time.
 
 Think like:
-You are turning this into a product-level portfolio, not a template site.
-
-
-
-update the prompt and fix these points:
-1. first the raw_data contains data like this:
-[all_father@archlinux portfolio]$ cd raw_data
-[all_father@archlinux raw_data]$ tree
-.
-├── content.json
-├── project_ant_meta_bots
-│   ├── ARCHITECTURE.md
-│   ├── dashboard.png
-│   ├── logs.txt
-│   ├── README.md
-│   └── running_bot_details_along_with_trades.png
-├── project_elastic_dca
-│   ├── ARCHITECTURE.md
-│   ├── dashboard.png
-│   ├── demo.mp4
-│   └── README.md
-├── project_lorentzian_ml_engine
-│   ├── ARCHITECTURE.md
-│   ├── chart_ss_with_signals.png
-│   ├── README.md
-│   └── trade_states_ss.png
-├── project_quant-discovery-pipeline
-│   ├── ARCHITECTURE.md
-│   └── readme.md
-├── project_rubix_cube_solver
-│   ├── ARCHITECTURE.md
-│   ├── cli_ss_solving_cube.png
-│   ├── Demo.mp4
-│   └── README.md
-├── project_stella
-│   ├── ARCHITECTURE.md
-│   ├── DEMO.mp4
-│   ├── README.md
-│   └── startup_console_image.png
-└── project_telegram_signal_distributor
-    ├── admin_chat_with_bot.mp4
-    ├── ARCHITECTURE.md
-    ├── README.md
-    └── signal_forwarder_group_chat_signals.png
-
-8 directories, 28 files
-[all_father@archlinux raw_data]$ 
-
-2. i have removed the priority mentioned in the projects detials in the raw_data/content.json so i let it on opus to decide which one to put in flagship and all. he can understant it by understanding each project form content.json also by checking when each project was made by checking the evolution data of the content.json. so he can understand everything and can easily decide.
-3. also i have an idea in the systems where we show the list of the projects first so there we show the abstract data only as of now and have the title, description, proof on left and other points on right side so we can do this crazy improvement here so it looks good as it is right now but when we hover we can make the image or video of the project (if we have) to like sliding up on the right side where we have the matrics showing right now. like a curvy edged photo or image pops on the right side as overly on the text and when we hover out then hoes down as it came it will be crazy if done correctly with good visuals. So i am not telling to change any data in the current way of showing the project just adding a crazy idea of make the demo image or video poping up on the right side as the right side does not containt too important data so we can do hide it just only when hovered on. adding the current image of how system page show list of projects so that you can undertand my feeling.
-4. 
+You are turning this into a product-level portfolio, not a template.
