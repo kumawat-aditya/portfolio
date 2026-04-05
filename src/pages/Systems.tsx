@@ -264,46 +264,50 @@ function SystemCard({
       onMouseEnter={() => onHover?.(project.slug)}
       onMouseLeave={() => onHover?.(null)}
     >
-      <div className="glass-card h-full hover:border-border-hover transition-all duration-400 relative overflow-hidden">
-        {/* Image layer: covers full card on hover, slides from below */}
+      <div className="glass-card p-6 h-full hover:border-border-hover transition-all duration-400 relative overflow-hidden">
+        <div className="flex items-center gap-2 mb-3">
+          <span
+            className="w-2 h-2 rounded-full"
+            style={{ backgroundColor: project.accentColor }}
+          />
+          <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-mono">
+            {project.tags[0]}
+          </span>
+        </div>
+        <h3 className="text-base font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors mb-2">
+          {project.title}
+        </h3>
+        <p className="text-sm text-text-muted leading-relaxed mb-4">
+          {project.subtitle}
+        </p>
+        <div className="pt-3 border-t border-border-subtle">
+          <p className="text-xs text-text-muted font-mono">
+            {project.stack.slice(0, 4).join(" · ")}
+          </p>
+        </div>
+
+        {/* Hover image for supporting */}
         {firstImage && (
-          <div className="absolute inset-0 z-0 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
-            <img
-              src={firstImage.src}
-              alt={firstImage.alt}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-            {/* Gradient overlay keeps text readable */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/5" />
+          <div className="hidden md:block absolute inset-0 pointer-events-none">
+            <div className="w-full h-full translate-y-[100%] group-hover:translate-y-0 transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
+              <img
+                src={firstImage.src}
+                alt={firstImage.alt}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <h3 className="text-sm font-bold text-text-primary mb-1">
+                  {project.title}
+                </h3>
+                <p className="text-[10px] text-text-muted font-mono">
+                  {project.subtitle}
+                </p>
+              </div>
+            </div>
           </div>
         )}
-
-        {/* Content — always above the image */}
-        <div className="relative z-10 p-6 h-full flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-2 mb-3 group-hover:opacity-0 transition-opacity duration-300">
-              <span
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: project.accentColor }}
-              />
-              <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-mono">
-                {project.tags[0]}
-              </span>
-            </div>
-            <h3 className="text-base font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors mb-2">
-              {project.title}
-            </h3>
-            <p className="text-sm text-text-muted leading-relaxed mb-4">
-              {project.subtitle}
-            </p>
-          </div>
-          <div className="pt-3 border-t border-border-subtle/50 group-hover:opacity-0 transition-opacity duration-300">
-            <p className="text-xs text-text-muted font-mono">
-              {project.stack.slice(0, 4).join(" · ")}
-            </p>
-          </div>
-        </div>
       </div>
     </Link>
   );

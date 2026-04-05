@@ -646,7 +646,12 @@ export const projects: Project[] = [
     whyThisArchitecture:
       "Five-layer separation (Bronze → Diamond) isolates compute concerns. Bronze does raw simulation, Silver adds features, Gold normalizes, Platinum mines rules, Diamond trains models. Each layer has different memory/compute profiles — separating them allows per-layer optimization without affecting others.",
     media: {
-      images: [],
+      images: [{
+          src: `${BASE}projects/qubiforge/diagram-1.png`,
+          alt: "Complete Data Pipeline",
+          caption:
+            "Complete Data Pipeline",
+        },],
       videos: [],
       diagrams: [
         {
