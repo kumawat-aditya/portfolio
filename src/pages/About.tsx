@@ -69,7 +69,7 @@ const patterns = [
   },
   {
     label: "Fail explicitly, recover automatically",
-    text: "Elastic DCA v1 had a CSV corruption bug that silently dropped state. The fix wasn't just SQLite — it was adding checksums, write-ahead logging, and making every failure loud. Silent failures are the ones that cost money.",
+    text: "Elastic DCA v1 had a JSON corruption bug that silently dropped state. The fix wasn't just SQLite — it was adding checksums, write-ahead logging, and making every failure loud. Silent failures are the ones that cost money.",
     source: "Elastic DCA, ANT Meta Bots",
   },
   {

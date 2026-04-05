@@ -289,7 +289,7 @@ export const projects: Project[] = [
     insight:
       "Synchronization between independent systems requires shared contracts, not direct control.",
     relatedLab: [
-      "csv-state-corruption-incident",
+      "json-state-corruption-incident",
       "deterministic-execution",
       "mistakes-elastic-dca",
     ],
@@ -328,14 +328,14 @@ export const projects: Project[] = [
     ],
     incidents: [
       {
-        title: "CSV state corruption during volatile market",
+        title: "JSON state corruption during volatile market",
         timeline: [
-          "Version 1 stored all state in CSV files on disk",
+          "Version 1 stored all state in JSON files on disk",
           "Market spiked — system needed to update state rapidly",
-          "Crash during write left CSV in corrupted state",
+          "Crash during write left JSON in corrupted state",
           "System thought it had positions it didn't — manual cleanup, lost money",
         ],
-        fix: "Complete rebuild: replaced CSV with SQLite database, added transactional state updates, built automatic orphan trade detection and cleanup.",
+        fix: "Complete rebuild: replaced JSON with SQLite database, added transactional state updates, built automatic orphan trade detection and cleanup.",
         outcome:
           "Zero state corruption incidents since migration to SQLite. System recovers automatically from crashes.",
       },

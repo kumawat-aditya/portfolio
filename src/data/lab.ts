@@ -35,8 +35,8 @@ export const labPosts: LabPost[] = [
     ],
   },
   {
-    slug: "csv-state-corruption-incident",
-    title: "The day CSV state corruption lost me money",
+    slug: "json-state-corruption-incident",
+    title: "The day JSON state corruption lost me money",
     preview:
       "Elastic DCA v1 crashed during a volatile market. State files corrupted. Real money lost. Here's the full incident report.",
     date: "2025",
@@ -49,12 +49,12 @@ export const labPosts: LabPost[] = [
     content: [
       "This is a real incident from Elastic DCA v1. Not a hypothetical — this happened, and it cost me.",
       "Timeline: 2025, volatile market session. Elastic DCA v1 was running — MQL5 EA with state.json for persistence. Strict trade ↔ server mapping was attempted, but buy-side and sell-side logic were tangled together without proper isolation.",
-      "14:32 — Market spiked sharply. The system needed to update state for multiple grid rows simultaneously. The EA crashed mid-write to the CSV state file.",
+      "14:32 — Market spiked sharply. The system needed to update state for multiple grid rows simultaneously. The EA crashed mid-write to the json state file.",
       "14:33 — EA restarted automatically. But the state file was partially written. Some entries had correct data, others were truncated. The system read this corrupted state and believed it held positions that no longer existed.",
       "14:35 — The system attempted to close phantom positions. MetaTrader returned errors. The system interpreted these errors as temporary failures and queued retries.",
       "14:41 — I noticed the anomalies manually. Stopped the system. Spent 20 minutes reconciling actual positions against what the system believed. Closed everything manually. Net loss from the incident.",
       "Root cause: file-based persistence has no transaction guarantees. A crash during write leaves state in an inconsistent state. The system had no integrity checks, no checksums, no recovery mechanism. It trusted the file blindly.",
-      "The fix wasn't incremental. I rebuilt the entire system. Replaced CSV with SQLite — atomic writes, transaction support, crash recovery built in. Moved all trading logic from MQL5 to a Python/FastAPI backend. The EA became a stateless executor.",
+      "The fix wasn't incremental. I rebuilt the entire system. Replaced JSON with SQLite — atomic writes, transaction support, crash recovery built in. Moved all trading logic from MQL5 to a Python/FastAPI backend. The EA became a stateless executor.",
     ],
   },
   {
