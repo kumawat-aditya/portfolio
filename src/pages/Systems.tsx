@@ -72,7 +72,10 @@ function SystemCard({
               {project.highlights.length > 0 && (
                 <div className="flex flex-col gap-1.5">
                   {project.highlights.slice(0, 4).map((h, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs text-text-muted">
+                    <div
+                      key={i}
+                      className="flex items-center gap-2 text-xs text-text-muted"
+                    >
                       <span
                         className="w-1 h-1 shrink-0 rounded-full"
                         style={{ backgroundColor: project.accentColor + "60" }}
@@ -187,7 +190,7 @@ function SystemCard({
               </div>
             </div>
 
-            <div className="md:col-span-5 space-y-3 relative z-10">
+            <div className="md:col-span-5 space-y-3 relative z-10 transition-opacity duration-[250ms] group-hover:opacity-0">
               {/* Stack tags */}
               <div className="flex flex-wrap gap-2">
                 {project.stack.map((t) => (
@@ -221,32 +224,31 @@ function SystemCard({
                   </span>
                 </div>
               )}
-
             </div>
           </div>
-
         </div>
 
-        {/* Sweep image: sibling of glass-card inside Link, so group-hover works and overflow:hidden doesn't clip it */}
+        {/* Image reveal — sibling of glass-card so it can overflow above the card's top border */}
         {firstImage && (
-          <div
-            className="hidden md:block absolute top-0 bottom-0 right-0 w-[46%] pointer-events-none z-20"
-            style={{ clipPath: "inset(-400px 0 0 0)" }}
-          >
-            {/* Left edge horizontal fade */}
-            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#08080c] via-[#08080c]/60 to-transparent z-10" />
-            {/* Image: starts below card bottom, sweeps up and exits past card top */}
-            <div className="absolute left-0 right-0 bottom-0 translate-y-[105%] opacity-0 group-hover:-translate-y-[65%] group-hover:opacity-100 transition-all duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
-              <img
-                src={firstImage.src}
-                alt={firstImage.alt}
-                className="w-full h-auto rounded-tl-lg shadow-2xl shadow-black/60"
-                loading="lazy"
-              />
-              <div
-                className="absolute -inset-2 -z-10 rounded-xl blur-2xl opacity-25"
-                style={{ background: project.accentColor }}
-              />
+          <div className="hidden md:block absolute right-[5%] bottom-1 w-[30%] h-[110%] pointer-events-none z-20 overflow-hidden">
+            <div
+              className="hidden md:block absolute h-full top-0 pointer-events-none z-20 overflow-hidden rounded-t-xl translate-y-[100%] group-hover:-translate-y-0 transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+              style={{
+                width: "calc(100% - 2rem)",
+                borderTop: `1px solid ${project.accentColor}`,
+                borderLeft: `1px solid ${project.accentColor}`,
+                borderRight: `1px solid ${project.accentColor}`,
+              }}
+            >
+              {/* Image fills the full container */}
+              <div className="absolute inset-0">
+                <img
+                  src={firstImage.src}
+                  alt={firstImage.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         )}
@@ -258,58 +260,51 @@ function SystemCard({
   return (
     <Link
       to={`/systems/${project.slug}`}
-      className="block group h-full relative hover:z-[30]"
+      className="block group h-full"
       onMouseEnter={() => onHover?.(project.slug)}
       onMouseLeave={() => onHover?.(null)}
     >
-      <div className="glass-card p-6 h-full hover:border-border-hover transition-all duration-400 relative">
-        <div className="flex items-center gap-2 mb-3">
-          <span
-            className="w-2 h-2 rounded-full"
-            style={{ backgroundColor: project.accentColor }}
-          />
-          <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-mono">
-            {project.tags[0]}
-          </span>
-        </div>
-        <h3 className="text-base font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors mb-2">
-          {project.title}
-        </h3>
-        <p className="text-sm text-text-muted leading-relaxed mb-4">
-          {project.subtitle}
-        </p>
-        <div className="pt-3 border-t border-border-subtle">
-          <p className="text-xs text-text-muted font-mono">
-            {project.stack.slice(0, 4).join(" · ")}
-          </p>
-        </div>
-
-
-      </div>
-
-      {/* Sweep image: OUTSIDE glass-card, inside Link — so group-hover: works, overflow:hidden does not clip */}
-      {firstImage && (
-        <div
-          className="hidden md:block absolute top-0 bottom-0 right-0 w-[62%] pointer-events-none z-20"
-          style={{ clipPath: "inset(-300px 0 0 0)" }}
-        >
-          {/* Left blend */}
-          <div className="absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[#08080c] to-transparent z-10" />
-          {/* Image sweep */}
-            <div className="absolute left-0 right-0 bottom-0 translate-y-[105%] opacity-0 group-hover:-translate-y-[65%] group-hover:opacity-90 transition-all duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
+      <div className="glass-card h-full hover:border-border-hover transition-all duration-400 relative overflow-hidden">
+        {/* Image layer: covers full card on hover, slides from below */}
+        {firstImage && (
+          <div className="absolute inset-0 z-0 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
             <img
               src={firstImage.src}
               alt={firstImage.alt}
-              className="w-full h-auto rounded-tl-lg shadow-xl shadow-black/50"
+              className="w-full h-full object-cover"
               loading="lazy"
             />
-            <div
-              className="absolute -inset-1 -z-10 rounded blur-xl opacity-15"
-              style={{ background: project.accentColor }}
-            />
+            {/* Gradient overlay keeps text readable */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/5" />
+          </div>
+        )}
+
+        {/* Content — always above the image */}
+        <div className="relative z-10 p-6 h-full flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-3 group-hover:opacity-0 transition-opacity duration-300">
+              <span
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: project.accentColor }}
+              />
+              <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-mono">
+                {project.tags[0]}
+              </span>
+            </div>
+            <h3 className="text-base font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors mb-2">
+              {project.title}
+            </h3>
+            <p className="text-sm text-text-muted leading-relaxed mb-4">
+              {project.subtitle}
+            </p>
+          </div>
+          <div className="pt-3 border-t border-border-subtle/50 group-hover:opacity-0 transition-opacity duration-300">
+            <p className="text-xs text-text-muted font-mono">
+              {project.stack.slice(0, 4).join(" · ")}
+            </p>
           </div>
         </div>
-      )}
+      </div>
     </Link>
   );
 }
