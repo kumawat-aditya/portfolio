@@ -180,36 +180,23 @@ export default function Home() {
                       </div>
                     )}
 
-                    {/* Key capabilities — fills left column vertical space */}
-                    {flagship.highlights.length > 0 && (
-                      <div className="flex flex-col gap-1.5">
-                        {flagship.highlights.slice(0, 4).map((h, i) => (
+                    {/* Metrics grid — moved to left column */}
+                    <div className="grid grid-cols-2 gap-3">
+                      {Object.entries(flagship.metrics)
+                        .slice(0, 4)
+                        .map(([key, val]) => (
                           <div
-                            key={i}
-                            className="flex items-center gap-2 text-xs text-text-muted"
+                            key={key}
+                            className="space-y-1 p-3 rounded-lg bg-bg-surface/50"
                           >
-                            <span
-                              className="w-1 h-1 shrink-0 rounded-full"
-                              style={{
-                                backgroundColor: flagship.accentColor + "60",
-                              }}
-                            />
-                            {h}
+                            <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono">
+                              {key}
+                            </div>
+                            <div className="text-xs text-text-primary leading-snug">
+                              {val}
+                            </div>
                           </div>
                         ))}
-                      </div>
-                    )}
-
-                    {/* Stack */}
-                    <div className="flex flex-wrap gap-1.5">
-                      {flagship.stack.map((t) => (
-                        <span
-                          key={t}
-                          className="text-[9px] font-mono text-text-muted/60 bg-bg-surface/40 px-2 py-0.5 rounded"
-                        >
-                          {t}
-                        </span>
-                      ))}
                     </div>
 
                     <div className="inline-flex items-center gap-2 text-sm text-accent-blue font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
@@ -260,23 +247,16 @@ export default function Home() {
                       </div>
                     )}
 
-                    <div className="grid grid-cols-2 gap-3">
-                      {Object.entries(flagship.metrics)
-                        .slice(0, 4)
-                        .map(([key, val]) => (
-                          <div
-                            key={key}
-                            className="space-y-1 p-3 rounded-lg bg-bg-surface/50"
-                          >
-                            <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono">
-                              {key}
-                            </div>
-                            <div className="text-xs text-text-primary leading-snug">
-                              {val}
-                            </div>
-                          </div>
-                        ))}
-                    </div>
+                    {flagship.challenges[0] && (
+                      <div className="text-xs text-text-muted leading-relaxed border-l-2 border-accent-amber/30 pl-3">
+                        <span className="text-[9px] uppercase tracking-widest text-accent-amber/70 font-mono block mb-1">
+                          Core Challenge
+                        </span>
+                        {flagship.challenges[0].length > 120
+                          ? flagship.challenges[0].slice(0, 120) + "…"
+                          : flagship.challenges[0]}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

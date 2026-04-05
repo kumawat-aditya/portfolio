@@ -68,34 +68,21 @@ function SystemCard({
                 </div>
               )}
 
-              {/* Key capabilities — fills left column vertical space */}
-              {project.highlights.length > 0 && (
-                <div className="flex flex-col gap-1.5">
-                  {project.highlights.slice(0, 4).map((h, i) => (
+              {/* Metrics grid — moved to left column */}
+              <div className="grid grid-cols-2 gap-3">
+                {Object.entries(project.metrics)
+                  .slice(0, 4)
+                  .map(([key, val]) => (
                     <div
-                      key={i}
-                      className="flex items-center gap-2 text-xs text-text-muted"
+                      key={key}
+                      className="p-3 rounded-lg bg-bg-surface/40 border border-border-subtle"
                     >
-                      <span
-                        className="w-1 h-1 shrink-0 rounded-full"
-                        style={{ backgroundColor: project.accentColor + "60" }}
-                      />
-                      {h}
+                      <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono mb-1">
+                        {key}
+                      </div>
+                      <div className="text-xs text-text-primary">{val}</div>
                     </div>
                   ))}
-                </div>
-              )}
-
-              {/* Stack tags */}
-              <div className="flex flex-wrap gap-1.5">
-                {project.stack.map((t) => (
-                  <span
-                    key={t}
-                    className="text-[9px] font-mono text-text-muted/60 bg-bg-surface/40 px-2 py-0.5 rounded"
-                  >
-                    {t}
-                  </span>
-                ))}
               </div>
 
               <div className="flex items-center gap-2 text-sm text-accent-blue font-medium pt-1 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
@@ -115,22 +102,6 @@ function SystemCard({
                   />
                 </div>
               )}
-
-              <div className="grid grid-cols-2 gap-3">
-                {Object.entries(project.metrics)
-                  .slice(0, 4)
-                  .map(([key, val]) => (
-                    <div
-                      key={key}
-                      className="p-3 rounded-lg bg-bg-surface/40 border border-border-subtle"
-                    >
-                      <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono mb-1">
-                        {key}
-                      </div>
-                      <div className="text-xs text-text-primary">{val}</div>
-                    </div>
-                  ))}
-              </div>
 
               {project.challenges[0] && (
                 <div className="text-xs text-text-muted leading-relaxed border-l-2 border-accent-amber/30 pl-3">
