@@ -7,33 +7,52 @@ import ScrollReveal from "../components/ScrollReveal";
 const timeline = [
   {
     year: "2022",
-    title: "First Lines of Code",
+    title: "Foundations in Structured Systems",
     description:
-      "Started with C++ and Python. Wrote bad code, broke things, learned fast.",
+      "Started with frontend and C++. The real focus was structure — understanding how systems are organized, not just how they look.",
+    tech: ["HTML/CSS", "C++", "Git"],
   },
   {
     year: "2023",
-    title: "Backend Systems",
+    title: "Shift to Computational Systems",
     description:
-      "Built REST APIs, learned database design, shipped my first production backend. Discovered I liked systems more than UI.",
+      "Moved from UI to logic-heavy systems. Built a full Rubik's Cube solver engine in pure C++17 — correctness and efficiency over visuals.",
+    tech: ["C++17", "Algorithms", "State-Space Search"],
   },
   {
-    year: "2024",
-    title: "Trading Infrastructure",
+    year: "Early 2024",
+    title: "Backend Architecture",
     description:
-      "Went deep into algorithmic trading. Built real-time execution systems, ML signal pipelines, and multi-agent architectures handling live market data.",
+      "Shifted into backend engineering. Systems fail not because of code, but because of improper state and boundary structures. Strict 3-tier architecture, JWT auth, payment flows.",
+    tech: ["Java 17", "Spring Boot", "REST APIs", "MariaDB"],
+  },
+  {
+    year: "Late 2024",
+    title: "Real-Time & Distributed Systems",
+    description:
+      "Built event-driven pipelines parsing unstructured Telegram signals for MT5 queues. Translated Pine Script algorithms into Python/MQL5 with strict parity.",
+    tech: ["Java 21", "MQL5", "Python", "Telegram API"],
   },
   {
     year: "2025",
-    title: "Scale & Reliability",
+    title: "Scale & Performance",
     description:
-      "Processing 570M+ rows. Deterministic execution engines. Systems that run unsupervised and don't break when it matters.",
+      "Processing hundreds of millions of trade combinations on commodity hardware (Ryzen 5 5600X, 16GB RAM). Numba JIT, Parquet chunking, strict memory mapping.",
+    tech: ["Python", "Numba", "Parquet", "XGBoost"],
   },
   {
-    year: "Next",
-    title: "What's Ahead",
+    year: "2025–2026",
+    title: "System Synchronization",
     description:
-      "Event-driven architectures. Horizontal scaling. Building systems that other engineers want to work on.",
+      "Solved keeping a stateless terminal synchronized with an authoritative server over unreliable networks. Deterministic state contracts, not isolated scripts.",
+    tech: ["Python", "FastAPI", "MQL5", "WebSockets"],
+  },
+  {
+    year: "2026",
+    title: "Cooperative Async Systems",
+    description:
+      "Single-process concurrency — 4 parallel lifecycles on one thread without race conditions. Strict phase-based execution with cooperative async.",
+    tech: ["Python", "asyncio", "FastAPI", "WebSockets"],
   },
 ];
 
@@ -55,22 +74,22 @@ const patterns = [
   },
   {
     label: "Constraints before features",
-    text: "QubiForge processes 570M+ rows on a 16GB machine. That constraint shaped the entire architecture — chunk-based processing, memory-mapped files, streaming aggregation. The constraint was the design.",
-    source: "QubiForge, Stella",
+    text: "Quant Discovery Pipeline processes hundreds of millions of combinations on a Ryzen 5 5600X with 16GB RAM. That constraint shaped the entire architecture — chunk-based processing, Numba JIT, Parquet streaming. The constraint was the design.",
+    source: "Quant Discovery Pipeline, Stella",
   },
 ];
 
 export default function About() {
   return (
     <PageTransition>
-      <section className="pt-32 pb-24 md:pb-32">
+      <section className="pt-28 pb-20 md:pt-32 md:pb-28">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-20 max-w-3xl"
+            className="mb-14 md:mb-16 max-w-3xl"
           >
             <h1 className="text-display font-bold tracking-tight text-text-primary mb-6">
               About
@@ -88,8 +107,8 @@ export default function About() {
 
           {/* Patterns I Default To */}
           <ScrollReveal>
-            <div className="mb-24">
-              <div className="flex items-center gap-3 mb-10">
+            <div className="mb-16 md:mb-20">
+              <div className="flex items-center gap-3 mb-8">
                 <div className="h-px flex-1 max-w-[60px] bg-accent-blue/40" />
                 <span className="text-[11px] uppercase tracking-[0.2em] text-text-muted font-mono">
                   Patterns I Default To
@@ -118,8 +137,8 @@ export default function About() {
 
           {/* Timeline */}
           <ScrollReveal>
-            <div className="mb-24">
-              <div className="flex items-center gap-3 mb-10">
+            <div className="mb-16 md:mb-20">
+              <div className="flex items-center gap-3 mb-8">
                 <div className="h-px flex-1 max-w-[60px] bg-accent-purple/40" />
                 <span className="text-[11px] uppercase tracking-[0.2em] text-text-muted font-mono">
                   Evolution
@@ -144,6 +163,18 @@ export default function About() {
                         <p className="text-sm text-text-muted leading-relaxed">
                           {entry.description}
                         </p>
+                        {entry.tech && (
+                          <div className="flex flex-wrap gap-1.5 mt-2">
+                            {entry.tech.map((t) => (
+                              <span
+                                key={t}
+                                className="text-[9px] font-mono text-text-muted/60 bg-bg-surface/40 px-1.5 py-0.5 rounded"
+                              >
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </ScrollReveal>
@@ -181,8 +212,7 @@ export default function About() {
                     <em>and</em> fast?
                   </p>
                   <p className="text-text-muted text-sm">
-                    B.Tech CSE (2022–2026) · Building full-time alongside
-                    academics.
+                    B.C.A (2022–2025) · Building full-time alongside academics.
                   </p>
                 </div>
               </div>

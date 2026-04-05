@@ -18,9 +18,9 @@ export default function Contact() {
 
   return (
     <PageTransition>
-      <section className="pt-32 pb-24 md:pb-32 min-h-dvh">
+      <section className="pt-28 pb-20 md:pt-32 md:pb-28 min-h-dvh flex flex-col justify-center">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left – Message */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -99,6 +99,16 @@ export default function Contact() {
                     />
                     linkedin.com/in/adityakumawat105
                   </a>
+                </div>
+              </div>
+
+              {/* Status */}
+              <div className="pt-4 border-t border-border-subtle">
+                <div className="flex items-center gap-2">
+                  <span className="status-dot bg-accent-green" />
+                  <span className="text-xs text-text-muted font-mono">
+                    Open to remote opportunities · Based in Jaipur, India
+                  </span>
                 </div>
               </div>
             </motion.div>

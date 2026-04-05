@@ -1,25 +1,332 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import PageTransition from "../components/PageTransition";
 import ScrollReveal from "../components/ScrollReveal";
-import { projects } from "../data/projects";
+import { projects, type Project } from "../data/projects";
 
 const flagship = projects.filter((p) => p.priority === "flagship");
 const major = projects.filter((p) => p.priority === "major");
 const supporting = projects.filter((p) => p.priority === "supporting");
 
+function SystemCard({
+  project,
+  variant,
+  onHover,
+}: {
+  project: Project;
+  variant: "flagship" | "major" | "supporting";
+  onHover?: (slug: string | null) => void;
+}) {
+  const firstImage = project.media.images[0];
+
+  if (variant === "flagship") {
+    return (
+      <Link
+        to={`/systems/${project.slug}`}
+        className="block group"
+        onMouseEnter={() => onHover?.(project.slug)}
+        onMouseLeave={() => onHover?.(null)}
+      >
+        <div className="glass-card p-8 md:p-10 hover:border-accent-blue/30 transition-all duration-500">
+          <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
+            <div className="md:col-span-7 space-y-4">
+              <div className="flex items-center gap-3">
+                <span
+                  className="w-2.5 h-2.5 rounded-full"
+                  style={{ backgroundColor: project.accentColor }}
+                />
+                <span className="text-[10px] uppercase tracking-[0.2em] text-accent-blue font-mono">
+                  ★ Flagship
+                </span>
+                {project.github === "private" && (
+                  <span className="text-[9px] uppercase tracking-[0.15em] text-text-muted/50 font-mono border border-border-subtle px-1.5 py-0.5 rounded">
+                    Private
+                  </span>
+                )}
+              </div>
+
+              <h2 className="text-title font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors">
+                {project.title}
+              </h2>
+
+              <p className="text-sm text-text-secondary leading-relaxed max-w-lg">
+                {project.thesis}
+              </p>
+
+              {project.proofCapsules[0] && (
+                <div className="border-l-2 border-accent-green/40 pl-3 py-1">
+                  <span className="text-[9px] uppercase tracking-widest text-accent-green/70 font-mono block mb-1">
+                    Proof
+                  </span>
+                  <p className="text-xs text-text-muted leading-relaxed">
+                    {project.proofCapsules[0].evidence.length > 150
+                      ? project.proofCapsules[0].evidence.slice(0, 150) + "…"
+                      : project.proofCapsules[0].evidence}
+                  </p>
+                </div>
+              )}
+
+              {/* Key capabilities — fills left column vertical space */}
+              {project.highlights.length > 0 && (
+                <div className="flex flex-col gap-1.5">
+                  {project.highlights.slice(0, 4).map((h, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs text-text-muted">
+                      <span
+                        className="w-1 h-1 shrink-0 rounded-full"
+                        style={{ backgroundColor: project.accentColor + "60" }}
+                      />
+                      {h}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Stack tags */}
+              <div className="flex flex-wrap gap-1.5">
+                {project.stack.map((t) => (
+                  <span
+                    key={t}
+                    className="text-[9px] font-mono text-text-muted/60 bg-bg-surface/40 px-2 py-0.5 rounded"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-2 text-sm text-accent-blue font-medium pt-1 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                Read the full story <ArrowUpRight size={14} />
+              </div>
+            </div>
+
+            <div className="md:col-span-5 space-y-4">
+              {/* Preview image */}
+              {firstImage && (
+                <div className="rounded-lg overflow-hidden border border-border-subtle bg-bg-surface/30">
+                  <img
+                    src={firstImage.src}
+                    alt={firstImage.alt}
+                    className="w-full h-auto opacity-75 group-hover:opacity-100 transition-opacity duration-500"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 gap-3">
+                {Object.entries(project.metrics)
+                  .slice(0, 4)
+                  .map(([key, val]) => (
+                    <div
+                      key={key}
+                      className="p-3 rounded-lg bg-bg-surface/40 border border-border-subtle"
+                    >
+                      <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono mb-1">
+                        {key}
+                      </div>
+                      <div className="text-xs text-text-primary">{val}</div>
+                    </div>
+                  ))}
+              </div>
+
+              {project.challenges[0] && (
+                <div className="text-xs text-text-muted leading-relaxed border-l-2 border-accent-amber/30 pl-3">
+                  <span className="text-[9px] uppercase tracking-widest text-accent-amber/70 font-mono block mb-1">
+                    Core Challenge
+                  </span>
+                  {project.challenges[0].length > 120
+                    ? project.challenges[0].slice(0, 120) + "…"
+                    : project.challenges[0]}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </Link>
+    );
+  }
+
+  if (variant === "major") {
+    return (
+      <Link
+        to={`/systems/${project.slug}`}
+        className="block group relative hover:z-[30]"
+        onMouseEnter={() => onHover?.(project.slug)}
+        onMouseLeave={() => onHover?.(null)}
+      >
+        <div className="glass-card p-6 md:p-8 hover:border-border-hover transition-all duration-500 relative">
+          <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
+            <div className="md:col-span-7 space-y-3 relative z-10">
+              <div className="flex items-center gap-3">
+                <span
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: project.accentColor }}
+                />
+                <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-mono">
+                  {project.tags[0]}
+                </span>
+                {project.github === "private" && (
+                  <span className="text-[9px] uppercase tracking-[0.15em] text-text-muted/50 font-mono border border-border-subtle px-1.5 py-0.5 rounded">
+                    Private
+                  </span>
+                )}
+              </div>
+
+              <h2 className="text-title font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors">
+                {project.title}
+              </h2>
+
+              <p className="text-sm text-text-muted leading-relaxed">
+                {project.thesis.length > 160
+                  ? project.thesis.slice(0, 160) + "…"
+                  : project.thesis}
+              </p>
+
+              <div className="flex items-center gap-2 text-sm text-accent-blue font-medium pt-1 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                Read the full story <ArrowUpRight size={14} />
+              </div>
+            </div>
+
+            <div className="md:col-span-5 space-y-3 relative z-10">
+              {/* Stack tags */}
+              <div className="flex flex-wrap gap-2">
+                {project.stack.map((t) => (
+                  <span
+                    key={t}
+                    className="text-[10px] font-mono text-text-muted bg-bg-surface/60 px-2 py-1 rounded"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              {/* Primary metric */}
+              <div className="p-3 rounded-lg bg-bg-surface/40 border border-border-subtle">
+                <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono mb-1">
+                  {Object.keys(project.metrics)[0]}
+                </div>
+                <div className="text-xs text-text-primary">
+                  {Object.values(project.metrics)[0]}
+                </div>
+              </div>
+
+              {project.constraints[0] && (
+                <div className="flex items-start gap-2 text-xs text-text-muted">
+                  <span className="text-accent-blue font-mono shrink-0">→</span>
+                  <span>
+                    <span className="text-text-secondary">
+                      {project.constraints[0].dimension}:
+                    </span>{" "}
+                    {project.constraints[0].value}
+                  </span>
+                </div>
+              )}
+
+            </div>
+          </div>
+
+        </div>
+
+        {/* Sweep image: sibling of glass-card inside Link, so group-hover works and overflow:hidden doesn't clip it */}
+        {firstImage && (
+          <div
+            className="hidden md:block absolute top-0 bottom-0 right-0 w-[46%] pointer-events-none z-20"
+            style={{ clipPath: "inset(-400px 0 0 0)" }}
+          >
+            {/* Left edge horizontal fade */}
+            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#08080c] via-[#08080c]/60 to-transparent z-10" />
+            {/* Image: starts below card bottom, sweeps up and exits past card top */}
+            <div className="absolute left-0 right-0 bottom-0 translate-y-[105%] opacity-0 group-hover:-translate-y-[65%] group-hover:opacity-100 transition-all duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
+              <img
+                src={firstImage.src}
+                alt={firstImage.alt}
+                className="w-full h-auto rounded-tl-lg shadow-2xl shadow-black/60"
+                loading="lazy"
+              />
+              <div
+                className="absolute -inset-2 -z-10 rounded-xl blur-2xl opacity-25"
+                style={{ background: project.accentColor }}
+              />
+            </div>
+          </div>
+        )}
+      </Link>
+    );
+  }
+
+  // Supporting
+  return (
+    <Link
+      to={`/systems/${project.slug}`}
+      className="block group h-full relative hover:z-[30]"
+      onMouseEnter={() => onHover?.(project.slug)}
+      onMouseLeave={() => onHover?.(null)}
+    >
+      <div className="glass-card p-6 h-full hover:border-border-hover transition-all duration-400 relative">
+        <div className="flex items-center gap-2 mb-3">
+          <span
+            className="w-2 h-2 rounded-full"
+            style={{ backgroundColor: project.accentColor }}
+          />
+          <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-mono">
+            {project.tags[0]}
+          </span>
+        </div>
+        <h3 className="text-base font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors mb-2">
+          {project.title}
+        </h3>
+        <p className="text-sm text-text-muted leading-relaxed mb-4">
+          {project.subtitle}
+        </p>
+        <div className="pt-3 border-t border-border-subtle">
+          <p className="text-xs text-text-muted font-mono">
+            {project.stack.slice(0, 4).join(" · ")}
+          </p>
+        </div>
+
+
+      </div>
+
+      {/* Sweep image: OUTSIDE glass-card, inside Link — so group-hover: works, overflow:hidden does not clip */}
+      {firstImage && (
+        <div
+          className="hidden md:block absolute top-0 bottom-0 right-0 w-[62%] pointer-events-none z-20"
+          style={{ clipPath: "inset(-300px 0 0 0)" }}
+        >
+          {/* Left blend */}
+          <div className="absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[#08080c] to-transparent z-10" />
+          {/* Image sweep */}
+            <div className="absolute left-0 right-0 bottom-0 translate-y-[105%] opacity-0 group-hover:-translate-y-[65%] group-hover:opacity-90 transition-all duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
+            <img
+              src={firstImage.src}
+              alt={firstImage.alt}
+              className="w-full h-auto rounded-tl-lg shadow-xl shadow-black/50"
+              loading="lazy"
+            />
+            <div
+              className="absolute -inset-1 -z-10 rounded blur-xl opacity-15"
+              style={{ background: project.accentColor }}
+            />
+          </div>
+        </div>
+      )}
+    </Link>
+  );
+}
+
 export default function Systems() {
+  const [, setHovered] = useState<string | null>(null);
+
   return (
     <PageTransition>
-      <section className="pt-32 pb-24 md:pb-32">
+      <section className="pt-32 pb-20 md:pb-28">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-16 md:mb-20"
+            className="mb-14 md:mb-16"
           >
             <div className="flex items-center gap-2 mb-4">
               <span className="text-[11px] uppercase tracking-[0.2em] text-text-muted font-mono">
@@ -38,7 +345,7 @@ export default function Systems() {
 
           {/* ─── Flagship Systems ─── */}
           {flagship.length > 0 && (
-            <div className="mb-16">
+            <div className="mb-14">
               <ScrollReveal>
                 <div className="flex items-center gap-3 mb-8">
                   <div className="h-px flex-1 max-w-[60px] bg-accent-blue/40" />
@@ -48,106 +355,23 @@ export default function Systems() {
                 </div>
               </ScrollReveal>
 
-              <div className="space-y-6">
+              <div className="space-y-5">
                 {flagship.map((project, i) => (
                   <ScrollReveal key={project.slug} delay={i * 0.05}>
-                    <Link
-                      to={`/systems/${project.slug}`}
-                      className="block group"
-                    >
-                      <div className="glass-card p-8 md:p-10 hover:border-accent-blue/30 transition-all duration-500">
-                        <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
-                          <div className="md:col-span-7 space-y-4">
-                            <div className="flex items-center gap-3">
-                              <span
-                                className="w-2.5 h-2.5 rounded-full"
-                                style={{ backgroundColor: project.accentColor }}
-                              />
-                              <span className="text-[10px] uppercase tracking-[0.2em] text-accent-blue font-mono">
-                                ★ Flagship
-                              </span>
-                              {project.github === "private" && (
-                                <span className="text-[9px] uppercase tracking-[0.15em] text-text-muted/50 font-mono border border-border-subtle px-1.5 py-0.5 rounded">
-                                  Private
-                                </span>
-                              )}
-                            </div>
-
-                            <h2 className="text-title font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors">
-                              {project.title}
-                            </h2>
-
-                            <p className="text-sm text-text-secondary leading-relaxed max-w-lg">
-                              {project.thesis}
-                            </p>
-
-                            {/* Proof capsule */}
-                            {project.proofCapsules[0] && (
-                              <div className="border-l-2 border-accent-green/40 pl-3 py-1">
-                                <span className="text-[9px] uppercase tracking-widest text-accent-green/70 font-mono block mb-1">
-                                  Proof
-                                </span>
-                                <p className="text-xs text-text-muted leading-relaxed">
-                                  {project.proofCapsules[0].evidence.length >
-                                  150
-                                    ? project.proofCapsules[0].evidence.slice(
-                                        0,
-                                        150,
-                                      ) + "…"
-                                    : project.proofCapsules[0].evidence}
-                                </p>
-                              </div>
-                            )}
-
-                            <div className="flex items-center gap-2 text-sm text-accent-blue font-medium pt-1 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                              Read the full story <ArrowUpRight size={14} />
-                            </div>
-                          </div>
-
-                          <div className="md:col-span-5 space-y-4">
-                            {/* Key metrics */}
-                            <div className="grid grid-cols-2 gap-3">
-                              {Object.entries(project.metrics)
-                                .slice(0, 4)
-                                .map(([key, val]) => (
-                                  <div
-                                    key={key}
-                                    className="p-3 rounded-lg bg-bg-surface/40 border border-border-subtle"
-                                  >
-                                    <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono mb-1">
-                                      {key}
-                                    </div>
-                                    <div className="text-xs text-text-primary">
-                                      {val}
-                                    </div>
-                                  </div>
-                                ))}
-                            </div>
-
-                            {/* Challenge */}
-                            {project.challenges[0] && (
-                              <div className="text-xs text-text-muted leading-relaxed border-l-2 border-accent-amber/30 pl-3">
-                                <span className="text-[9px] uppercase tracking-widest text-accent-amber/70 font-mono block mb-1">
-                                  Core Challenge
-                                </span>
-                                {project.challenges[0].length > 120
-                                  ? project.challenges[0].slice(0, 120) + "…"
-                                  : project.challenges[0]}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
+                    <SystemCard
+                      project={project}
+                      variant="flagship"
+                      onHover={setHovered}
+                    />
                   </ScrollReveal>
                 ))}
               </div>
             </div>
           )}
 
-          {/* ─── Major Systems ─── */}
+          {/* ─── Core Systems ─── */}
           {major.length > 0 && (
-            <div className="mb-16">
+            <div className="mb-14">
               <ScrollReveal>
                 <div className="flex items-center gap-3 mb-8">
                   <div className="h-px flex-1 max-w-[60px] bg-accent-purple/40" />
@@ -157,132 +381,40 @@ export default function Systems() {
                 </div>
               </ScrollReveal>
 
-              <div className="space-y-6">
+              <div className="space-y-5">
                 {major.map((project, i) => (
                   <ScrollReveal key={project.slug} delay={i * 0.05}>
-                    <Link
-                      to={`/systems/${project.slug}`}
-                      className="block group"
-                    >
-                      <div className="glass-card p-6 md:p-8 hover:border-border-hover transition-all duration-500">
-                        <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
-                          <div className="md:col-span-7 space-y-3">
-                            <div className="flex items-center gap-3">
-                              <span
-                                className="w-2 h-2 rounded-full"
-                                style={{ backgroundColor: project.accentColor }}
-                              />
-                              <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-mono">
-                                {project.tags[0]}
-                              </span>
-                              {project.github === "private" && (
-                                <span className="text-[9px] uppercase tracking-[0.15em] text-text-muted/50 font-mono border border-border-subtle px-1.5 py-0.5 rounded">
-                                  Private
-                                </span>
-                              )}
-                            </div>
-
-                            <h2 className="text-title font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors">
-                              {project.title}
-                            </h2>
-
-                            <p className="text-sm text-text-muted leading-relaxed">
-                              {project.thesis.length > 160
-                                ? project.thesis.slice(0, 160) + "…"
-                                : project.thesis}
-                            </p>
-
-                            <div className="flex items-center gap-2 text-sm text-accent-blue font-medium pt-1 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                              Read the full story <ArrowUpRight size={14} />
-                            </div>
-                          </div>
-
-                          <div className="md:col-span-5 space-y-3">
-                            <div className="flex flex-wrap gap-2">
-                              {project.stack.map((t) => (
-                                <span
-                                  key={t}
-                                  className="text-[10px] font-mono text-text-muted bg-bg-surface/60 px-2 py-1 rounded"
-                                >
-                                  {t}
-                                </span>
-                              ))}
-                            </div>
-
-                            <div className="p-3 rounded-lg bg-bg-surface/40 border border-border-subtle">
-                              <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono mb-1">
-                                {Object.keys(project.metrics)[0]}
-                              </div>
-                              <div className="text-xs text-text-primary">
-                                {Object.values(project.metrics)[0]}
-                              </div>
-                            </div>
-
-                            {project.constraints[0] && (
-                              <div className="flex items-start gap-2 text-xs text-text-muted">
-                                <span className="text-accent-blue font-mono shrink-0">
-                                  →
-                                </span>
-                                <span>
-                                  <span className="text-text-secondary">
-                                    {project.constraints[0].dimension}:
-                                  </span>{" "}
-                                  {project.constraints[0].value}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
+                    <SystemCard
+                      project={project}
+                      variant="major"
+                      onHover={setHovered}
+                    />
                   </ScrollReveal>
                 ))}
               </div>
             </div>
           )}
 
-          {/* ─── Earlier Work ─── */}
+          {/* ─── Supporting Work ─── */}
           {supporting.length > 0 && (
             <div>
               <ScrollReveal>
                 <div className="flex items-center gap-3 mb-8">
                   <div className="h-px flex-1 max-w-[60px] bg-border-subtle" />
                   <span className="text-[11px] uppercase tracking-[0.2em] text-text-muted font-mono">
-                    Earlier Work
+                    Supporting Work
                   </span>
                 </div>
               </ScrollReveal>
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-3 gap-5">
                 {supporting.map((project, i) => (
                   <ScrollReveal key={project.slug} delay={i * 0.05}>
-                    <Link
-                      to={`/systems/${project.slug}`}
-                      className="block group h-full"
-                    >
-                      <div className="glass-card p-6 h-full hover:border-border-hover transition-all duration-400">
-                        <div className="flex items-center gap-2 mb-3">
-                          <span
-                            className="w-2 h-2 rounded-full"
-                            style={{ backgroundColor: project.accentColor }}
-                          />
-                          <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-mono">
-                            {project.tags[0]}
-                          </span>
-                        </div>
-                        <h3 className="text-base font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors mb-2">
-                          {project.title}
-                        </h3>
-                        <p className="text-sm text-text-muted leading-relaxed">
-                          {project.subtitle}
-                        </p>
-                        <div className="mt-4 pt-3 border-t border-border-subtle">
-                          <p className="text-xs text-text-muted font-mono">
-                            {project.stack.slice(0, 4).join(" · ")}
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
+                    <SystemCard
+                      project={project}
+                      variant="supporting"
+                      onHover={setHovered}
+                    />
                   </ScrollReveal>
                 ))}
               </div>

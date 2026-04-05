@@ -351,3 +351,14 @@ Take your time.
 
 Think like:
 You are turning this into a product-level portfolio, not a template.
+
+
+
+your task is to five me a prompt that tells ai to fix the bellow mentioned cases also mark each case as task1 , task2, tast3.etc.
+
+- the image shown on the flagship project on landing page and also on systems page looks awfull look at the image i shared you this is very bad and having blank space in the card also the image just looks pasted there without any good layout thinking. so I want to fix this i am sharing the image to you.
+- in the other projects (other than the main flagship) shown under the systems have image comming when hover but the way it is comming is super bad and can't even understand what is it showing. my actuall i dea was the image will come on the right side of the card and it pops from the bottom right border of the card and goes a little bit above the top right border so this will create a cool 3d kind of feel and will look amazing if shown with good animation and image with clean curvy border. i am also sharing the current way of it is showing image that looks very bad.
+- the side bar active topic. so when i click on any topic there so it directly opens that part does not have smooth scroll.
+- in the elastic dca website mentions that v1 had 2000 + line of mql script with csv all that is fake. it actually never happened. actuall v1 also had the mql + server based working but in that i used a state.json file for persistance and used very strict mapping of the mql trades and server row simulation and that was not very precisely created and had so many flaws. like if meta trader was enable to open trade then server will get stuck and will try to open that again and again and if mql have any open trade that was not registered on server state.json then it will get stuck on emergency state and will not recover even after closing the trade (  will only recover if i go on vps and clear the state.json) and had so many more bad bugs also it was a single file server script with no modularization and best practices. so i want to update this data from all over he website where the mention of v1 mwl 2000+ and csv is used that is fake.
+- there is a bug: when i click back on the system detailed page then it does not brings to the systems page it brings to the last clicked detailse section of the same system detailed page. so this is very bad bug a back means back from system details to system or landing page not to the sub point of the same system details.
+- 

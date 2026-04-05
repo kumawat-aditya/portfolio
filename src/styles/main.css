@@ -346,6 +346,21 @@ body::before {
   .text-title {
     font-size: clamp(1.6rem, 2vw, 2.8rem);
   }
+
+  /* Wider containers for 2K — fill more horizontal space */
+  .max-w-\[1400px\] {
+    max-width: 1600px;
+  }
+
+  /* Tighter section gaps on 2K — reduce dead zones */
+  section {
+    --section-gap-scale: 0.85;
+  }
+
+  /* Glass cards get slightly more padding at 2K */
+  .glass-card {
+    padding-inline: 2rem;
+  }
 }
 
 /* 4K (3840px+) */
@@ -364,5 +379,14 @@ body::before {
 
   .text-title {
     font-size: clamp(2rem, 2vw, 3.5rem);
+  }
+
+  /* Even wider containers for 4K */
+  .max-w-\[1400px\] {
+    max-width: 2000px;
+  }
+
+  .glass-card {
+    padding-inline: 2.5rem;
   }
 }

@@ -9,7 +9,7 @@ import { projects } from "../data/projects";
 import { labPosts } from "../data/lab";
 
 const flagship = projects.find((p) => p.priority === "flagship")!;
-const secondary = projects.filter((p) => p.priority === "major").slice(0, 3);
+const secondary = projects.filter((p) => p.priority === "major").slice(0, 2);
 
 const container = {
   hidden: {},
@@ -45,21 +45,17 @@ export default function Home() {
               variants={container}
               initial="hidden"
               animate="show"
-              className="lg:col-span-3 space-y-7"
+              className="lg:col-span-3 space-y-8"
             >
-              {/* Identity badges */}
-              <motion.div
-                variants={item}
-                className="flex flex-wrap items-center gap-3"
-              >
-                <span className="text-[10px] uppercase tracking-[0.15em] font-mono px-2.5 py-1 rounded border border-accent-blue/30 bg-accent-blue/5 text-accent-blue">
-                  Backend Engineer
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.15em] font-mono px-2.5 py-1 rounded border border-accent-purple/30 bg-accent-purple/5 text-accent-purple">
-                  Systems Engineer
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.15em] font-mono px-2.5 py-1 rounded border border-border-subtle text-text-muted">
-                  Trading Systems
+              <motion.div variants={item} className="flex items-center gap-2">
+                <span className="status-dot bg-accent-green" />
+                <span className="text-[11px] uppercase tracking-[0.2em] text-text-muted font-medium font-mono">
+                  Last signal:{" "}
+                  {new Date().toLocaleDateString("en-IN", {
+                    month: "short",
+                    day: "numeric",
+                  })}{" "}
+                  — systems active
                 </span>
               </motion.div>
 
@@ -67,12 +63,12 @@ export default function Home() {
                 variants={item}
                 className="text-display font-bold tracking-tight leading-[0.95] text-text-primary"
               >
-                I build backend
+                I build systems
                 <br />
                 <span className="gradient-text">
-                  systems that
+                  that run when
                   <br />
-                  don't break.
+                  it matters.
                 </span>
               </motion.h1>
 
@@ -80,36 +76,18 @@ export default function Home() {
                 variants={item}
                 className="text-lg md:text-xl text-text-secondary max-w-xl leading-relaxed"
               >
-                State machines with zero double-execution. Async engines running
-                4 subsystems on a single thread. Data pipelines tuned for
-                commodity hardware. Systems that run unsupervised — and survive
-                when they shouldn't.
+                Real-time trading engines with 1-second execution cycles. ML
+                pipelines processing 570M+ rows. State machines that don't
+                double-execute, even when everything else fails.
               </motion.p>
 
-              <motion.div variants={item} className="flex flex-wrap gap-4 pt-1">
+              <motion.div variants={item} className="flex flex-wrap gap-4 pt-2">
                 <Link
                   to="/systems"
                   className="glow-btn inline-flex items-center gap-2 text-sm font-medium"
                 >
                   Explore Systems <ArrowRight size={16} />
                 </Link>
-                <Link
-                  to="/about"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-text-muted hover:text-text-secondary transition-colors px-4 py-3"
-                >
-                  About me <ArrowRight size={14} />
-                </Link>
-              </motion.div>
-
-              {/* Status line */}
-              <motion.div
-                variants={item}
-                className="flex items-center gap-2 pt-2"
-              >
-                <span className="status-dot bg-accent-green" />
-                <span className="text-[10px] uppercase tracking-[0.15em] text-text-muted font-mono">
-                  Open to remote opportunities · Based in Jaipur, India
-                </span>
               </motion.div>
             </motion.div>
 
@@ -130,14 +108,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Proof Band — tight, no gap ─── */}
+      {/* ─── Proof Band ─── */}
       <ProofBand />
 
       {/* ─── Flagship System ─── */}
-      <section className="py-20 md:py-28">
+      <section className="py-24 md:py-32">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           <ScrollReveal>
-            <div className="flex items-center gap-3 mb-10">
+            <div className="flex items-center gap-3 mb-12">
               <div className="h-px flex-1 max-w-[60px] bg-accent-blue/40" />
               <span className="text-[11px] uppercase tracking-[0.2em] text-text-muted font-mono">
                 Flagship
@@ -147,8 +125,8 @@ export default function Home() {
 
           <ScrollReveal delay={0.1}>
             <Link to={`/systems/${flagship.slug}`} className="block group">
-              <div className="glass-card p-8 md:p-10 hover:border-accent-blue/30 transition-all duration-500">
-                <div className="grid md:grid-cols-2 gap-8 md:gap-10">
+              <div className="glass-card p-8 md:p-12 hover:border-accent-blue/30 transition-all duration-500">
+                <div className="grid md:grid-cols-2 gap-8 md:gap-12">
                   <div className="space-y-5">
                     <div className="flex items-center gap-2">
                       <span
@@ -162,13 +140,11 @@ export default function Home() {
                     <h2 className="text-headline font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors">
                       {flagship.title}
                     </h2>
-                    <p className="text-text-secondary leading-relaxed text-sm md:text-base">
-                      {flagship.thesis.length > 200
-                        ? flagship.thesis.slice(0, 200) + "…"
-                        : flagship.thesis}
+                    <p className="text-text-secondary leading-relaxed">
+                      {flagship.thesis}
                     </p>
 
-                    {/* Proof capsule */}
+                    {/* Proof capsule — inline */}
                     {flagship.proofCapsules[0] && (
                       <div className="border-l-2 border-accent-green/40 pl-3 py-1">
                         <span className="text-[9px] uppercase tracking-widest text-accent-green/70 font-mono block mb-1">
@@ -180,103 +156,54 @@ export default function Home() {
                       </div>
                     )}
 
-                    {/* Key capabilities — fills left column vertical space */}
-                    {flagship.highlights.length > 0 && (
-                      <div className="flex flex-col gap-1.5">
-                        {flagship.highlights.slice(0, 4).map((h, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center gap-2 text-xs text-text-muted"
-                          >
-                            <span
-                              className="w-1 h-1 shrink-0 rounded-full"
-                              style={{
-                                backgroundColor: flagship.accentColor + "60",
-                              }}
-                            />
-                            {h}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Stack */}
-                    <div className="flex flex-wrap gap-1.5">
-                      {flagship.stack.map((t) => (
-                        <span
-                          key={t}
-                          className="text-[9px] font-mono text-text-muted/60 bg-bg-surface/40 px-2 py-0.5 rounded"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
                     <div className="inline-flex items-center gap-2 text-sm text-accent-blue font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                       Deep dive <ArrowUpRight size={14} />
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    {/* Flagship image — layered system panel */}
-                    {flagship.media.images[0] && (
-                      <div className="relative group/img">
-                        {/* Glow background */}
+                    <div className="grid grid-cols-2 gap-4">
+                      {Object.entries(flagship.metrics).map(([key, val]) => (
                         <div
-                          className="absolute -inset-3 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl"
-                          style={{
-                            background: `radial-gradient(ellipse at center, ${flagship.accentColor}22, transparent 70%)`,
-                          }}
-                        />
-                        {/* Glass container with perspective */}
-                        <div
-                          className="relative rounded-xl overflow-hidden border border-border-subtle bg-bg-surface/40 backdrop-blur-sm shadow-2xl shadow-black/20 transition-transform duration-500 group-hover:scale-[1.02]"
-                          style={{
-                            transform:
-                              "perspective(800px) rotateY(-2deg) rotateX(1deg)",
-                          }}
+                          key={key}
+                          className="space-y-1 p-4 rounded-lg bg-bg-surface/50"
                         >
-                          <img
-                            src={flagship.media.images[0].src}
-                            alt={flagship.media.images[0].alt}
-                            className="w-full h-auto opacity-85 group-hover:opacity-100 transition-opacity duration-500"
-                            loading="lazy"
-                          />
-                          {/* Overlay labels */}
-                          <div className="absolute top-3 left-3 flex gap-2">
-                            <span className="text-[8px] font-mono uppercase tracking-wider text-accent-green/90 bg-bg/70 backdrop-blur-sm px-2 py-0.5 rounded border border-accent-green/20">
-                              ● live system
-                            </span>
+                          <div className="text-[10px] uppercase tracking-widest text-text-muted font-mono">
+                            {key}
                           </div>
-                          <div className="absolute bottom-3 right-3">
-                            <span className="text-[8px] font-mono text-text-muted/70 bg-bg/70 backdrop-blur-sm px-2 py-0.5 rounded border border-border-subtle">
-                              {flagship.media.images[0].caption ||
-                                "execution panel"}
-                            </span>
+                          <div className="text-sm text-text-primary leading-snug">
+                            {val}
                           </div>
-                          {/* Subtle scan line effect */}
-                          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-accent-blue/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Constraint preview */}
+                    {flagship.constraints.length > 0 && (
+                      <div className="p-4 rounded-lg bg-bg-surface/30 border border-border-subtle">
+                        <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono mb-2">
+                          System constraints
+                        </div>
+                        <div className="space-y-1.5">
+                          {flagship.constraints.slice(0, 3).map((c, i) => (
+                            <div
+                              key={i}
+                              className="flex items-start gap-2 text-xs"
+                            >
+                              <span className="text-accent-blue font-mono shrink-0">
+                                →
+                              </span>
+                              <span className="text-text-muted">
+                                <span className="text-text-secondary">
+                                  {c.dimension}:
+                                </span>{" "}
+                                {c.value}
+                              </span>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     )}
-
-                    <div className="grid grid-cols-2 gap-3">
-                      {Object.entries(flagship.metrics)
-                        .slice(0, 4)
-                        .map(([key, val]) => (
-                          <div
-                            key={key}
-                            className="space-y-1 p-3 rounded-lg bg-bg-surface/50"
-                          >
-                            <div className="text-[9px] uppercase tracking-widest text-text-muted font-mono">
-                              {key}
-                            </div>
-                            <div className="text-xs text-text-primary leading-snug">
-                              {val}
-                            </div>
-                          </div>
-                        ))}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -285,27 +212,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Core Systems ─── */}
-      <section className="pb-20 md:pb-28">
+      {/* ─── More Systems ─── */}
+      <section className="pb-24 md:pb-32">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           <ScrollReveal>
-            <div className="flex items-center gap-3 mb-10">
+            <div className="flex items-center gap-3 mb-12">
               <div className="h-px flex-1 max-w-[60px] bg-border-subtle" />
               <span className="text-[11px] uppercase tracking-[0.2em] text-text-muted font-mono">
-                Core systems
+                More systems
               </span>
             </div>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="grid md:grid-cols-2 gap-6">
             {secondary.map((project, i) => (
-              <ScrollReveal key={project.slug} delay={i * 0.08}>
+              <ScrollReveal key={project.slug} delay={i * 0.1}>
                 <Link
                   to={`/systems/${project.slug}`}
                   className="block group h-full"
                 >
-                  <div className="glass-card p-6 h-full flex flex-col hover:border-border-hover transition-all duration-400 group">
-                    <div className="flex items-center gap-2 mb-3">
+                  <div className="glass-card p-6 md:p-8 h-full flex flex-col hover:border-border-hover transition-all duration-400 group">
+                    <div className="flex items-center gap-2 mb-4">
                       <span
                         className="w-2 h-2 rounded-full"
                         style={{ backgroundColor: project.accentColor }}
@@ -314,18 +241,18 @@ export default function Home() {
                         {project.tags[0]}
                       </span>
                     </div>
-                    <h3 className="text-title font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors mb-2">
+                    <h3 className="text-title font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors mb-3">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-text-secondary leading-relaxed flex-1 mb-4">
-                      {project.thesis.length > 120
-                        ? project.thesis.slice(0, 120) + "…"
+                    <p className="text-sm text-text-secondary leading-relaxed flex-1">
+                      {project.thesis.length > 140
+                        ? project.thesis.slice(0, 140) + "…"
                         : project.thesis}
                     </p>
 
                     {/* Key constraint */}
                     {project.constraints[0] && (
-                      <div className="pt-3 border-t border-border-subtle">
+                      <div className="mt-4 pt-3 border-t border-border-subtle">
                         <div className="flex items-start gap-2 text-xs">
                           <span className="text-accent-blue font-mono shrink-0">
                             →
@@ -346,12 +273,12 @@ export default function Home() {
           </div>
 
           <ScrollReveal delay={0.2}>
-            <div className="mt-8 text-center">
+            <div className="mt-10 text-center">
               <Link
                 to="/systems"
                 className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-accent-blue transition-colors font-medium"
               >
-                View all {projects.length} systems <ArrowRight size={14} />
+                View all systems <ArrowRight size={14} />
               </Link>
             </div>
           </ScrollReveal>
@@ -359,7 +286,7 @@ export default function Home() {
       </section>
 
       {/* ─── Lab Teaser ─── */}
-      <section className="border-t border-border-subtle py-20 md:py-28 bg-bg-secondary/30">
+      <section className="border-t border-border-subtle py-24 md:py-32 bg-bg-secondary/30">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-4">
@@ -371,18 +298,18 @@ export default function Home() {
             <h2 className="text-headline font-bold tracking-tight text-text-primary mb-4">
               Field notes from building real systems.
             </h2>
-            <p className="text-text-secondary max-w-xl mb-10">
+            <p className="text-text-secondary max-w-xl mb-12">
               Not tutorials. Not best practices. Honest accounts of what
               actually breaks when you ship to production.
             </p>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-3 gap-5">
-            {labPosts.slice(0, 3).map((post, i) => (
-              <ScrollReveal key={post.slug} delay={i * 0.08}>
+          <div className="grid md:grid-cols-2 gap-6">
+            {labPosts.slice(0, 2).map((post, i) => (
+              <ScrollReveal key={post.slug} delay={i * 0.1}>
                 <Link
                   to="/lab"
-                  className="glass-card p-6 block group hover:border-accent-purple/20 transition-all duration-400 h-full flex flex-col"
+                  className="glass-card p-6 block group hover:border-accent-purple/20 transition-all duration-400"
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <span
@@ -394,10 +321,10 @@ export default function Home() {
                       {post.readTime}
                     </span>
                   </div>
-                  <h3 className="text-sm font-semibold text-text-primary group-hover:text-accent-purple transition-colors mb-2">
+                  <h3 className="text-base font-semibold text-text-primary group-hover:text-accent-purple transition-colors mb-2">
                     {post.title}
                   </h3>
-                  <p className="text-xs text-text-muted leading-relaxed flex-1">
+                  <p className="text-sm text-text-muted leading-relaxed">
                     {post.preview}
                   </p>
                 </Link>
@@ -408,15 +335,15 @@ export default function Home() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="py-20 md:py-28">
+      <section className="py-24 md:py-32">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 text-center">
           <ScrollReveal>
             <h2 className="text-headline font-bold tracking-tight text-text-primary mb-5">
               Got a system that needs building?
             </h2>
-            <p className="text-text-secondary text-lg max-w-lg mx-auto mb-8">
-              I'm open to backend challenges, infrastructure work, and systems
-              that actually matter.
+            <p className="text-text-secondary text-lg max-w-lg mx-auto mb-10">
+              I'm open to infrastructure work, trading systems, and backend
+              challenges that actually matter.
             </p>
             <Link
               to="/contact"
