@@ -1,3 +1,4 @@
+import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
@@ -243,14 +244,13 @@ export default function SystemDetail() {
                   >
                     <SectionLabel>Visuals</SectionLabel>
 
-                    {/* Images */}
-                    {project.media.images.length > 0 && (
-                      <div
-                        className={`grid gap-4 ${project.media.images.length > 1 ? "md:grid-cols-2" : ""}`}
-                      >
-                        {project.media.images.map((img, i) => (
+                    {/* Unified grid: images + videos together (no diagrams) */}
+                    {(() => {
+                      const items: React.ReactNode[] = [];
+                      project.media.images.forEach((img, i) => {
+                        items.push(
                           <div
-                            key={i}
+                            key={`img-${i}`}
                             className="rounded-lg overflow-hidden border border-border-subtle bg-bg-surface/30"
                           >
                             <img
@@ -266,17 +266,13 @@ export default function SystemDetail() {
                                 </p>
                               </div>
                             )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Videos */}
-                    {project.media.videos.length > 0 && (
-                      <div className="space-y-4">
-                        {project.media.videos.map((vid, i) => (
+                          </div>,
+                        );
+                      });
+                      project.media.videos.forEach((vid, i) => {
+                        items.push(
                           <div
-                            key={i}
+                            key={`vid-${i}`}
                             className="rounded-lg overflow-hidden border border-border-subtle bg-bg-surface/30"
                           >
                             <video
@@ -295,10 +291,20 @@ export default function SystemDetail() {
                                 </p>
                               </div>
                             )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                          </div>,
+                        );
+                      });
+                      if (items.length === 0) return null;
+                      const cols =
+                        items.length === 1
+                          ? ""
+                          : items.length === 2
+                            ? "md:grid-cols-2"
+                            : "md:grid-cols-2 lg:grid-cols-3";
+                      return (
+                        <div className={`grid gap-4 ${cols}`}>{items}</div>
+                      );
+                    })()}
 
                     {/* Log snippet */}
                     {project.media.logSnippet &&
@@ -415,6 +421,8 @@ export default function SystemDetail() {
                 </div>
               </ScrollReveal>
 
+              {/* Architecture Diagrams — now merged into Visuals section above */}
+
               {/* Architecture Diagrams */}
               {project.media.diagrams && project.media.diagrams.length > 0 && (
                 <ScrollReveal>
@@ -424,7 +432,9 @@ export default function SystemDetail() {
                     className="scroll-mt-24 space-y-5"
                   >
                     <SectionLabel>Architecture Diagrams</SectionLabel>
-                    <div className="space-y-6">
+                    <div
+                      className={`grid gap-6 ${project.media.diagrams.length > 1 ? "md:grid-cols-2" : ""}`}
+                    >
                       {project.media.diagrams.map((d, i) => (
                         <div
                           key={i}
