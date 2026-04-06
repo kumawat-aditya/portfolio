@@ -1,0 +1,890 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  #app {
+    background: #07070d;
+    min-height: 100vh;
+    font-family: 'Space Grotesk', sans-serif;
+    color: #e2e0ff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    border-bottom: 1px solid #1a1a3a;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #09091a;
+  }
+
+  .header-logo {
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .header-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #d4d0ff;
+    letter-spacing: -0.3px;
+  }
+
+  .header-badge {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: #6c63ff;
+    border: 1px solid #2d2b5e;
+    border-radius: 4px;
+    padding: 3px 8px;
+    text-transform: uppercase;
+  }
+
+  .workspace {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    flex: 1;
+    min-height: 0;
+    gap: 0;
+  }
+
+  .panel-left {
+    background: #09091a;
+    border-right: 1px solid #1a1a3a;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .panel-section {
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid #131329;
+  }
+
+  .panel-label {
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #4f4b8a;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .template-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+
+  .tpl-btn {
+    background: #0e0e22;
+    border: 1px solid #1e1e40;
+    border-radius: 7px;
+    padding: 9px 10px;
+    cursor: pointer;
+    transition: all 0.18s;
+    text-align: left;
+  }
+
+  .tpl-btn:hover {
+    border-color: #4f46e5;
+    background: #12123a;
+    transform: translateY(-1px);
+  }
+
+  .tpl-btn.active {
+    border-color: #6c63ff;
+    background: #14143a;
+    box-shadow: 0 0 0 1px #6c63ff33;
+  }
+
+  .tpl-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: #a89fff;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .tpl-type {
+    font-size: 10px;
+    color: #4f4b8a;
+    margin-top: 3px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .editor-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 14px 18px;
+  }
+
+  #editor {
+    flex: 1;
+    background: #07070d;
+    border: 1px solid #1a1a3a;
+    border-radius: 9px;
+    color: #c4c0ff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    padding: 14px 16px;
+    resize: none;
+    outline: none;
+    min-height: 260px;
+    tab-size: 2;
+  }
+
+  #editor:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px #4f46e520;
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .btn-primary {
+    flex: 1;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 11px 18px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.3px;
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  .btn-secondary {
+    background: #0e0e22;
+    border: 1px solid #1e1e40;
+    border-radius: 8px;
+    color: #7b78b0;
+    font-size: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+
+  .btn-secondary:hover {
+    border-color: #4f46e5;
+    color: #a89fff;
+  }
+
+  .panel-right {
+    background: #07070d;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .preview-toolbar {
+    background: #09091a;
+    border-bottom: 1px solid #1a1a3a;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .preview-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pulse 2.5s infinite;
+  }
+
+  @keyframes pulse {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  .status-dot.error {
+    background: #ef4444;
+    animation: none;
+  }
+
+  .status-dot.loading {
+    background: #f59e0b;
+  }
+
+  .status-text {
+    font-size: 12px;
+    color: #4f4b8a;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .toolbar-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .icon-btn {
+    background: #0e0e22;
+    border: 1px solid #1e1e40;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #6c63ff;
+    transition: all 0.15s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .icon-btn:hover {
+    border-color: #4f46e5;
+    background: #12123a;
+  }
+
+  .preview-area {
+    flex: 1;
+    overflow: auto;
+    padding: 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  #output {
+    max-width: 100%;
+  }
+
+  #output svg {
+    border-radius: 12px;
+    max-width: 100%;
+  }
+
+  .error-box {
+    background: #1a0808;
+    border: 1px solid #3d1515;
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: #ff6b6b;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .error-box .err-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ff4444;
+    margin-bottom: 8px;
+  }
+
+  .placeholder-state {
+    text-align: center;
+    color: #2a2850;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    padding: 60px 20px;
+  }
+
+  .placeholder-icon {
+    font-size: 48px;
+    margin-bottom: 18px;
+    opacity: 0.3;
+  }
+
+  .theme-selector {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .theme-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.15s;
+  }
+
+  .theme-dot:hover,
+  .theme-dot.active {
+    border-color: #e2e0ff;
+    transform: scale(1.2);
+  }
+
+  .zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .zoom-val {
+    font-size: 11px;
+    color: #4f4b8a;
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 36px;
+    text-align: center;
+  }
+
+  .output-wrap {
+    transform-origin: top center;
+    transition: transform 0.2s;
+  }
+
+  .kbd {
+    display: inline-block;
+    background: #0e0e22;
+    border: 1px solid #1e1e40;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #6c63ff;
+  }
+</style>
+
+<div id="app">
+  <div class="header">
+    <div class="header-logo">M</div>
+    <div class="header-title">Mermaid Forge</div>
+    <div class="header-badge">Dark Studio</div>
+    <div style="flex:1"></div>
+    <span class="kbd">⌘ + Enter</span>&nbsp;<span style="font-size:11px;color:#3a3869;">to render</span>
+  </div>
+
+  <div class="workspace">
+    <div class="panel-left">
+      <div class="panel-section">
+        <div class="panel-label">Templates</div>
+        <div class="template-grid"
+             id="templates"></div>
+      </div>
+
+      <div class="panel-section">
+        <div class="panel-label">Color Theme</div>
+        <div class="theme-selector"
+             id="themes"></div>
+      </div>
+
+      <div class="editor-wrap">
+        <div class="panel-label">Diagram Source</div>
+        <textarea id="editor"
+                  spellcheck="false"></textarea>
+        <div class="actions">
+          <button class="btn-secondary"
+                  onclick="copyCode()">Copy</button>
+          <button class="btn-secondary"
+                  onclick="clearEditor()">Clear</button>
+          <button class="btn-primary"
+                  onclick="renderDiagram()">▶ Render</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-right">
+      <div class="preview-toolbar">
+        <div class="preview-status">
+          <div class="status-dot"
+               id="statusDot"></div>
+          <span class="status-text"
+                id="statusText">ready</span>
+        </div>
+        <div class="zoom-controls">
+          <div class="icon-btn"
+               onclick="zoom(-0.15)">−</div>
+          <div class="zoom-val"
+               id="zoomVal">100%</div>
+          <div class="icon-btn"
+               onclick="zoom(0.15)">+</div>
+          <div class="icon-btn"
+               onclick="setZoom(1)">1:1</div>
+          <div class="icon-btn"
+               onclick="fitDiagram()">fit</div>
+        </div>
+        <div class="toolbar-actions">
+          <div class="icon-btn"
+               onclick="downloadSVG()">↓ SVG</div>
+          <div class="icon-btn"
+               onclick="downloadPNG()">↓ PNG</div>
+        </div>
+      </div>
+      <div class="preview-area"
+           id="previewArea">
+        <div class="output-wrap"
+             id="outputWrap">
+          <div id="output">
+            <div class="placeholder-state">
+              <div class="placeholder-icon">◈</div>
+              <div>Select a template or write Mermaid syntax</div>
+              <div style="margin-top:8px;color:#1e1c40;font-size:11px;">Press ▶ Render to generate diagram</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  const THEMES = [
+    { name: 'Void', primary: '#4f46e5', bg: '#07070d', node: '#12122a', text: '#e2e0ff', border: '#3b3880', edge: '#2a2870', secondBg: '#0e0e20', accent: '#7c3aed' },
+    { name: 'Cyber', primary: '#00d4ff', bg: '#020d12', node: '#041820', text: '#d0f4ff', border: '#0a4a5e', edge: '#063040', secondBg: '#031218', accent: '#00ff88' },
+    { name: 'Ember', primary: '#f97316', bg: '#0d0703', node: '#1a0d06', text: '#ffd8b0', border: '#5e2a0a', edge: '#3d1a06', secondBg: '#110a04', accent: '#fbbf24' },
+    { name: 'Neon', primary: '#a855f7', bg: '#080212', node: '#130820', text: '#e8d4ff', border: '#4a1280', edge: '#2d0a50', secondBg: '#0d061a', accent: '#ec4899' },
+    { name: 'Matrix', primary: '#22c55e', bg: '#020d05', node: '#041408', text: '#c0ffd0', border: '#0a4d1a', edge: '#063010', secondBg: '#030e06', accent: '#86efac' },
+    { name: 'Rust', primary: '#ef4444', bg: '#0d0505', node: '#1a0808', text: '#ffd0d0', border: '#5e1212', edge: '#3d0a0a', secondBg: '#110606', accent: '#f97316' },
+  ];
+
+  const TEMPLATES = [
+    {
+      name: 'Flowchart', type: 'graph', code: `flowchart TD
+    A([Start]) --> B{Input Valid?}
+    B -->|Yes| C[Process Data]
+    B -->|No| D[Show Error]
+    C --> E[Transform]
+    E --> F[Validate]
+    F -->|Pass| G([Success])
+    F -->|Fail| H[Retry]
+    H --> C
+    D --> A` },
+    {
+      name: 'Sequence', type: 'sequence', code: `sequenceDiagram
+    participant C as Client
+    participant G as Gateway
+    participant S as Service
+    participant D as Database
+    C->>+G: POST /api/request
+    G->>+S: Forward Request
+    S->>+D: Query Data
+    D-->>-S: Result Set
+    S-->>-G: JSON Response
+    G-->>-C: 200 OK` },
+    {
+      name: 'Architecture', type: 'graph', code: `flowchart LR
+    subgraph FE["Frontend Layer"]
+        W[Web App] & M[Mobile]
+    end
+    subgraph API["API Gateway"]
+        GW[Gateway] --> LB[Load Balancer]
+    end
+    subgraph SVC["Microservices"]
+        Auth[Auth Service]
+        Data[Data Service]
+        Queue[Message Queue]
+    end
+    subgraph DB["Data Layer"]
+        PG[(PostgreSQL)]
+        RD[(Redis)]
+    end
+    FE --> API
+    LB --> Auth & Data
+    Data --> Queue
+    Auth --> RD
+    Data --> PG` },
+    {
+      name: 'State Machine', type: 'stateDiagram', code: `stateDiagram-v2
+    [*] --> Idle
+    Idle --> Processing : submit
+    Processing --> Validating : data_received
+    Validating --> Ready : valid
+    Validating --> Error : invalid
+    Error --> Idle : reset
+    Ready --> Complete : confirm
+    Complete --> [*]
+    Processing --> Error : timeout` },
+    {
+      name: 'Class Diagram', type: 'classDiagram', code: `classDiagram
+    class BaseModel {
+        +String id
+        +DateTime createdAt
+        +save()
+        +delete()
+    }
+    class User {
+        +String email
+        +String name
+        +authenticate()
+        +getProfile()
+    }
+    class Project {
+        +String title
+        +String status
+        +List~Task~ tasks
+        +addTask()
+    }
+    class Task {
+        +String title
+        +Boolean done
+        +complete()
+    }
+    BaseModel <|-- User
+    BaseModel <|-- Project
+    Project "1" *-- "many" Task
+    User "1" --> "many" Project` },
+    {
+      name: 'ERD', type: 'erDiagram', code: `erDiagram
+    USER {
+        uuid id PK
+        string email UK
+        string name
+        timestamp created_at
+    }
+    PROJECT {
+        uuid id PK
+        string title
+        string status
+        uuid owner_id FK
+    }
+    TASK {
+        uuid id PK
+        string title
+        boolean completed
+        uuid project_id FK
+    }
+    USER ||--o{ PROJECT : owns
+    PROJECT ||--o{ TASK : contains` },
+    {
+      name: 'Gantt', type: 'gantt', code: `gantt
+    title Sprint Timeline
+    dateFormat YYYY-MM-DD
+    section Design
+    Research         :done, 2024-01-01, 3d
+    Wireframes       :done, 2024-01-04, 4d
+    Prototyping      :active, 2024-01-08, 5d
+    section Backend
+    API Design       :done, 2024-01-03, 4d
+    Auth Service     :2024-01-09, 5d
+    Data Layer       :2024-01-14, 6d
+    section Frontend
+    Component Lib    :2024-01-08, 7d
+    Integration      :2024-01-15, 5d
+    Testing          :2024-01-20, 4d` },
+    {
+      name: 'Git Graph', type: 'gitGraph', code: `gitGraph
+    commit id: "init"
+    commit id: "setup"
+    branch develop
+    checkout develop
+    commit id: "feat/auth"
+    commit id: "feat/api"
+    branch feature/ui
+    checkout feature/ui
+    commit id: "components"
+    commit id: "styling"
+    checkout develop
+    merge feature/ui id: "merge-ui"
+    commit id: "tests"
+    checkout main
+    merge develop id: "v1.0.0" tag: "release"` },
+  ];
+
+  const THEME_COLORS = ['#4f46e5', '#00d4ff', '#f97316', '#a855f7', '#22c55e', '#ef4444'];
+
+  let currentTheme = 0;
+  let zoomLevel = 1;
+  let renderCount = 0;
+
+  function buildThemes() {
+    const cont = document.getElementById('themes');
+    THEMES.forEach((t, i) => {
+      const d = document.createElement('div');
+      d.className = 'theme-dot' + (i === 0 ? ' active' : '');
+      d.style.background = THEME_COLORS[i];
+      d.title = t.name;
+      d.onclick = () => {
+        document.querySelectorAll('.theme-dot').forEach(x => x.classList.remove('active'));
+        d.classList.add('active');
+        currentTheme = i;
+        if (document.getElementById('output').querySelector('svg')) renderDiagram();
+      };
+      cont.appendChild(d);
+    });
+  }
+
+  function buildTemplates() {
+    const cont = document.getElementById('templates');
+    TEMPLATES.forEach((t, i) => {
+      const btn = document.createElement('div');
+      btn.className = 'tpl-btn';
+      btn.innerHTML = `<div class="tpl-name">${t.name}</div><div class="tpl-type">${t.type}</div>`;
+      btn.onclick = () => {
+        document.querySelectorAll('.tpl-btn').forEach(x => x.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('editor').value = t.code;
+        renderDiagram();
+      };
+      cont.appendChild(btn);
+    });
+  }
+
+  function getMermaidConfig(themeIdx) {
+    const t = THEMES[themeIdx];
+    return {
+      theme: 'base',
+      themeVariables: {
+        primaryColor: t.node,
+        primaryTextColor: t.text,
+        primaryBorderColor: t.border,
+        lineColor: t.edge,
+        secondaryColor: t.secondBg,
+        tertiaryColor: t.bg,
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: '13px',
+        nodeBorder: t.border,
+        mainBkg: t.node,
+        clusterBkg: t.secondBg,
+        clusterBorder: t.border,
+        titleColor: t.text,
+        edgeLabelBackground: t.bg,
+        nodeTextColor: t.text,
+        actorBkg: t.node,
+        actorBorder: t.primary,
+        actorLineColor: t.edge,
+        actorTextColor: t.text,
+        signalColor: t.text,
+        signalTextColor: t.text,
+        labelBoxBkgColor: t.node,
+        labelBoxBorderColor: t.primary,
+        labelTextColor: t.text,
+        loopTextColor: t.text,
+        noteBkgColor: t.node,
+        noteTextColor: t.text,
+        noteBorderColor: t.accent,
+        activationBkgColor: t.secondBg,
+        activationBorderColor: t.primary,
+        sequenceNumberColor: t.primary,
+        fillType0: t.node,
+        fillType1: t.secondBg,
+        git0: t.primary,
+        git1: t.accent,
+        git2: '#22d3ee',
+        git3: '#f97316',
+        gitBranchLabel0: t.text,
+        gitBranchLabel1: t.text,
+        commitLabelColor: t.text,
+        commitLabelBackground: t.node,
+        tagLabelColor: t.text,
+        tagLabelBackground: t.accent,
+        tagLabelBorder: t.accent,
+        classText: t.text,
+        attributeBackgroundColorEven: t.node,
+        attributeBackgroundColorOdd: t.secondBg,
+        pie1: t.primary,
+        pie2: t.accent,
+        pie3: '#22d3ee',
+        pie4: '#f97316',
+        pieSectionTextColor: t.text,
+        pieLegendTextColor: t.text,
+        pieTitleTextColor: t.text,
+        taskBkgColor: t.node,
+        taskBorderColor: t.border,
+        taskTextColor: t.text,
+        taskTextLightColor: t.text,
+        taskTextOutsideColor: t.text,
+        activeTaskBkgColor: t.primary,
+        activeTaskBorderColor: t.accent,
+        doneTaskBkgColor: t.secondBg,
+        doneTaskBorderColor: t.border,
+        critBkgColor: '#3d0a0a',
+        critBorderColor: '#ef4444',
+        critTextColor: '#ffd0d0',
+        gridColor: t.edge,
+        todayLineColor: t.accent,
+        sectionBkgColor: t.secondBg,
+        altSectionBkgColor: t.bg,
+        sectionBkgColor2: t.node,
+        excludeBkgColor: t.bg,
+        taskTextDarkColor: t.text,
+      }
+    };
+  }
+
+  function setStatus(state, msg) {
+    const dot = document.getElementById('statusDot');
+    const txt = document.getElementById('statusText');
+    dot.className = 'status-dot' + (state === 'error' ? ' error' : state === 'loading' ? ' loading' : '');
+    txt.textContent = msg;
+  }
+
+  async function renderDiagram() {
+    const code = document.getElementById('editor').value.trim();
+    if (!code) return;
+
+    setStatus('loading', 'rendering...');
+    const output = document.getElementById('output');
+
+    try {
+      const cfg = getMermaidConfig(currentTheme);
+      mermaid.initialize({ startOnLoad: false, ...cfg, securityLevel: 'loose' });
+
+      const id = 'mermaid-' + (++renderCount);
+      const { svg } = await mermaid.render(id, code);
+
+      const t = THEMES[currentTheme];
+      const wrapped = `<div style="background:${t.bg};padding:28px 36px;border-radius:14px;border:1px solid ${t.border};display:inline-block;min-width:400px;">${svg}</div>`;
+      output.innerHTML = wrapped;
+
+      // Style the SVG after render
+      const svgEl = output.querySelector('svg');
+      if (svgEl) {
+        svgEl.style.maxWidth = '100%';
+        svgEl.style.background = 'transparent';
+        svgEl.style.fontFamily = "'JetBrains Mono', monospace";
+      }
+
+      setStatus('ok', `rendered · ${code.split('\n').length} lines`);
+    } catch (e) {
+      output.innerHTML = `<div class="error-box"><div class="err-title">Syntax Error</div>${e.message || e}</div>`;
+      setStatus('error', 'parse error');
+    }
+  }
+
+  function zoom(delta) {
+    zoomLevel = Math.max(0.3, Math.min(3, zoomLevel + delta));
+    applyZoom();
+  }
+
+  function setZoom(v) {
+    zoomLevel = v;
+    applyZoom();
+  }
+
+  function applyZoom() {
+    document.getElementById('outputWrap').style.transform = `scale(${zoomLevel})`;
+    document.getElementById('zoomVal').textContent = Math.round(zoomLevel * 100) + '%';
+  }
+
+  function fitDiagram() {
+    const area = document.getElementById('previewArea');
+    const wrap = document.getElementById('outputWrap');
+    const child = document.getElementById('output').firstChild;
+    if (!child) return;
+    const aW = area.clientWidth - 64;
+    const aH = area.clientHeight - 64;
+    const cW = child.offsetWidth || 600;
+    const cH = child.offsetHeight || 400;
+    zoomLevel = Math.min(aW / cW, aH / cH, 1);
+    applyZoom();
+  }
+
+  function clearEditor() {
+    document.getElementById('editor').value = '';
+    document.getElementById('output').innerHTML = `<div class="placeholder-state"><div class="placeholder-icon">◈</div><div>Select a template or write Mermaid syntax</div></div>`;
+    setStatus('ok', 'ready');
+    document.querySelectorAll('.tpl-btn').forEach(x => x.classList.remove('active'));
+  }
+
+  function copyCode() {
+    navigator.clipboard.writeText(document.getElementById('editor').value);
+  }
+
+  function downloadSVG() {
+    const svg = document.getElementById('output').querySelector('svg');
+    if (!svg) return;
+    const t = THEMES[currentTheme];
+    const full = `<svg xmlns="http://www.w3.org/2000/svg" style="background:${t.bg}">${svg.innerHTML}</svg>`;
+    const blob = new Blob([full], { type: 'image/svg+xml' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'diagram.svg';
+    a.click();
+  }
+
+  function downloadPNG() {
+    const svg = document.getElementById('output').querySelector('svg');
+    if (!svg) return;
+    const t = THEMES[currentTheme];
+    const w = svg.clientWidth || 1920;
+    const h = svg.clientHeight || 1080;
+    const canvas = document.createElement('canvas');
+    canvas.width = w * 2; canvas.height = h * 2;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = t.bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const img = new Image();
+    const data = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([data], { type: 'image/svg+xml' });
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'diagram.png';
+      a.click();
+    };
+    img.src = URL.createObjectURL(blob);
+  }
+
+  document.getElementById('editor').addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      e.preventDefault();
+      renderDiagram();
+    }
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const s = e.target.selectionStart;
+      const v = e.target.value;
+      e.target.value = v.slice(0, s) + '  ' + v.slice(e.target.selectionEnd);
+      e.target.selectionStart = e.target.selectionEnd = s + 2;
+    }
+  });
+
+  buildThemes();
+  buildTemplates();
+
+  // Auto-load first template
+  setTimeout(() => {
+    document.getElementById('editor').value = TEMPLATES[0].code;
+    document.querySelectorAll('.tpl-btn')[0].classList.add('active');
+    renderDiagram();
+  }, 500);
+</script>
