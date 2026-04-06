@@ -121,6 +121,9 @@
     font-weight: 500;
     color: #a89fff;
     font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .tpl-type {
@@ -289,6 +292,18 @@
     background: #12123a;
   }
 
+  .icon-btn.hd {
+    background: #1a143a;
+    border-color: #7c3aed;
+    color: #d4d0ff;
+    font-weight: 600;
+  }
+
+  .icon-btn.hd:hover {
+    background: #2b1d5a;
+    border-color: #a855f7;
+  }
+
   .preview-area {
     flex: 1;
     overflow: auto;
@@ -455,6 +470,8 @@
                onclick="downloadSVG()">↓ SVG</div>
           <div class="icon-btn"
                onclick="downloadPNG()">↓ PNG</div>
+          <div class="icon-btn hd"
+               onclick="downloadHDPNG()">↓ HD PNG</div>
         </div>
       </div>
       <div class="preview-area"
@@ -474,7 +491,8 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<!-- CHANGED: Pinned to exact version 11.4.1 which has full Architecture Diagram support -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
 <script>
   const THEMES = [
     { name: 'Void', primary: '#4f46e5', bg: '#07070d', node: '#12122a', text: '#e2e0ff', border: '#3b3880', edge: '#2a2870', secondBg: '#0e0e20', accent: '#7c3aed' },
@@ -486,6 +504,61 @@
   ];
 
   const TEMPLATES = [
+    {
+      name: 'System Architecture', type: 'architecture-beta', code: `architecture-beta
+    group backend(server)[Backend Single Process]
+    group exec(server)[Execution Engine] in backend
+    group db(database)[Persistence]
+
+    service browser(internet)[React SPA]
+    service api(server)[FastAPI] in backend
+    service botmgr(server)[BotInstanceManager] in backend
+    service ir(server)[InstanceRunners] in backend
+    service strat(server)[Lorentzian Strategy] in backend
+    service sigmem(database)[Signal Database] in backend
+    service lfm(server)[LiveFeedManager] in backend
+    service streams(server)[Tick Streams] in backend
+    service tick(server)[TickFetcher] in backend
+    service wd(server)[Unified Watchdog] in backend
+
+    service dclient(server)[DeltaClient] in exec
+    service strike(server)[StrikeSelector] in exec
+    service order(server)[OrderExecutor] in exec
+
+    service json(disk)[bots json] in db
+    service sigdb(database)[signals db] in db
+    service trddb(database)[trades db] in db
+
+    service extapi(cloud)[Delta Exchange]
+
+    browser:R <--> L:api
+    api:R --> L:botmgr
+    botmgr:R <--> L:json
+
+    botmgr:B --> T:ir
+    ir:B --> T:strat
+    strat:B --> T:sigmem
+    sigmem:R <--> L:sigdb
+
+    wd:T --> B:lfm
+    lfm:L --> R:tick
+    lfm:T --> B:streams
+
+    wd:B --> T:dclient
+    dclient:R --> L:strike
+    strike:R --> L:order
+
+    wd:R --> L:sigmem
+    
+    %% FIX 1: Push trddb to the Right side (next to sigdb) so the "db" group 
+    %% stays together in one neat column instead of stretching across the screen
+    sigdb:R --> L:trddb
+    wd:R --> L:trddb
+
+    %% FIX 2: Route tick out its Left port so it travels down the empty exterior
+    %% instead of crashing vertically through the backend groups
+    dclient:B <--> T:extapi
+    tick:L <--> L:extapi` },
     {
       name: 'Flowchart', type: 'graph', code: `flowchart TD
     A([Start]) --> B{Input Valid?}
@@ -509,39 +582,6 @@
     D-->>-S: Result Set
     S-->>-G: JSON Response
     G-->>-C: 200 OK` },
-    {
-      name: 'Architecture', type: 'graph', code: `flowchart LR
-    subgraph FE["Frontend Layer"]
-        W[Web App] & M[Mobile]
-    end
-    subgraph API["API Gateway"]
-        GW[Gateway] --> LB[Load Balancer]
-    end
-    subgraph SVC["Microservices"]
-        Auth[Auth Service]
-        Data[Data Service]
-        Queue[Message Queue]
-    end
-    subgraph DB["Data Layer"]
-        PG[(PostgreSQL)]
-        RD[(Redis)]
-    end
-    FE --> API
-    LB --> Auth & Data
-    Data --> Queue
-    Auth --> RD
-    Data --> PG` },
-    {
-      name: 'State Machine', type: 'stateDiagram', code: `stateDiagram-v2
-    [*] --> Idle
-    Idle --> Processing : submit
-    Processing --> Validating : data_received
-    Validating --> Ready : valid
-    Validating --> Error : invalid
-    Error --> Idle : reset
-    Ready --> Complete : confirm
-    Complete --> [*]
-    Processing --> Error : timeout` },
     {
       name: 'Class Diagram', type: 'classDiagram', code: `classDiagram
     class BaseModel {
@@ -593,22 +633,6 @@
     }
     USER ||--o{ PROJECT : owns
     PROJECT ||--o{ TASK : contains` },
-    {
-      name: 'Gantt', type: 'gantt', code: `gantt
-    title Sprint Timeline
-    dateFormat YYYY-MM-DD
-    section Design
-    Research         :done, 2024-01-01, 3d
-    Wireframes       :done, 2024-01-04, 4d
-    Prototyping      :active, 2024-01-08, 5d
-    section Backend
-    API Design       :done, 2024-01-03, 4d
-    Auth Service     :2024-01-09, 5d
-    Data Layer       :2024-01-14, 6d
-    section Frontend
-    Component Lib    :2024-01-08, 7d
-    Integration      :2024-01-15, 5d
-    Testing          :2024-01-20, 4d` },
     {
       name: 'Git Graph', type: 'gitGraph', code: `gitGraph
     commit id: "init"
@@ -774,7 +798,6 @@
       const wrapped = `<div style="background:${t.bg};padding:28px 36px;border-radius:14px;border:1px solid ${t.border};display:inline-block;min-width:400px;">${svg}</div>`;
       output.innerHTML = wrapped;
 
-      // Style the SVG after render
       const svgEl = output.querySelector('svg');
       if (svgEl) {
         svgEl.style.maxWidth = '100%';
@@ -864,6 +887,59 @@
     img.src = URL.createObjectURL(blob);
   }
 
+  function downloadHDPNG() {
+    const svg = document.getElementById('output').querySelector('svg');
+    if (!svg) return;
+
+    const t = THEMES[currentTheme];
+    const viewBox = svg.getAttribute('viewBox');
+    let origW = 800, origH = 600;
+    if (viewBox) {
+      const parts = viewBox.split(' ');
+      origW = parseFloat(parts[2]);
+      origH = parseFloat(parts[3]);
+    } else {
+      const rect = svg.getBoundingClientRect();
+      origW = rect.width || 800;
+      origH = rect.height || 600;
+    }
+
+    const scale = Math.max(1920 / origW, 1080 / origH, 2);
+    const baseWidth = origW * scale;
+    const baseHeight = origH * scale;
+
+    const paddingX = baseWidth * 0.05;
+    const paddingY = baseHeight * 0.05;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = baseWidth + (paddingX * 2);
+    canvas.height = baseHeight + (paddingY * 2);
+
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = t.bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const clonedSvg = svg.cloneNode(true);
+    clonedSvg.setAttribute('width', baseWidth);
+    clonedSvg.setAttribute('height', baseHeight);
+    clonedSvg.style.background = 'transparent';
+
+    const data = new XMLSerializer().serializeToString(clonedSvg);
+    const svgBlob = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+
+    const img = new Image();
+    img.onload = () => {
+      ctx.drawImage(img, paddingX, paddingY, baseWidth, baseHeight);
+      URL.revokeObjectURL(url);
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png', 1.0);
+      a.download = 'diagram-full-hd.png';
+      a.click();
+    };
+    img.src = url;
+  }
+
   document.getElementById('editor').addEventListener('keydown', e => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
       e.preventDefault();
@@ -881,7 +957,6 @@
   buildThemes();
   buildTemplates();
 
-  // Auto-load first template
   setTimeout(() => {
     document.getElementById('editor').value = TEMPLATES[0].code;
     document.querySelectorAll('.tpl-btn')[0].classList.add('active');
