@@ -1,343 +1,290 @@
-/frontend-design 
-You are acting as a senior systems engineer, UX designer, and product-level frontend developer.
+You are performing a **precision refinement pass** on a systems engineering portfolio that is already strong (top ~10%).
 
-Your task is to DIRECTLY IMPROVE an existing portfolio website — not redesign from scratch, not replan, but evolve it with precision.
+This is NOT a redesign.
+This is NOT a rewrite of everything.
+
+Your job is to **eliminate the final trust gaps and UX friction** that prevent the site from reaching top 1%.
 
 ---
 
 ## 🧠 CONTEXT
 
-This is NOT a typical “hire me” portfolio.
+The site already has:
 
-This is a **personal systems engineering website** designed to:
+* Strong personality
+* Real systems with depth
+* Honest failure documentation
+* Visual identity (dark, premium, terminal-driven)
+* Structured system pages
 
-1. Hook attention (visual + emotional)
-2. Create curiosity
-3. Show personality and thinking
-4. Provide deep technical exploration for those who want it
+Recent critique identified **very specific high-impact gaps**.
 
-The current site already does:
-
-* Strong visual design
-* Unique tone
-* Good interaction foundation
-
-BUT it has a critical flaw:
-
-👉 **Proof exists, but is invisible**
-
-This creates a mismatch:
-
-* Visuals signal: senior / high-level engineer
-* Evidence signals: unclear / mid-level
-
-Your job is to FIX THIS GAP — without destroying the original feel.
+You must fix ONLY those — without disturbing what already works.
 
 ---
 
-## ⚠️ IMPORTANT RULES (STRICT)
+## ⚠️ NON-NEGOTIABLE RULES
 
 DO NOT:
 
-* Rewrite everything in corporate / resume tone
-* Remove personality or human feel
-* Turn this into a generic “systems engineer portfolio”
-* Invent any data, metrics, or claims
-* Add fake production claims
-* Replace narrative with dry technical documentation
+* Change tone to corporate
+* Remove human / raw language
+* Over-polish content
+* Rewrite everything unnecessarily
+* Add fake proof or invented data
 
 DO:
 
-* Preserve the tone: human, sharp, thoughtful, slightly raw
-* Add proof WITHOUT killing storytelling
-* Use ONLY provided data sources
-* Improve clarity, trust, and depth
-* Keep the experience layered (hook → interest → depth)
+* Strengthen credibility
+* Improve visual proof clarity
+* Fix interaction gaps
+* Remove friction in attention flow
 
 ---
 
-## 🌐 LIVE SITE (MANDATORY REFERENCE)
+# 🔴 TASK 1: FIX ARCHITECTURE DIAGRAMS (CRITICAL)
 
-You MUST continuously evaluate and improve against:
+Current problem:
 
-http://localhost:3000/portfolio/
+* Diagrams exist but are by default small ( which is good for not makking them bugging for the reader. )
 
-Do NOT assume structure — VERIFY by checking the running site.
+Add:
 
----
-
-## 📂 AVAILABLE DATA (SOURCE OF TRUTH)
-
-You are given real engineering artifacts:
-
-root/raw_data/
-
-Each project contains:
-
-* ARCHITECTURE.md → system design details
-* README.md → structured explanation
-* logs.txt → real execution logs (critical for proof)
-* dashboard.png → real system UI proof
-* demo.mp4 → system behavior
-* screenshots → state / signals / flows
-
-Also:
-
-* content.json → structured raw truth of all projects
-
-👉 This is your ONLY source of truth
-👉 If something is not in these files or missing then, DO NOT fabricate it
-
----
-
-## 🔥 CORE PROBLEM TO SOLVE
-
-Current issue:
-
-* Claims like “production”, “deterministic”, “zero duplicate execution”
-* BUT no visible mechanism or proof attached
-
-Result:
-
-* Feels polished but unverified
-* Reduces trust
-
-👉 Your goal:
-Make every strong claim feel **earned and grounded**
-
----
-
-## 🧩 REQUIRED IMPROVEMENTS
-
-### 1. PROOF INTEGRATION (HIGHEST PRIORITY)
-
-Create a reusable concept:
-
-### “Proof Capsule”
-
-Structure:
-[Claim]
-→ [Visual / Log / Artifact Proof]
-→ [Short grounded explanation]
-
-Use:
-
-* logs.txt → real execution snippets
-* dashboard.png → system proof
-* demo.mp4 → behavior
-* ARCHITECTURE.md → system reasoning
-
-Apply this to:
-
-* Home page (above the fold)
-* System cards (light version)
-* System detail pages (deep version)
-
----
-
-### 2. HOME PAGE FIX (CRITICAL)
-
-Problems:
-
-* Strong visuals but weak proof
-* “Building in production” is unverified
-* Feels like startup landing flow
-
-Fix:
-
-ADD (do not remove current vibe):
-
-* One **hard proof strip above the fold**
-  Examples:
-
-  * last run stats
-  * rows processed
-  * execution guarantees (ONLY if supported by logs)
-
-* One **visual proof element**
-  (dashboard / logs preview / system state)
-
-* Reduce CTA noise (focus on credibility first)
+* Click-to-expand (lightbox or modal)
+* Smooth zoom interaction
+* Clear visual affordance (hover → zoom cursor / subtle glow)
 
 Goal:
-Within 5 seconds user should know:
 
-* what you build
-* what actually runs
-* why it’s real
+> Diagrams should feel like something engineers can actually study, not glance at.
 
 ---
 
-### 3. SYSTEMS PAGE RESTRUCTURE
-
-Problems:
-
-* All projects have equal weight
-* Too much stack-based scanning
-* Not enough system pressure visibility
-
-Fix:
-
-* Create hierarchy:
-
-  * Flagship systems (top)
-  * Secondary systems
-  * Earlier work (separate section)
-
-* Each system should show:
-
-  * problem
-  * constraint
-  * failure
-  * outcome
-
-NOT just tech stack
-
----
-
-### 4. SYSTEM DETAIL (MAJOR UPGRADE)
-
-Currently:
-
-* Good structure
-* Too text-heavy
-* Lacks artifacts
-
-ADD:
-
-For each flagship project:
-
-1. Architecture section (visual or structured)
-2. Constraint table:
-
-   * latency
-   * state control
-   * failure boundary
-   * recovery behavior
-3. “What broke” (real incident using logs)
-4. “Why this architecture” (decision reasoning)
-5. Proof section (logs / screenshots / demo)
-
-Goal:
-Turn this into a **system dossier**, not a blog post
-
----
-
-### 5. LAB UPGRADE
+# 🟡 TASK 2: FIX HERO DEAD ZONE
 
 Problem:
 
-* Feels slightly curated, not raw enough
+* Bottom ~30–40% of hero is empty on desktop
 
 Fix:
 
-* Add at least ONE real incident post:
+* Reduce vertical spacing below CTA
+* Pull next section (Proof or equivalent) closer
 
-  * timeline
-  * failure chain
-  * fix
-  * outcome
+Constraint:
 
-* Remove performative elements (like artificial difficulty tags)
+* Do NOT compress hero aggressively
+* Maintain breathing space — just remove “void feeling”
 
-* Connect lab posts to actual systems
+Goal:
+
+> No moment where user thinks “page ended”
 
 ---
 
-### 6. ABOUT PAGE FIX
+# 🟣 TASK 3: LAB SYSTEM FIX (STRUCTURE, NOT CONTENT)
 
 Problem:
 
-* Generic philosophy
-* Weak differentiation
+* Best content is buried
+* No individual URLs
+* Reading context is wrong
 
 Fix:
 
-* Remove generic statements
-* Add:
+* Each lab post gets:
+  → Dedicated page / route
 
-“Patterns I default to now”
+* Listing page:
+  → Show preview only (not full article)
 
-Derived ONLY from real work:
+* Highlight ONE post as:
+  → “Featured Incident” (visually distinct)
 
-* state handling
-* idempotency
-* system boundaries
-* failure-first thinking
+Optional:
 
----
+* Add type distinction:
 
-### 7. CONTACT PAGE
-
-Keep tone human, not corporate
-
----
-
-### 8. 2K / 4K RESPONSIVENESS (IMPORTANT)
-
-Problems:
-
-* Layout stuck in ~1280px thinking
-* Too much empty space
-* Small typography
-
-Fix:
-
-* Expand container widths (page-specific)
-* Add larger breakpoints (2xl, ultra-wide)
-* Scale body text using clamp()
-* Increase micro-text sizes (nav, tags, labels)
-* Make hero + terminal use more horizontal space
-* Reduce over-centered layouts
+  * incident / system / insight
 
 Goal:
-Feel intentional on large screens, not stretched
+
+> Lab becomes a sharable, high-value artifact
 
 ---
 
-## 🎯 EXECUTION STRATEGY
+# 🟤 TASK 4: REMOVE REPETITION (CONTENT TRIM)
 
-You are NOT writing theory.
+Problem:
 
-You must:
+* Same claims repeated multiple times
+  ("4 async subsystems", etc.)
 
-1. Inspect current implementation
-2. Modify actual structure/content decisions
-3. Use raw_data + content.json to inject real proof
-4. Maintain design direction
-5. Improve iteratively
+Fix:
 
----
+* Keep strongest instance
+* Remove duplicates across sections
 
-## 🚫 FAILURE CONDITIONS
+Goal:
 
-Your output will be rejected if:
-
-* It feels like a generic portfolio rewrite
-* It removes personality
-* It invents metrics or claims
-* It ignores provided proof data
-* It over-engineers UI without improving trust
+> Each statement feels intentional, not padded
 
 ---
 
-## ✅ SUCCESS CRITERIA
+# ⚫ TASK 5: FIX PROOF FLOW (HOMEPAGE)
 
-* Site still feels like “me”, not “resume”
-* Stronger trust without losing emotion
-* Proof is visible but not intrusive
-* One flagship system feels undeniable
-* SystemDetail pages feel deep and real
-* Large screens feel premium, not empty
+Problem:
+
+* Stats + logs feel disconnected
+* Visual flow breaks
+
+Fix:
+
+* Align proof elements so eye flows naturally:
+  stats → logs OR logs → stats
+
+* Reduce spatial separation
+
+* Make them feel like one system, not two blocks
+
+Goal:
+
+> Proof section feels cohesive and immediate
 
 ---
 
-## 🧠 FINAL INSTRUCTION
+# ⚪ TASK 6: ADD “ALIVENESS” SIGNAL (SUBTLE)
 
-This is a **refinement and elevation task**, not a rewrite.
+Problem:
 
-Respect what exists.
-Strengthen what’s missing.
-Ground everything in reality.
+* Site feels documented, not running
 
-Proceed step-by-step and improve the system.
+Fix (light touch only):
+
+Add ONE of:
+
+* “Last active: [time/contextual]”
+* “System status: monitoring / idle”
+* “Last run: [relative time]”
+
+Source must be:
+
+* real data OR clearly static contextual text
+
+Do NOT fake live systems.
+
+Goal:
+
+> Subtle sense that systems exist in present time
+
+---
+
+# 🔻 TASK 7: TUNE WEAK LINES (DO NOT OVER-CLEAN)
+
+Problem:
+
+* Some lines feel generic or overly polished
+
+Fix:
+
+* Reduce frequency of weak/generic lines (don’t remove all)
+* Keep a few subtle imperfect lines to preserve human feel
+* Prefer specific, grounded phrasing over abstract claims
+
+Goal:
+
+> Content feels human and real — not AI-cleaned
+
+---
+
+# 📱 TASK 8: MOBILE FIX (CRITICAL)
+
+Problem:
+
+* Layout breaks heavily on mobile
+* Components overflow / spacing inconsistent
+
+Fix:
+
+* Audit all pages on small screens
+
+* Fix:
+
+  * overflow issues
+  * spacing/padding inconsistencies
+  * unreadable text blocks
+  * broken layouts (cards, grids, hero, system pages)
+
+* Ensure:
+
+  * clean vertical flow
+  * readable typography
+  * no horizontal scroll
+
+Goal:
+
+> Site should feel intentionally designed for mobile, not just “shrunk”
+
+---
+
+# 🖥️ TASK 9: 2K+ TERMINAL SCALING
+
+Problem:
+
+* Hero terminal feels too small on ≥2K screens
+
+Fix:
+
+* Increase terminal scale responsively for large screens
+* Maintain balance with text (don’t overpower hero)
+* Ensure readability of log lines at distance
+
+Goal:
+
+> Terminal remains dominant visual anchor on large displays
+
+---
+
+# 🖥️ TASK 10: Do Type Error checking after full upgradation and validation in the very end.
+
+---
+
+# 🧪 FINAL VALIDATION (RECURSIVE)
+
+After EACH major change:
+
+* Re-check on the live site (`http://localhost:3000/portfolio/`)
+* Verify visually (desktop + 2K + mobile)
+* Ensure fix did not break another section
+
+Final checks:
+
+* Diagrams are readable and interactive
+* No major dead zones remain
+* Lab posts are individually accessible
+* No repeated claims clutter the content
+* Mobile layout is stable and clean
+* Terminal scales correctly on large screens
+* Site still feels human, not corporate
+
+---
+
+# 🎯 END GOAL
+
+After this pass:
+
+Engineer should think:
+
+> “I can see how this works.”
+
+Not:
+
+> “I think this works.”
+
+That is the difference between top 10% and top 1%.
+
+---
+
+Do not overdo it.
+
+Precision > volume.

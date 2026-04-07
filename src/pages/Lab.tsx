@@ -69,10 +69,6 @@ function FeaturedCard({ post }: { post: LabPost }) {
 
   return (
     <div className="glass-card p-8 md:p-10 hover:border-accent-purple/20 transition-all duration-400 relative overflow-hidden">
-      <div
-        className="absolute top-0 left-0 w-1 h-full"
-        style={{ backgroundColor: accentColor }}
-      />
       <div className="flex items-center gap-3 mb-4">
         <StatusBadge status={post.status} />
         <span className="text-[10px] text-text-muted font-mono">
@@ -119,10 +115,6 @@ function StandardCard({ post }: { post: LabPost }) {
 
   return (
     <div className="glass-card p-6 h-full flex flex-col hover:border-border-hover transition-all duration-400 relative overflow-hidden">
-      <div
-        className="absolute top-0 left-0 w-0.5 h-full opacity-40"
-        style={{ backgroundColor: accentColor }}
-      />
       <div className="flex items-center gap-3 mb-3">
         <StatusBadge status={post.status} />
         <span className="text-[10px] text-text-muted font-mono">
