@@ -296,11 +296,9 @@ export default function SystemDetail() {
                       });
                       if (items.length === 0) return null;
                       const cols =
-                        items.length === 1
-                          ? ""
-                          : items.length === 2
-                            ? "md:grid-cols-2"
-                            : "md:grid-cols-2 lg:grid-cols-3";
+                        items.length <= 2
+                          ? "md:grid-cols-2"
+                          : "md:grid-cols-2 lg:grid-cols-3";
                       return (
                         <div className={`grid gap-4 ${cols}`}>{items}</div>
                       );
@@ -432,9 +430,7 @@ export default function SystemDetail() {
                     className="scroll-mt-24 space-y-5"
                   >
                     <SectionLabel>Architecture Diagrams</SectionLabel>
-                    <div
-                      className={`grid gap-6 ${project.media.diagrams.length > 1 ? "md:grid-cols-2" : ""}`}
-                    >
+                    <div className="grid gap-6 md:grid-cols-2">
                       {project.media.diagrams.map((d, i) => (
                         <div
                           key={i}

@@ -215,16 +215,12 @@ export const projects: Project[] = [
       ],
       diagrams: [
         {
-          src: `${BASE}projects/ant-meta-bots/diagrams/diagram-3.png`,
+          src: `${BASE}projects/ant-meta-bots/diagrams/architecture.png`,
           title: "System Architecture",
         },
         {
-          src: `${BASE}projects/ant-meta-bots/diagrams/diagram-4.png`,
-          title: "Database Schema",
-        },
-        {
-          src: `${BASE}projects/ant-meta-bots/diagrams/diagram-5.png`,
-          title: "Deployment Architecture",
+          src: `${BASE}projects/ant-meta-bots/diagrams/data_flow.png`,
+          title: "Data Flow",
         },
       ],
     },
@@ -360,28 +356,20 @@ export const projects: Project[] = [
       ],
       diagrams: [
         {
-          src: `${BASE}projects/elastic-dca/diagrams/diagram-1.png`,
+          src: `${BASE}projects/elastic-dca/diagrams/architecture.png`,
           title: "System Architecture",
         },
         {
-          src: `${BASE}projects/elastic-dca/diagrams/diagram-2.png`,
-          title: "Tick Evaluation Loop",
-        },
-        {
-          src: `${BASE}projects/elastic-dca/diagrams/diagram-3.png`,
+          src: `${BASE}projects/elastic-dca/diagrams/grid_row_execution_flow.png`,
           title: "Grid Execution Flow",
         },
         {
-          src: `${BASE}projects/elastic-dca/diagrams/diagram-4.png`,
-          title: "Cycle & Hedge Flow",
+          src: `${BASE}projects/elastic-dca/diagrams/tick_data_flow.png`,
+          title: "Tick Data Flow diagram",
         },
         {
-          src: `${BASE}projects/elastic-dca/diagrams/diagram-5.png`,
-          title: "Database Schema",
-        },
-        {
-          src: `${BASE}projects/elastic-dca/diagrams/diagram-6.png`,
-          title: "State Model",
+          src: `${BASE}projects/elastic-dca/diagrams/tp_hedge_cycle_flow.png`,
+          title: "TP & Hedge Cycle Flow",
         },
       ],
     },
@@ -513,20 +501,12 @@ export const projects: Project[] = [
       ],
       diagrams: [
         {
-          src: `${BASE}projects/signal-distribution/diagrams/diagram-1.png`,
+          src: `${BASE}projects/signal-distribution/diagrams/architecture.png`,
           title: "System Architecture",
         },
         {
-          src: `${BASE}projects/signal-distribution/diagrams/diagram-2.png`,
+          src: `${BASE}projects/signal-distribution/diagrams/data_flow.png`,
           title: "Signal Processing Flow",
-        },
-        {
-          src: `${BASE}projects/signal-distribution/diagrams/diagram-3.png`,
-          title: "Order Execution Flow",
-        },
-        {
-          src: `${BASE}projects/signal-distribution/diagrams/diagram-4.png`,
-          title: "System Deployment",
         },
       ],
     },
@@ -646,21 +626,22 @@ export const projects: Project[] = [
     whyThisArchitecture:
       "Five-layer separation (Bronze → Diamond) isolates compute concerns. Bronze does raw simulation, Silver adds features, Gold normalizes, Platinum mines rules, Diamond trains models. Each layer has different memory/compute profiles — separating them allows per-layer optimization without affecting others.",
     media: {
-      images: [{
+      images: [
+        {
           src: `${BASE}projects/qubiforge/diagram-1.png`,
           alt: "Complete Data Pipeline",
-          caption:
-            "Complete Data Pipeline",
-        },],
+          caption: "Complete Data Pipeline",
+        },
+      ],
       videos: [],
       diagrams: [
         {
-          src: `${BASE}projects/qubiforge/diagrams/diagram-1.png`,
-          title: "Complete Data Pipeline",
+          src: `${BASE}projects/qubiforge/diagrams/pipeline_architecture.png`,
+          title: "Complete Data Pipeline architecture",
         },
         {
-          src: `${BASE}projects/qubiforge/diagrams/diagram-2.png`,
-          title: "Pipeline Flow",
+          src: `${BASE}projects/qubiforge/diagrams/orchestrator_flow.png`,
+          title: "Orchestrator Flow",
         },
       ],
     },
@@ -775,31 +756,15 @@ export const projects: Project[] = [
       videos: [],
       diagrams: [
         {
-          src: `${BASE}projects/lorentzian-ml/diagrams/diagram-1.png`,
+          src: `${BASE}projects/lorentzian-ml/diagrams/architecture.png`,
           title: "Architecture Overview",
         },
         {
-          src: `${BASE}projects/lorentzian-ml/diagrams/diagram-2.png`,
+          src: `${BASE}projects/lorentzian-ml/diagrams/data_flow.png`,
           title: "Data Flow",
         },
         {
-          src: `${BASE}projects/lorentzian-ml/diagrams/diagram-3.png`,
-          title: "Three-Phase Processing Model",
-        },
-        {
-          src: `${BASE}projects/lorentzian-ml/diagrams/diagram-4.png`,
-          title: "Bar Data Structure",
-        },
-        {
-          src: `${BASE}projects/lorentzian-ml/diagrams/diagram-5.png`,
-          title: "Configuration Structures",
-        },
-        {
-          src: `${BASE}projects/lorentzian-ml/diagrams/diagram-6.png`,
-          title: "Computation Pipeline",
-        },
-        {
-          src: `${BASE}projects/lorentzian-ml/diagrams/diagram-7.png`,
+          src: `${BASE}projects/lorentzian-ml/diagrams/filter_pipeline.png`,
           title: "Filter Pipeline",
         },
       ],
@@ -914,16 +879,12 @@ export const projects: Project[] = [
       ],
       diagrams: [
         {
-          src: `${BASE}projects/stella/diagrams/diagram-1.png`,
+          src: `${BASE}projects/stella/diagrams/architecture.png`,
           title: "Architecture Overview",
         },
         {
-          src: `${BASE}projects/stella/diagrams/diagram-2.png`,
+          src: `${BASE}projects/stella/diagrams/data_flow.png`,
           title: "Order Placement Data Flow",
-        },
-        {
-          src: `${BASE}projects/stella/diagrams/diagram-4.png`,
-          title: "Security Architecture",
         },
       ],
     },
@@ -1021,12 +982,12 @@ export const projects: Project[] = [
       ],
       diagrams: [
         {
-          src: `${BASE}projects/rubiks-solver/diagrams/diagram-1.png`,
+          src: `${BASE}projects/rubiks-solver/diagrams/architecture.png`,
           title: "Architecture Overview",
         },
         {
-          src: `${BASE}projects/rubiks-solver/diagrams/diagram-3.png`,
-          title: "Class Hierarchy",
+          src: `${BASE}projects/rubiks-solver/diagrams/data_flow.png`,
+          title: "Data Flow",
         },
       ],
     },
