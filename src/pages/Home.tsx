@@ -149,8 +149,8 @@ export default function Home() {
           <ScrollReveal delay={0.1}>
             <Link to={`/systems/${flagship.slug}`} className="block group">
               <div className="glass-card p-8 md:p-10 hover:border-accent-blue/30 transition-all duration-500">
-                <div className="grid md:grid-cols-2 gap-3 md:gap-10">
-                  <div className="space-y-5">
+                <div className="grid md:grid-cols-2 gap-2.5 md:gap-10">
+                  <div className="space-y-4 md:space-y-5">
                     <div className="flex items-center gap-2">
                       <span
                         className="w-2 h-2 rounded-full"
@@ -211,10 +211,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Mobile divider */}
-                  <div className="md:hidden h-px bg-border-subtle" />
-
-                  <div className="space-y-4">
+                  <div className="space-y-3.5 md:space-y-4 border-t border-border-subtle mt-0 pt-3 md:border-t-0 md:mt-0 md:pt-0">
                     {/* Flagship image — layered system panel */}
                     {flagship.media.images[0] && (
                       <div className="relative group/img">

@@ -30,8 +30,8 @@ function SystemCard({
         onMouseLeave={() => onHover?.(null)}
       >
         <div className="glass-card p-8 md:p-10 hover:border-accent-blue/30 transition-all duration-500">
-          <div className="grid md:grid-cols-12 gap-3 md:gap-8 items-start">
-            <div className="md:col-span-7 space-y-4">
+          <div className="grid md:grid-cols-12 gap-2.5 md:gap-8 items-start">
+            <div className="md:col-span-7 space-y-3.5 md:space-y-4">
               <div className="flex items-center gap-3">
                 <span
                   className="w-2.5 h-2.5 rounded-full"
@@ -96,10 +96,7 @@ function SystemCard({
               </div>
             </div>
 
-            {/* Mobile divider */}
-            <div className="md:hidden h-px bg-border-subtle col-span-full" />
-
-            <div className="md:col-span-5 space-y-4">
+            <div className="md:col-span-5 space-y-3.5 md:space-y-4 border-t border-border-subtle mt-0 pt-3 md:border-t-0 md:mt-0 md:pt-0">
               {/* Preview image — parallax zoom */}
               {firstImage && (
                 <div className="relative group/img">
@@ -158,7 +155,7 @@ function SystemCard({
         onMouseLeave={() => onHover?.(null)}
       >
         <div className="glass-card p-6 md:p-8 hover:border-border-hover transition-all duration-500 relative">
-          <div className="grid md:grid-cols-12 gap-2 md:gap-8 items-start">
+          <div className="grid md:grid-cols-12 gap-2.5 md:gap-8 items-start">
             <div className="md:col-span-7 space-y-3 relative z-10">
               <div className="flex items-center gap-3">
                 <span
@@ -190,10 +187,7 @@ function SystemCard({
               </div>
             </div>
 
-            {/* Mobile divider */}
-            <div className="md:hidden h-px bg-border-subtle col-span-full" />
-
-            <div className="md:col-span-5 space-y-3 relative z-10 transition-opacity duration-[250ms] group-hover:opacity-0">
+            <div className="md:col-span-5 space-y-3 relative z-10 transition-opacity duration-[250ms] group-hover:opacity-0 border-t border-border-subtle mt-0 pt-3 md:border-t-0 md:mt-0 md:pt-0">
               {/* Stack tags */}
               <div className="flex flex-wrap gap-2">
                 {project.stack.map((t) => (
