@@ -30,7 +30,7 @@ function SystemCard({
         onMouseLeave={() => onHover?.(null)}
       >
         <div className="glass-card p-8 md:p-10 hover:border-accent-blue/30 transition-all duration-500">
-          <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
+          <div className="grid md:grid-cols-12 gap-3 md:gap-8 items-start">
             <div className="md:col-span-7 space-y-4">
               <div className="flex items-center gap-3">
                 <span
@@ -91,10 +91,13 @@ function SystemCard({
                   ))}
               </div>
 
-              <div className="flex items-center gap-2 text-sm text-accent-blue font-medium pt-1 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+              <div className="hidden md:flex items-center gap-2 text-sm text-accent-blue font-medium pt-1 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                 Read the full story <ArrowUpRight size={14} />
               </div>
             </div>
+
+            {/* Mobile divider */}
+            <div className="md:hidden h-px bg-border-subtle col-span-full" />
 
             <div className="md:col-span-5 space-y-4">
               {/* Preview image — parallax zoom */}
@@ -155,7 +158,7 @@ function SystemCard({
         onMouseLeave={() => onHover?.(null)}
       >
         <div className="glass-card p-6 md:p-8 hover:border-border-hover transition-all duration-500 relative">
-          <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
+          <div className="grid md:grid-cols-12 gap-2 md:gap-8 items-start">
             <div className="md:col-span-7 space-y-3 relative z-10">
               <div className="flex items-center gap-3">
                 <span
@@ -182,10 +185,13 @@ function SystemCard({
                   : project.thesis}
               </p>
 
-              <div className="flex items-center gap-2 text-sm text-accent-blue font-medium pt-1 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+              <div className="hidden md:flex items-center gap-2 text-sm text-accent-blue font-medium pt-1 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                 Read the full story <ArrowUpRight size={14} />
               </div>
             </div>
+
+            {/* Mobile divider */}
+            <div className="md:hidden h-px bg-border-subtle col-span-full" />
 
             <div className="md:col-span-5 space-y-3 relative z-10 transition-opacity duration-[250ms] group-hover:opacity-0">
               {/* Stack tags */}

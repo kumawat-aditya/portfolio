@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useScrollDirection } from "../hooks/useScrollDirection";
 
 const links = [
@@ -59,26 +60,49 @@ export default function Navbar() {
         </div>
       </div>
 
-      {open && (
-        <div className="md:hidden bg-bg/95 backdrop-blur-xl border-b border-border-subtle">
-          <div className="px-6 py-4 flex flex-col gap-3">
-            {links.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                onClick={() => setOpen(false)}
-                className={`text-sm py-2 transition-colors ${
-                  location.pathname === l.to
-                    ? "text-text-primary"
-                    : "text-text-muted"
-                }`}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{
+              duration: 0.45,
+              ease: [0.16, 1, 0.3, 1],
+              opacity: { duration: 0.3 },
+            }}
+            className="md:hidden bg-bg/95 backdrop-blur-xl border-b border-border-subtle overflow-hidden"
+          >
+            <div className="px-6 py-4 flex flex-col gap-3">
+              {links.map((l, i) => (
+                <motion.div
+                  key={l.to}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -8 }}
+                  transition={{
+                    delay: 0.1 + i * 0.06,
+                    duration: 0.35,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  <Link
+                    to={l.to}
+                    onClick={() => setOpen(false)}
+                    className={`text-sm py-2 block transition-colors ${
+                      location.pathname === l.to
+                        ? "text-text-primary"
+                        : "text-text-muted"
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

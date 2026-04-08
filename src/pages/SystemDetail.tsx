@@ -5,6 +5,7 @@ import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import PageTransition from "../components/PageTransition";
 import ScrollReveal from "../components/ScrollReveal";
 import ImageLightbox from "../components/ImageLightbox";
+import MediaLightbox from "../components/MediaLightbox";
 import VideoPlayer from "../components/VideoPlayer";
 import { projects } from "../data/projects";
 import { labPosts } from "../data/lab";
@@ -257,33 +258,41 @@ export default function SystemDetail() {
                       const items: React.ReactNode[] = [];
                       project.media.images.forEach((img, i) => {
                         items.push(
-                          <div
+                          <MediaLightbox
                             key={`img-${i}`}
-                            className="rounded-lg overflow-hidden border border-border-subtle bg-bg-surface/30"
+                            type="image"
+                            src={img.src}
+                            alt={img.alt}
+                            caption={img.caption}
                           >
-                            <img
-                              src={img.src}
-                              alt={img.alt}
-                              className="w-full h-auto"
-                              loading="lazy"
-                            />
-                            {img.caption && (
-                              <div className="px-4 py-2 border-t border-border-subtle">
-                                <p className="text-[10px] font-mono text-text-muted">
-                                  {img.caption}
-                                </p>
-                              </div>
-                            )}
-                          </div>,
+                            <div className="rounded-lg overflow-hidden border border-border-subtle bg-bg-surface/30">
+                              <img
+                                src={img.src}
+                                alt={img.alt}
+                                className="w-full h-auto"
+                                loading="lazy"
+                              />
+                              {img.caption && (
+                                <div className="px-4 py-2 border-t border-border-subtle">
+                                  <p className="text-[10px] font-mono text-text-muted">
+                                    {img.caption}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </MediaLightbox>,
                         );
                       });
                       project.media.videos.forEach((vid, i) => {
                         items.push(
-                          <VideoPlayer
+                          <MediaLightbox
                             key={`vid-${i}`}
+                            type="video"
                             src={vid.src}
                             caption={vid.caption}
-                          />,
+                          >
+                            <VideoPlayer src={vid.src} caption={vid.caption} />
+                          </MediaLightbox>,
                         );
                       });
                       if (items.length === 0) return null;

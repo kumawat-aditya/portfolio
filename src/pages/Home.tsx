@@ -149,7 +149,7 @@ export default function Home() {
           <ScrollReveal delay={0.1}>
             <Link to={`/systems/${flagship.slug}`} className="block group">
               <div className="glass-card p-8 md:p-10 hover:border-accent-blue/30 transition-all duration-500">
-                <div className="grid md:grid-cols-2 gap-8 md:gap-10">
+                <div className="grid md:grid-cols-2 gap-3 md:gap-10">
                   <div className="space-y-5">
                     <div className="flex items-center gap-2">
                       <span
@@ -206,10 +206,13 @@ export default function Home() {
                         ))}
                     </div>
 
-                    <div className="inline-flex items-center gap-2 text-sm text-accent-blue font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                    <div className="hidden md:inline-flex items-center gap-2 text-sm text-accent-blue font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                       Deep dive <ArrowUpRight size={14} />
                     </div>
                   </div>
+
+                  {/* Mobile divider */}
+                  <div className="md:hidden h-px bg-border-subtle" />
 
                   <div className="space-y-4">
                     {/* Flagship image — layered system panel */}
