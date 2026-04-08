@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Systems from "./pages/Systems";
 import SystemDetail from "./pages/SystemDetail";
 import Lab from "./pages/Lab";
+import LabPost from "./pages/LabPost";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 
@@ -28,6 +29,7 @@ function AnimatedRoutes() {
         <Route path="/systems" element={<Systems />} />
         <Route path="/systems/:slug" element={<SystemDetail />} />
         <Route path="/lab" element={<Lab />} />
+        <Route path="/lab/:slug" element={<LabPost />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>

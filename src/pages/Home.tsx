@@ -28,7 +28,9 @@ export default function Home() {
   return (
     <PageTransition>
       {/* ─── Hero ─── */}
-      <section className="min-h-dvh flex items-center relative overflow-hidden">
+      {/* <section className="min-h-dvh flex items-center relative overflow-hidden"> */}
+      <section className="min-h-[auto] lg:min-h-[85dvh] flex items-center relative overflow-hidden">
+        {/* <section className="min-h-[85dvh] flex items-center relative overflow-hidden"> */}
         {/* Ambient glow */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -38,7 +40,7 @@ export default function Home() {
           }}
         />
 
-        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 w-full py-32">
+        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 w-full py-24 lg:py-28">
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
             {/* Left – Content */}
             <motion.div
@@ -80,10 +82,9 @@ export default function Home() {
                 variants={item}
                 className="text-lg md:text-xl text-text-secondary max-w-xl leading-relaxed"
               >
-                State machines with zero double-execution. Async engines running
-                4 subsystems on a single thread. Data pipelines tuned for
-                commodity hardware. Systems that run unsupervised — and survive
-                when they shouldn't.
+                State machines with zero double-execution. Data pipelines tuned
+                for commodity hardware. Systems designed to run unsupervised —
+                and recover on their own.
               </motion.p>
 
               <motion.div variants={item} className="flex flex-wrap gap-4 pt-1">
@@ -158,6 +159,12 @@ export default function Home() {
                       <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted font-mono">
                         {flagship.tags.slice(0, 3).join(" · ")}
                       </span>
+                      {flagship.lastActive && (
+                        <span className="text-[9px] font-mono text-accent-green/80 border border-accent-green/20 bg-accent-green/5 px-2 py-0.5 rounded flex items-center gap-1.5">
+                          <span className="status-dot bg-accent-green" />
+                          {flagship.lastActive}
+                        </span>
+                      )}
                     </div>
                     <h2 className="text-headline font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors">
                       {flagship.title}
@@ -361,7 +368,7 @@ export default function Home() {
             {labPosts.slice(0, 3).map((post, i) => (
               <ScrollReveal key={post.slug} delay={i * 0.08}>
                 <Link
-                  to="/lab"
+                  to={`/lab/${post.slug}`}
                   className="glass-card p-6 block group hover:border-accent-purple/20 transition-all duration-400 h-full flex flex-col"
                 >
                   <div className="flex items-center gap-3 mb-3">

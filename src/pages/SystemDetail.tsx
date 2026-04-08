@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import PageTransition from "../components/PageTransition";
 import ScrollReveal from "../components/ScrollReveal";
+import ImageLightbox from "../components/ImageLightbox";
+import VideoPlayer from "../components/VideoPlayer";
 import { projects } from "../data/projects";
 import { labPosts } from "../data/lab";
 import { useState, useEffect, useCallback } from "react";
@@ -129,6 +131,12 @@ export default function SystemDetail() {
               >
                 {project.priority}
               </span>
+              {project.lastActive && (
+                <span className="text-[9px] font-mono text-accent-green/80 border border-accent-green/20 bg-accent-green/5 px-2 py-0.5 rounded flex items-center gap-1.5">
+                  <span className="status-dot bg-accent-green" />
+                  {project.lastActive}
+                </span>
+              )}
             </div>
 
             <h1 className="text-display font-bold tracking-tight text-text-primary mb-3">
@@ -187,7 +195,7 @@ export default function SystemDetail() {
             </aside>
 
             {/* Content */}
-            <div className="lg:col-span-9 space-y-14">
+            <div className="lg:col-span-9 min-w-0 space-y-14">
               {/* Overview */}
               <ScrollReveal>
                 <div
@@ -271,27 +279,11 @@ export default function SystemDetail() {
                       });
                       project.media.videos.forEach((vid, i) => {
                         items.push(
-                          <div
+                          <VideoPlayer
                             key={`vid-${i}`}
-                            className="rounded-lg overflow-hidden border border-border-subtle bg-bg-surface/30"
-                          >
-                            <video
-                              src={vid.src}
-                              autoPlay
-                              loop
-                              muted
-                              playsInline
-                              preload="metadata"
-                              className="w-full"
-                            />
-                            {vid.caption && (
-                              <div className="px-4 py-2 border-t border-border-subtle">
-                                <p className="text-[10px] font-mono text-text-muted">
-                                  {vid.caption}
-                                </p>
-                              </div>
-                            )}
-                          </div>,
+                            src={vid.src}
+                            caption={vid.caption}
+                          />,
                         );
                       });
                       if (items.length === 0) return null;
@@ -432,25 +424,29 @@ export default function SystemDetail() {
                     <SectionLabel>Architecture Diagrams</SectionLabel>
                     <div className="grid gap-6 md:grid-cols-2">
                       {project.media.diagrams.map((d, i) => (
-                        <div
+                        <ImageLightbox
                           key={i}
-                          className="rounded-lg border border-border-subtle bg-bg-surface/30 overflow-hidden"
+                          src={d.src}
+                          alt={d.title}
+                          title={d.title}
                         >
-                          <div className="px-4 py-2.5 border-b border-border-subtle flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-accent-blue" />
-                            <span className="text-[10px] uppercase tracking-[0.15em] text-text-muted font-mono">
-                              {d.title}
-                            </span>
+                          <div className="rounded-lg border border-border-subtle bg-bg-surface/30 overflow-hidden transition-all duration-300 hover:border-accent-blue/30 hover:shadow-lg hover:shadow-accent-blue/5">
+                            <div className="px-4 py-2.5 border-b border-border-subtle flex items-center gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-accent-blue" />
+                              <span className="text-[10px] uppercase tracking-[0.15em] text-text-muted font-mono">
+                                {d.title}
+                              </span>
+                            </div>
+                            <div className="p-3 bg-[#08080c]">
+                              <img
+                                src={d.src}
+                                alt={d.title}
+                                className="w-full h-auto rounded"
+                                loading="lazy"
+                              />
+                            </div>
                           </div>
-                          <div className="p-3 bg-[#08080c]">
-                            <img
-                              src={d.src}
-                              alt={d.title}
-                              className="w-full h-auto rounded"
-                              loading="lazy"
-                            />
-                          </div>
-                        </div>
+                        </ImageLightbox>
                       ))}
                     </div>
                   </div>
@@ -684,7 +680,7 @@ export default function SystemDetail() {
                       {relatedPosts.map((post) => (
                         <Link
                           key={post.slug}
-                          to="/lab"
+                          to={`/lab/${post.slug}`}
                           className="glass-card p-5 block group hover:border-accent-purple/20 transition-all"
                         >
                           <p className="text-sm font-medium text-text-primary group-hover:text-accent-purple transition-colors">

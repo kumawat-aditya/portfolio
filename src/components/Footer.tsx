@@ -25,7 +25,7 @@ export default function Footer() {
               From the Lab
             </h4>
             {latestPost && (
-              <Link to="/lab" className="block group">
+              <Link to={`/lab/${latestPost.slug}`} className="block group">
                 <p className="text-sm text-text-secondary group-hover:text-accent-blue transition-colors leading-relaxed">
                   {latestPost.title}
                 </p>
@@ -99,7 +99,7 @@ export default function Footer() {
 
         <div className="mt-14 pt-6 border-t border-border-subtle text-center">
           <p className="text-[11px] text-text-muted tracking-wide">
-            Built with intention. Not with templates.
+            Systems first. Everything else follows.
           </p>
         </div>
       </div>

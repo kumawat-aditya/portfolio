@@ -390,3 +390,15 @@ body::before {
     padding-inline: 2.5rem;
   }
 }
+
+/* Terminal scaling for ultra-wide */
+@media (min-width: 2560px) {
+  .max-w-xl {
+    max-width: 40rem;
+  }
+}
+@media (min-width: 3840px) {
+  .max-w-xl {
+    max-width: 48rem;
+  }
+}

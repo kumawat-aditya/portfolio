@@ -56,6 +56,7 @@ export interface Project {
   incidents: Incident[];
   whyThisArchitecture: string;
   media: ProjectMedia;
+  lastActive?: string;
 }
 
 const BASE = import.meta.env.BASE_URL;
@@ -186,6 +187,7 @@ export const projects: Project[] = [
     ],
     whyThisArchitecture:
       "Four concurrent async subsystems in a single process — BotInstanceManager, LiveFeedManager, Watchdog, and API server. The alternative was microservices, but the overhead of inter-service communication at 1-second cycles would have added latency that matters in live trading. Single process with strict async isolation gives the reliability of separation without network hops.",
+    lastActive: "Active — market sessions",
     media: {
       images: [
         {
@@ -338,6 +340,7 @@ export const projects: Project[] = [
     ],
     whyThisArchitecture:
       "Server-centric because MT5 EAs have severe limitations — no persistent state, no reliable networking, no debugging tools. Moving all intelligence to Python/FastAPI gives full control over state, logging, and recovery. EA becomes a thin HTTP client that just executes instructions.",
+    lastActive: "v4 — stable",
     media: {
       images: [
         {

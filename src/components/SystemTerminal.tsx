@@ -123,7 +123,7 @@ export default function SystemTerminal() {
   }, [lines]);
 
   return (
-    <div className="glass-card overflow-hidden font-mono text-[11px] leading-relaxed w-full max-w-lg">
+    <div className="glass-card overflow-hidden font-mono text-[11px] 2xl:text-[13px] leading-relaxed w-full max-w-lg 2xl:max-w-xl">
       {/* Title bar */}
       <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border-subtle bg-bg-secondary/50">
         <div className="flex gap-1.5">
@@ -140,7 +140,7 @@ export default function SystemTerminal() {
       {/* Log body */}
       <div
         ref={containerRef}
-        className="px-4 py-3 h-[240px] overflow-y-auto space-y-1 scrollbar-none"
+        className="px-4 py-3 h-[240px] 2xl:h-[320px] overflow-y-auto space-y-1 scrollbar-none"
       >
         {lines.map((line) => (
           <div

@@ -45,6 +45,12 @@ function SystemCard({
                     Private
                   </span>
                 )}
+                {project.lastActive && (
+                  <span className="text-[9px] font-mono text-accent-green/80 border border-accent-green/20 bg-accent-green/5 px-2 py-0.5 rounded flex items-center gap-1.5">
+                    <span className="status-dot bg-accent-green" />
+                    {project.lastActive}
+                  </span>
+                )}
               </div>
 
               <h2 className="text-title font-bold tracking-tight text-text-primary group-hover:text-accent-blue transition-colors">
@@ -91,15 +97,35 @@ function SystemCard({
             </div>
 
             <div className="md:col-span-5 space-y-4">
-              {/* Preview image */}
+              {/* Preview image — parallax zoom */}
               {firstImage && (
-                <div className="rounded-lg overflow-hidden border border-border-subtle bg-bg-surface/30">
-                  <img
-                    src={firstImage.src}
-                    alt={firstImage.alt}
-                    className="w-full h-auto opacity-75 group-hover:opacity-100 transition-opacity duration-500"
-                    loading="lazy"
+                <div className="relative group/img">
+                  <div
+                    className="absolute -inset-3 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl"
+                    style={{
+                      background: `radial-gradient(ellipse at center, ${project.accentColor}22, transparent 70%)`,
+                    }}
                   />
+                  <div
+                    className="relative rounded-xl overflow-hidden border border-border-subtle bg-bg-surface/40 backdrop-blur-sm shadow-2xl shadow-black/20 transition-transform duration-500 group-hover:scale-[1.02]"
+                    style={{
+                      transform:
+                        "perspective(800px) rotateY(-2deg) rotateX(1deg)",
+                    }}
+                  >
+                    <img
+                      src={firstImage.src}
+                      alt={firstImage.alt}
+                      className="w-full h-auto opacity-75 group-hover:opacity-100 transition-opacity duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute top-3 left-3 flex gap-2">
+                      <span className="text-[8px] font-mono uppercase tracking-wider text-accent-green/90 bg-bg/70 backdrop-blur-sm px-2 py-0.5 rounded border border-accent-green/20">
+                        ● live system
+                      </span>
+                    </div>
+                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-accent-blue/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  </div>
                 </div>
               )}
 

@@ -57,53 +57,40 @@ function FeaturedCard({ post }: { post: LabPost }) {
     : null;
   const accentColor = project?.accentColor || "#3b82f6";
 
-  // Find the most insightful paragraph (shortest after the first two)
-  const insightIdx =
-    post.content.length > 3
-      ? post.content.slice(2).reduce((best, p, i) => {
-          if (p.length < post.content[best].length && p.length > 60)
-            return i + 2;
-          return best;
-        }, 2)
-      : -1;
-
   return (
-    <div className="glass-card p-8 md:p-10 hover:border-accent-purple/20 transition-all duration-400 relative overflow-hidden">
-      <div className="flex items-center gap-3 mb-4">
-        <StatusBadge status={post.status} />
-        <span className="text-[10px] text-text-muted font-mono">
-          {post.readTime}
-        </span>
-        {post.relatedProject && <ProjectLink slug={post.relatedProject} />}
-      </div>
+    <Link to={`/lab/${post.slug}`} className="block group">
+      <div className="glass-card p-8 md:p-10 hover:border-accent-purple/20 transition-all duration-400 relative overflow-hidden">
+        <div className="flex items-center gap-3 mb-4">
+          <StatusBadge status={post.status} />
+          <span className="text-[10px] text-text-muted font-mono">
+            {post.readTime}
+          </span>
+          {post.relatedProject && <ProjectLink slug={post.relatedProject} />}
+        </div>
 
-      <h2 className="text-headline font-bold tracking-tight text-text-primary mb-3">
-        {post.title}
-      </h2>
-      <p className="text-text-secondary leading-relaxed max-w-2xl mb-6">
-        {post.preview}
-      </p>
+        <h2 className="text-headline font-bold tracking-tight text-text-primary group-hover:text-accent-purple transition-colors mb-3">
+          {post.title}
+        </h2>
+        <p className="text-text-secondary leading-relaxed max-w-2xl mb-4">
+          {post.preview}
+        </p>
 
-      <div className="space-y-4 text-sm text-text-secondary leading-relaxed max-w-2xl">
-        {post.content.map((paragraph, i) =>
-          i === insightIdx ? (
-            <blockquote
-              key={i}
-              className="border-l-2 pl-4 py-1 text-text-primary/90 italic"
-              style={{ borderColor: accentColor }}
-            >
-              {paragraph}
-            </blockquote>
-          ) : (
-            <p key={i}>{paragraph}</p>
-          ),
+        {/* Show first paragraph as teaser */}
+        {post.content[0] && (
+          <p className="text-sm text-text-muted leading-relaxed max-w-2xl mb-4">
+            {post.content[0]}
+          </p>
         )}
-      </div>
 
-      <div className="mt-6 pt-4 border-t border-border-subtle">
-        <Tags tags={post.tags} />
+        <span className="inline-flex items-center gap-2 text-sm text-accent-purple font-medium opacity-70 group-hover:opacity-100 transition-opacity">
+          Read full post →
+        </span>
+
+        <div className="mt-6 pt-4 border-t border-border-subtle">
+          <Tags tags={post.tags} />
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -114,76 +101,76 @@ function StandardCard({ post }: { post: LabPost }) {
   const accentColor = project?.accentColor || "#3b82f6";
 
   return (
-    <div className="glass-card p-6 h-full flex flex-col hover:border-border-hover transition-all duration-400 relative overflow-hidden">
-      <div className="flex items-center gap-3 mb-3">
-        <StatusBadge status={post.status} />
-        <span className="text-[10px] text-text-muted font-mono">
-          {post.readTime}
-        </span>
-      </div>
-
-      <h3 className="text-base font-semibold text-text-primary mb-2">
-        {post.title}
-      </h3>
-      <p className="text-sm text-text-muted leading-relaxed mb-4">
-        {post.preview}
-      </p>
-
-      <div className="space-y-3 flex-1">
-        {post.content.slice(0, 2).map((paragraph, i) => (
-          <p key={i} className="text-sm text-text-secondary leading-relaxed">
-            {paragraph}
-          </p>
-        ))}
-      </div>
-
-      {post.relatedProject && (
-        <div className="mt-4 pt-3 border-t border-border-subtle">
-          <ProjectLink slug={post.relatedProject} />
+    <Link to={`/lab/${post.slug}`} className="block group h-full">
+      <div className="glass-card p-6 h-full flex flex-col hover:border-border-hover transition-all duration-400 relative overflow-hidden">
+        <div className="flex items-center gap-3 mb-3">
+          <StatusBadge status={post.status} />
+          <span className="text-[10px] text-text-muted font-mono">
+            {post.readTime}
+          </span>
         </div>
-      )}
 
-      <div className="mt-4 pt-3 border-t border-border-subtle">
-        <Tags tags={post.tags} />
+        <h3 className="text-base font-semibold text-text-primary group-hover:text-accent-purple transition-colors mb-2">
+          {post.title}
+        </h3>
+        <p className="text-sm text-text-muted leading-relaxed mb-4 flex-1">
+          {post.preview}
+        </p>
+
+        {post.relatedProject && (
+          <div className="mt-auto pt-3 border-t border-border-subtle">
+            <span className="text-[10px] text-accent-blue/70 font-mono">
+              → {project?.title}
+            </span>
+          </div>
+        )}
+
+        <div className="mt-3 pt-3 border-t border-border-subtle">
+          <Tags tags={post.tags} />
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
 function CompactCard({ post }: { post: LabPost }) {
   return (
-    <div className="glass-card p-5 h-full flex flex-col hover:border-border-hover transition-all duration-400">
-      <div className="flex items-center gap-2 mb-2">
-        <StatusBadge status={post.status} />
-        <span className="text-[10px] text-text-muted font-mono">
-          {post.readTime}
-        </span>
-      </div>
-
-      <h3 className="text-sm font-semibold text-text-primary mb-1.5">
-        {post.title}
-      </h3>
-      <p className="text-xs text-text-muted leading-relaxed flex-1">
-        {post.preview}
-      </p>
-
-      {post.relatedProject && (
-        <div className="mt-3 pt-2 border-t border-border-subtle">
-          <ProjectLink slug={post.relatedProject} />
-        </div>
-      )}
-
-      <div className="flex flex-wrap gap-1.5 mt-3 pt-2 border-t border-border-subtle">
-        {post.tags.slice(0, 3).map((tag) => (
-          <span
-            key={tag}
-            className="text-[9px] font-mono text-text-muted bg-bg-surface/60 px-1.5 py-0.5 rounded"
-          >
-            {tag}
+    <Link to={`/lab/${post.slug}`} className="block group h-full">
+      <div className="glass-card p-5 h-full flex flex-col hover:border-border-hover transition-all duration-400">
+        <div className="flex items-center gap-2 mb-2">
+          <StatusBadge status={post.status} />
+          <span className="text-[10px] text-text-muted font-mono">
+            {post.readTime}
           </span>
-        ))}
+        </div>
+
+        <h3 className="text-sm font-semibold text-text-primary group-hover:text-accent-purple transition-colors mb-1.5">
+          {post.title}
+        </h3>
+        <p className="text-xs text-text-muted leading-relaxed flex-1">
+          {post.preview}
+        </p>
+
+        {post.relatedProject && (
+          <div className="mt-3 pt-2 border-t border-border-subtle">
+            <span className="text-[10px] text-accent-blue/70 font-mono">
+              → {projects.find((p) => p.slug === post.relatedProject)?.title}
+            </span>
+          </div>
+        )}
+
+        <div className="flex flex-wrap gap-1.5 mt-3 pt-2 border-t border-border-subtle">
+          {post.tags.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              className="text-[9px] font-mono text-text-muted bg-bg-surface/60 px-1.5 py-0.5 rounded"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
