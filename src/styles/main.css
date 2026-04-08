@@ -103,19 +103,19 @@ body::before {
 
 @media (hover: hover) and (pointer: fine) {
   body {
-    cursor: none;
+    /* cursor: none; */
   }
   a,
   button,
   [role="button"],
   input[type="submit"] {
-    cursor: none !important;
+    /* cursor: none !important; */
   }
 
   .cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: rgba(59, 130, 246, 0.9);
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     position: fixed;
     pointer-events: none;
@@ -128,7 +128,7 @@ body::before {
   .cursor-ring {
     width: 32px;
     height: 32px;
-    border: 1px solid rgba(59, 130, 246, 0.25);
+    border: 3px solid rgba(255, 255, 255, 0.25);
     border-radius: 50%;
     position: fixed;
     pointer-events: none;
@@ -143,7 +143,7 @@ body::before {
   .cursor-ring.hover {
     width: 48px;
     height: 48px;
-    border-color: rgba(59, 130, 246, 0.5);
+    border-color: rgba(255, 255, 255, 0.25);
   }
 }
 
