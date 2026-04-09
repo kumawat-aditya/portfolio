@@ -420,3 +420,46 @@ textarea:-webkit-autofill:active {
     max-width: 48rem;
   }
 }
+
+/* ═══════════════════════════════════════════
+   MOBILE OPTIMIZATIONS
+   ═══════════════════════════════════════════ */
+
+/* Prevent horizontal overflow on mobile */
+@media (max-width: 767px) {
+  /* Tighter padding on very small screens */
+  .px-6 {
+    padding-inline: 1.25rem;
+  }
+
+  /* Scale down display text for small phones */
+  .text-display {
+    font-size: clamp(2.2rem, 9vw, 3.5rem);
+  }
+
+  /* Prevent log/code overflow */
+  .font-mono {
+    word-break: break-word;
+  }
+
+  /* Better touch targets */
+  .glass-card {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent image perspective from causing overflow */
+  [style*="perspective"] {
+    transform: none !important;
+  }
+}
+
+/* Small phone specific (< 375px) */
+@media (max-width: 374px) {
+  .text-display {
+    font-size: 2rem;
+  }
+
+  .text-headline {
+    font-size: 1.5rem;
+  }
+}

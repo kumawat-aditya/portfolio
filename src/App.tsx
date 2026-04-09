@@ -1,16 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Lenis from "lenis";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import Systems from "./pages/Systems";
-import SystemDetail from "./pages/SystemDetail";
-import Lab from "./pages/Lab";
-import LabPost from "./pages/LabPost";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
+
+// Lazy-load non-critical routes for code splitting
+const Systems = React.lazy(() => import("./pages/Systems"));
+const SystemDetail = React.lazy(() => import("./pages/SystemDetail"));
+const Lab = React.lazy(() => import("./pages/Lab"));
+const LabPost = React.lazy(() => import("./pages/LabPost"));
+const About = React.lazy(() => import("./pages/About"));
+const Contact = React.lazy(() => import("./pages/Contact"));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -23,17 +25,25 @@ function ScrollToTop() {
 function AnimatedRoutes() {
   const location = useLocation();
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="/systems" element={<Systems />} />
-        <Route path="/systems/:slug" element={<SystemDetail />} />
-        <Route path="/lab" element={<Lab />} />
-        <Route path="/lab/:slug" element={<LabPost />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
-    </AnimatePresence>
+    <Suspense
+      fallback={
+        <div className="min-h-dvh flex items-center justify-center">
+          <div className="w-5 h-5 border-2 border-accent-blue/30 border-t-accent-blue rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Home />} />
+          <Route path="/systems" element={<Systems />} />
+          <Route path="/systems/:slug" element={<SystemDetail />} />
+          <Route path="/lab" element={<Lab />} />
+          <Route path="/lab/:slug" element={<LabPost />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </AnimatePresence>
+    </Suspense>
   );
 }
 

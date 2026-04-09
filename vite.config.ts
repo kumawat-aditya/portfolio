@@ -9,9 +9,15 @@ export default defineConfig({
     port: 3000,
     host: "0.0.0.0",
   },
-  //   resolve: {
-  //   alias: {
-  //     "@": path.resolve(__dirname, "."),
-  //   },
-  // },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "react-router-dom"],
+          "vendor-motion": ["framer-motion"],
+          "vendor-ui": ["lucide-react", "lenis"],
+        },
+      },
+    },
+  },
 });

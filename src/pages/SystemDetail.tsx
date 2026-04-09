@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import PageTransition from "../components/PageTransition";
+import SEO from "../components/SEO";
 import ScrollReveal from "../components/ScrollReveal";
 import ImageLightbox from "../components/ImageLightbox";
 import MediaLightbox from "../components/MediaLightbox";
@@ -106,6 +107,20 @@ export default function SystemDetail() {
 
   return (
     <PageTransition>
+      <SEO
+        title={`${project.title} — ${project.subtitle}`}
+        description={
+          project.thesis.length > 160
+            ? project.thesis.slice(0, 157) + "..."
+            : project.thesis
+        }
+        path={`/systems/${project.slug}`}
+        image={
+          project.media.images[0]?.src
+            ? `https://kumawat-aditya.github.io/portfolio${project.media.images[0].src}`
+            : undefined
+        }
+      />
       {/* Header */}
       <section className="pt-28 pb-10 md:pt-32 md:pb-14">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">

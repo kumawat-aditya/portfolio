@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import PageTransition from "../components/PageTransition";
+import SEO from "../components/SEO";
 import ScrollReveal from "../components/ScrollReveal";
 import { projects, type Project } from "../data/projects";
 
@@ -315,6 +316,11 @@ export default function Systems() {
 
   return (
     <PageTransition>
+      <SEO
+        title="Systems — Production Engineering Portfolio"
+        description="Deep-dive case studies of production systems: trading platforms, ML pipelines, real-time infrastructure. Each with architecture, proof, and incident reports."
+        path="/systems"
+      />
       <section className="pt-32 pb-20 md:pb-28">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           {/* Header */}

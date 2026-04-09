@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import PageTransition from "../components/PageTransition";
+import SEO from "../components/SEO";
 import ScrollReveal from "../components/ScrollReveal";
 
 const timeline = [
@@ -82,6 +83,11 @@ const patterns = [
 export default function About() {
   return (
     <PageTransition>
+      <SEO
+        title="About — Backend & Systems Engineer"
+        description="I'm Aditya Kumawat. I build backend systems and trading infrastructure that work under real-world pressure. State machines, idempotent operations, and constraint-driven design."
+        path="/about"
+      />
       <section className="pt-28 pb-20 md:pt-32 md:pb-28">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           {/* Header */}

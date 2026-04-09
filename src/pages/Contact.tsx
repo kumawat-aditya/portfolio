@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Github, Linkedin, Send } from "lucide-react";
 import PageTransition from "../components/PageTransition";
+import SEO from "../components/SEO";
 import ScrollReveal from "../components/ScrollReveal";
 
 const contexts = [
@@ -18,6 +19,11 @@ export default function Contact() {
 
   return (
     <PageTransition>
+      <SEO
+        title="Contact — Let's Build Something"
+        description="Get in touch for backend engineering, trading infrastructure, or system design work. Open to remote opportunities."
+        path="/contact"
+      />
       <section className="pt-28 pb-20 md:pt-32 md:pb-28 min-h-dvh flex flex-col justify-center">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">

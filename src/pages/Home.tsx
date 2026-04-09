@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import PageTransition from "../components/PageTransition";
+import SEO from "../components/SEO";
 import SystemTerminal from "../components/SystemTerminal";
 import ProofBand from "../components/ProofBand";
 import ScrollReveal from "../components/ScrollReveal";
@@ -27,6 +28,11 @@ const item = {
 export default function Home() {
   return (
     <PageTransition>
+      <SEO
+        title="Systems Engineer — Backend & Trading Infrastructure"
+        description="I build backend systems that don't break. Real-time trading platforms, ML pipelines, and production infrastructure designed for zero downtime and autonomous operation."
+        path="/"
+      />
       {/* ─── Hero ─── */}
       {/* <section className="min-h-dvh flex items-center relative overflow-hidden"> */}
       <section className="min-h-[auto] lg:min-h-[85dvh] flex items-center relative overflow-hidden">

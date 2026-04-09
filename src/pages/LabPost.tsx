@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import PageTransition from "../components/PageTransition";
+import SEO from "../components/SEO";
 import { labPosts } from "../data/lab";
 import { projects } from "../data/projects";
 
@@ -46,6 +47,11 @@ export default function LabPost() {
 
   return (
     <PageTransition>
+      <SEO
+        title={post.title}
+        description={post.preview}
+        path={`/lab/${post.slug}`}
+      />
       <article className="pt-28 pb-20 md:pt-32 md:pb-28">
         <div className="max-w-[800px] mx-auto px-6">
           {/* Header */}

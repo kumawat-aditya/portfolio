@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import PageTransition from "../components/PageTransition";
+import SEO from "../components/SEO";
 import ScrollReveal from "../components/ScrollReveal";
 import { labPosts, LabPost } from "../data/lab";
 import { projects } from "../data/projects";
@@ -177,6 +178,11 @@ function CompactCard({ post }: { post: LabPost }) {
 export default function Lab() {
   return (
     <PageTransition>
+      <SEO
+        title="Lab — Field Notes from Production"
+        description="Not tutorials. Honest accounts of what actually breaks when you ship to production. Incident reports, architectural decisions, and engineering lessons from real systems."
+        path="/lab"
+      />
       <section className="pt-28 pb-20 md:pt-32 md:pb-28">
         <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6">
           {/* Header */}
