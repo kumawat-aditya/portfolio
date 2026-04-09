@@ -1,0 +1,78 @@
+{
+  "personal": {
+    "name": "",
+    "role": "",
+    "location": "",
+    "email": "",
+    "availability": "",
+    "education": [],
+    "links": {
+      "github": "",
+      "linkedin": "",
+      "resume": ""
+    }
+  },
+  "projects": [
+    {
+      "title": "",
+      "description": "",
+      "github": "",
+      "stack": [],
+      "tags": [],
+      "highlights": [],
+      "details": {
+        "architecture": [],
+        "engineering": [],
+        "system_design": []
+      },
+      "insights": {
+        "problem": "",
+        "why_it_was_hard": "",
+        "tradeoffs": [],
+        "failure_points": [],
+        "real_world_behavior": "",
+        "what_i_learned": ""
+      },
+      "metrics": {
+        "scale": "",
+        "latency": "",
+        "throughput": "",
+        "impact": ""
+      }
+    }
+  ],
+  "expertise": [
+    {
+      "title": "",
+      "statement": "",
+      "skills": []
+    }
+  ],
+  "experience": [
+    {
+      "company": "",
+      "role": "",
+      "duration": "",
+      "summary": [],
+      "impact": [],
+      "environment": "",
+      "signals": [],
+      "details": [
+        {
+          "title": "",
+          "items": []
+        }
+      ]
+    }
+  ],
+  "evolution": [
+    {
+      "year": "",
+      "title": "",
+      "subtitle": "",
+      "description": "",
+      "points": [],
+      "tech": []
+    }
+  ]
+}
