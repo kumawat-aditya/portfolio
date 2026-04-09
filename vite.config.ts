@@ -7,6 +7,11 @@ export default defineConfig({
   base: "/portfolio/",
   server: {
     port: 3000,
-    allowedHosts: true, // Allows any ngrok URL
+    host: "0.0.0.0",
   },
+  //   resolve: {
+  //   alias: {
+  //     "@": path.resolve(__dirname, "."),
+  //   },
+  // },
 });

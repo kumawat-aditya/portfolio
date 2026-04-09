@@ -1,0 +1,82 @@
+ok format each thing i am teling you now. so the bellow is my timeline based projects i done so far:
+
+my journery started in 2022, apprx in june or jully. where i learned html css from famous frontend course by Jonas Schmedtmann.
+i learned all about html, css, jquery, grid, flex,etc. and through the course i deveoped the clasical omnifood website that he used to explain frontend.
+
+and meanwile this i also learned git and was learning c++ constantly.
+
+
+and then i got introduced to frontend mentor website from this i did few challenge websites. one of them is this single page news-home-page (jan 2023) and space tourism (a super beautifull website on space - febrory 2023).
+this is just pure html/css and grid flex journey for me.
+
+august 2023:
+then i learned about matrics in my college course and i was good at solving robix cube so it made me curious that there must be some connection and before this thought i already complete another course on c++ and learned almost everything about it (from data type, arrays, vectors to smart pointer, normal pointers, exception handling and how to make software fast by use of bits and bytes and OOPS for sure).so i implemented all my learning in this project and after 7 months of brain storming i came up with a 3 dimentional cube representation and applied the 3x3x3 cube solving algorithm and made a full command line visual(with colors for cube visual) software which solves cube millions of times and returns the best combination found within 2 seconds and this run was on intel duo processor so for today generation this will be lightining fast. and i used a robus architechture used polimorphism and inheritence for a super flexible main function. and also used multi threading.
+Introduction  to the software i made:
+ This C.F.O.P (Cross, F2L, OLL, PLL) based solver is designed to efficiently and quickly solve a Rubik's Cube within an astonishing 2 seconds. Whether you're a beginner or an experienced cuber, this program will showcase the power of the C.F.O.P method in solving the cube.
+
+in dec 2023:
+then i recreated my cousins frontend project (guess my number) as he developed it using direct functions in javascript. and i hate that i like object oriented structure so i did recreated that in oops logic and completed it in one day.
+
+then i joined worninwell internship (may to jully):
+january 2024:
+there created an EMS system with UI and backend separate. in java and html/css/js. the internship tought me how to do crud and api and jquerry. and created a full crud based employee management system. but that was simple for me as before this I already completed a course on java Springboot. so i learned JWT tokens and implemented that in it and created a fully functional login system role based.
+may 2024:
+they tought me another project on java which is calculator. built in java using swing but that was very basic and not responsive so i moved that to another level by making it fully responsive usi for all ratios and added live calculation feature and included too many exception cases that show error in even modern calculators. this took huge brainstorming as there are many exceptions comes in a simple calculator as they changes things in between. but i finally overcome them all and created a fully responsive dark themed calculator.
+
+febrory 2024:
+as i used to go at park with my friends so there we played cards and uno. so for cards we played call break a lot. but writing everyone's scrore was mess so i created a good ui and state storing website which asks for numberof players, their names, number of rounds and then tells how  much cards to share with each player record their call and scores they made each round and finaaly tells the winner and stats of the game.
+the webstie used statemangement so even if you close the browser and all the game will continue from where you left.
+  
+jully 2024,
+i was thinking to make something huge as i just learned everything about springboot and login things. so i thought of creating backend of a shopping website that can beat amazon shopping site level. and i created a fully functional backend named it stella.
+it has two types of logins user and seller. they have their separate functionality. a dashboard api for seller and product uploads image handling. review and rating. and everythings that modern shopping site have. and for user i added dynamic search review raitng order tracking carting system and checkout. in payment gateway i used razorpay fully integrated it.  and everything was as much accurate as we have in amazon seller cause that was my goal to achieve. i learned a lot of things that is more important and software throught this and that is a good and scalable architechture. this project changed my way of looking at softwares and after this i always prioritized architechture design as top priority.
+
+trade amplification software developer: (August 2024 — october 2024)
+this was a turning point of my life i am glad i joind it. this is my first paid job and you won't believe it was remote job. the company is at indore. here i learned mql5, pinescript, mql4 and created bots as the client wanted worked on support/resistance, bolinger bands, ema's, and sma's and other strategies shooting start and all i forgot most of the names. here i learned all of forex trading concepts and implemented them on work.
+the actuall job was of 6 months but i did it for 3-4 months only as they ran out of projects and told me to work on project based from now and i have that much respect that i won't take money for not doing anything.
+and everything went silent for 2-3 months after that they contacted me for creating a signal forwarder and executer project. so it started in january 2025 and i succesfully created a superfast java server which listens to a telegram group. gets the signal for trading with three target levels stores that on server and for each user share it and manage it cause we cant share it multiple times to same user so all that management was done and the recievers of the signal was meta trader script EA that recieved signal verified by their meta trader id. and then execute that signal on the live account and do the stop loss trailing and risk management. this system also sends this signal on a telegram channel for telegram users in beautifull format. and there was lot more features i  added like client managemnt throught telegram bot only few admins of the company can contact to bot and do the client management updation and download backup of data and all. the server is self healing even if server restarts it works from where we left.
+after that on may 2025:
+i got another project from them which is the restoration of an old website of some very important person on izrael and jordan i can't disclose their name. so the website was on .net framework so i recreated that on springboot fullstack with database and frontend recreation with better UI than before. and rewrote there tons of documentation recovered there server and fixed everything. each documentation was of 10s  thousands of line so i understood and and managed them and sucesfully transfered to the new server. this was huge deeply documentation type of website that i restored which have lots of law related data and very sensitive data for the country and there condition.
+
+dec 2024:
+i started working on another backend in spring boot for lead management system of travel agency which was actually a freelance project but client droped it in between so it is left half till then.
+but before that i already implemented dosens of apis and all the experience i got from the stella project.
+like tracking of lead, followups, quotation system, hot deals, invoice management, customer management, and authentication and authorizations. and even customer creations and feedback collection.
+
+on april 2025 i started having interest in AI:
+so i give it a very small start and created a single file python script of rule based AI. i know this was nothing.
+then i came to know about rasa. which is a framework that does most of the internal work for you. now you are just left to feed data and action of how to react to each thing. in this i leaned how story works in ai. how conversation works. how data is extracted from sentence. and then i started working on my own little AI assistant powered by rasa "Elisa Assistant" in this i used whisper.cpp, porcupine, rasa, ducking,etc.
+for this i came to some dependency errors. so i learned docker and how to use them. and dockerized whisper for smooth work flow.
+after completing this project i succesfully created a voice based AI assistant who opens applications, type for you, gives word meaning from wikipedia, searched on web for you, plays songs on spotify, and much more.
+so here ilearned a lot about AI.
+then i understood how ai works how layers are arranged in the super AI's that we interact these days.
+So in jully 2025 i started my research on NLP's and tried to create my own NLP. so in this i learned depts of english grammer and learned everything form grammer and created an NLP capable of formating user query into json format and extracting task, time, adjective. and much more. the core features was dependency parcing, named entity recognision, semantic role labeling, advace time/date normalization, pragmatics analysis, structured json ouput. i used tokenization pos, lemma, depparse, ner. but than i found out that there are pre trained models  available in scypy for this NLP task and they do cover even more things than i did. here so i but by doing this manually I understood a very depth of how query can be tokenized.
+
+and in the meantime i continued to finetune my elisa assistant till the end of the year 2025 and also introduced nvidia GPU acceleration.
+
+on may 2025 i contributed in a early startup named FLYNT. 
+this is a startup plan created by my cousins on bringing multiple credit card pionts on airlines into one place and get user a super cool inter creditcard pionts sharing system. so i created a first prototype of this startup that fetches fite data from agoda api and show flight searches. implemented this all on java with full security. in this understanding agoda api was the major issue i fased but i understood and and implemented our own way of useing them.
+
+on september 2025 i joined qubitron labs (to december 2025):
+here i created an trading strategy finder data pipeline. while making this i learned pandas, numpy, njit, transformer (basic), dicision tree regressor, xg boost, and how x and y logic works in model training.
+i researched on trading data creation for ai training in depth here and created a pipeline driven data creation: system which was fully customizable by modifying a single config file. in focused on performance here and made scripts that initialy took 8 -9 hours to complete the same and even better data in 10 minutes. i used parallel processing to its fullest in python. and this data pipeline was devided in layers:
+Bronze Layer: The SL/TP ratio grids and lookforward periods for the initial simulation generates miliions of possibilities.
+Silver Layer: The periods and parameters for all technical indicators 200+, with advance support and resistance calculations.
+Gold Layer: The rolling window size for time-series-aware feature scaling, added cross normalization of static indicators by closing price and suport resistance and so more.
+Platinum Layer: The thresholds and hyperparameters for the Decision Tree rule mining. later i added alternate platinum layer to use xgboot to train the data on using the created data.
+Simulation & Cost Model: The spread, commission, and slippage assumptions for all backtests.
+Diamond Layer: The performance criteria (Profit Factor, Max Drawdown, etc.) for a strategy to be considered a "Master". a backtest layer for testing it on different market data.
+
+but this is still under research and the final model still need too much finetuning. but the data creation for the model training is super hight quality and tested for best. the only task remianing is using best way to train model on.
+
+here in qubitron labs i also created another data training set to finetune a visual model. so for this I inherited many functions from the first project i just told you and use matplot lib to create a 30 candle window trading chart and fill it with indicators and then give the next future candle prediction. so now we can finetune a visual model on it. i named it qubiforge.
+but before the completion of it. the company stoped investing in me and i left that out.
+
+meanwhile i got three more projects from trade amplification:
+december 2025:
+i created and fullstack Elastic DCA Trading System. in this client wanted to do take trades on his meta trader account directly by his prediction on market reversal so he will fill a grid of when to take trade on based on the market movement by dollar gap. and then the server will do automation to take trade on the defined gap by traking the market data and applying the lots and also showing the profit and loss on tehUI i created. i added features for target by equity, balance, and fixed dollar as client decides and a hedge loss option for recovery. and also start limit entry system.
+this is done using mql5, python, react.
+
+on january 2026 i got another project from trade amplification:
+the project was to convert the famous trading view strategy lorentzian classification by jdhorty into mql5 working script so I analysed full script and understook how it does prediction based on 4 future candles and how it markes them and used kernel smoothing function to get a very high quality market movement change indicator and does the next prediction of market reversal. i did full implementation on mql5 even when mql5 has all the downside of making it harder to implement. and now it is even more customizable then the original one.
+
