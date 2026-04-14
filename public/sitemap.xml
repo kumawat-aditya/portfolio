@@ -46,6 +46,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kumawat-aditya.github.io/portfolio/systems/elisa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kumawat-aditya.github.io/portfolio/systems/nlp-command-engine</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kumawat-aditya.github.io/portfolio/lab</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -82,6 +92,16 @@
   </url>
   <url>
     <loc>https://kumawat-aditya.github.io/portfolio/lab/cooperative-async-vs-threading</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kumawat-aditya.github.io/portfolio/lab/voice-pipeline-isolation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kumawat-aditya.github.io/portfolio/lab/rule-based-nlp-boundaries</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

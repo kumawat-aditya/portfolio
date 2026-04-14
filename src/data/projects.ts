@@ -228,6 +228,153 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "elisa",
+    title: "ELISA",
+    subtitle: "Multi-Service Conversational AI Pipeline",
+    thesis:
+      "A local-first, multi-service voice assistant that decomposes the full conversational AI pipeline — wake word detection, speech-to-text, intent classification, action execution, and speech synthesis — into isolated, independently deployable layers communicating over strict HTTP boundaries. No LLM APIs. No cloud dependencies. Every pipeline stage is deterministic or explicitly probabilistic with defined failure boundaries.",
+    priority: "major",
+    accentColor: "#06b6d4",
+    stack: [
+      "Python",
+      "Rasa 3.x",
+      "FastAPI",
+      "Docker",
+      "Whisper.cpp",
+      "WebRTC VAD",
+      "Coqui TTS",
+      "SQLite",
+      "WebSocket",
+    ],
+    github: "https://github.com/kumawat-aditya/elisa-assistant.git",
+    metrics: {
+      scale: "3 service layers, 2 containerized instances, 20 NLU intents",
+      latency: "~200ms TTS generation, 3-second wake word cooldown",
+      reliability:
+        "Graceful degradation — subsystem failure returns error text, preserves pipeline",
+      automation:
+        "100% local, zero-telemetry voice control with persistent scheduling",
+    },
+    highlights: [
+      "Full offline speech pipeline — zero cloud API calls",
+      "Strict inter-service isolation over HTTP REST boundaries",
+      "Hybrid NLU — probabilistic DIET + deterministic Duckling",
+      "Explicit hardware contention management for single-microphone systems",
+    ],
+    whatItDoes:
+      "Runs continuously as a background multi-process system. Listens for a wake word via OpenWakeWord, captures speech through WebRTC VAD with ring-buffer onset/offset detection, transcribes via Whisper.cpp, classifies intent through a Rasa DIET pipeline, executes actions against a FastAPI logic layer, and responds through Coqui TTS — all locally, with no external API calls.",
+    architecture: [
+      "Multi-service layered topology: Assistant (Runtime Orchestrator) → NLU (Rasa + Duckling) → Logic (FastAPI), with strict unidirectional data flow",
+      "Containerized infrastructure — Coqui TTS and Duckling run in Docker, communicating with host-native Python orchestration via bridge networks",
+      "Dual-featurization NLU pipeline using spaCy 300-dimensional word embeddings and CountVectors for semantic and morphological analysis",
+      "Each layer runs in its own process and virtual environment — zero shared imports, independently replaceable",
+    ],
+    engineering: [
+      "Integrated WebRTC VAD with aggressiveness level 2 — ring buffer requiring 80% voiced frames for onset, 90% unvoiced for offset detection",
+      "Implemented explicit PyAudio instance release protocols to prevent single-microphone contention between wake word listener and speech recorder",
+      "Positioned Duckling temporally late in NLU pipeline to guarantee deterministic ISO 8601 parsing overrides conflicting DIET probabilistic extractions",
+      "Built persistent background scheduling with APScheduler and SQLite, supporting dual-trigger alerts and fuzzy-matched CRUD operations",
+      "Exposed real-time system state (boot, listening, processing) to Web UI via async WebSocket server with thread-safe message queues",
+    ],
+    challenges: [
+      "Single-microphone contention — wake word listener and VAD recorder compete for the same hardware device, requiring explicit stream termination and handoff",
+      "Managing multi-turn conversational state across strictly isolated HTTP services without shared memory",
+      "Preventing self-activation loops where TTS audio output triggers the wake word listener",
+      "Graceful degradation when individual pipeline stages (TTS container, Duckling sidecar) become unavailable",
+    ],
+    failures: [
+      "Early versions had TTS output triggering false wake word activations — solved with 3-second cooldown after speech synthesis",
+      "Transient Whisper.cpp recognition failures caused pipeline stalls — added 3-attempt state-machine retry loop",
+      "Ambiguous reminder deletion requests produced incorrect matches — implemented 0.5 cutoff fuzzy matching against active SQLite job stores",
+      "Tight coupling between NLU and Logic layers in initial design prevented independent testing — rebuilt with strict HTTP boundaries",
+    ],
+    tradeoffs: [
+      "DIET classifier over pre-trained transformers — eliminated GPU requirement, prioritized local execution over model scale",
+      "Accepted HTTP serialization overhead between layers in exchange for absolute process isolation and independent testability",
+      "Duckling for temporal extraction over ML-based parsing — deterministic ISO 8601 precision required for APScheduler integration",
+      "Single-microphone sequential access over concurrent audio streams — simpler hardware management, slight latency tradeoff",
+    ],
+    improvements: [
+      "Multi-microphone support with hardware abstraction layer",
+      "Streaming STT for reduced perceived latency",
+      "Context window for multi-turn conversation memory across service boundaries",
+    ],
+    insight:
+      "Modern AI systems are not larger models — they are tightly integrated pipelines. Building ELISA clarified how LLMs abstract away orchestration complexity by embedding reasoning, memory, and intent understanding into a single model.",
+    relatedLab: ["voice-pipeline-isolation"],
+    tags: [
+      "voice-ai",
+      "pipeline",
+      "local-first",
+      "microservices",
+      "nlu",
+      "backend",
+    ],
+    proofCapsules: [
+      {
+        claim: "Full offline voice pipeline — zero cloud dependencies",
+        evidence:
+          "End-to-end pipeline: OpenWakeWord → WebRTC VAD → Whisper.cpp → Rasa DIET → FastAPI Logic → Coqui TTS. Every component runs locally. No API keys, no telemetry, no external calls.",
+        source: "architecture",
+      },
+      {
+        claim: "Graceful degradation under partial failure",
+        evidence:
+          "If Logic API fails, NLU returns structured error text while preserving conversational intents like greetings. Subsystem isolation prevents cascading failures across service boundaries.",
+        source: "behavior",
+      },
+      {
+        claim: "Explicit hardware contention resolution",
+        evidence:
+          "PyAudio stream forcefully terminated and device yielded before VAD recording begins. 3-second cooldown after TTS prevents self-activation loops. Single-microphone access is serialized, not concurrent.",
+        source: "log",
+      },
+    ],
+    constraints: [
+      {
+        dimension: "Execution model",
+        value:
+          "Strict unidirectional flow — Assistant → NLU → Logic, no lateral state",
+      },
+      {
+        dimension: "Hardware",
+        value:
+          "Single microphone — sequential access with explicit stream handoff",
+      },
+      {
+        dimension: "Dependency boundary",
+        value: "Zero cloud APIs — all inference and synthesis run locally",
+      },
+      {
+        dimension: "Failure isolation",
+        value:
+          "Per-service process isolation — one service crash doesn't propagate",
+      },
+    ],
+    incidents: [
+      {
+        title: "TTS self-activation loop",
+        timeline: [
+          "ELISA spoke a response through system speakers",
+          "Wake word listener detected speech output as a new activation",
+          "System entered a feedback loop — responding to its own voice",
+          "Pipeline saturated with recursive activations",
+        ],
+        fix: "Implemented a 3-second cooldown period after every TTS utterance. Wake word listener is explicitly suppressed during and immediately after speech output.",
+        outcome:
+          "Zero self-activation incidents after cooldown implementation. Hardware access is now strictly serialized.",
+      },
+    ],
+    whyThisArchitecture:
+      "Each pipeline stage has fundamentally different compute profiles and failure modes — audio I/O is hardware-bound, NLU is CPU-bound, TTS is memory-bound. Isolating them into independent services over HTTP means any component can fail, restart, or be replaced without affecting the others. The alternative — a monolithic pipeline — would make a Duckling timeout crash the entire voice interaction.",
+    lastActive: "Stable — local deployment",
+    media: {
+      images: [],
+      videos: [],
+      diagrams: [],
+    },
+  },
+  {
     slug: "elastic-dca",
     title: "Elastic DCA Engine v4",
     subtitle: "Server-Centric Trading State Machine",
@@ -993,6 +1140,109 @@ export const projects: Project[] = [
           title: "Data Flow",
         },
       ],
+    },
+  },
+  {
+    slug: "nlp-command-engine",
+    title: "Classical NLP Command Engine",
+    subtitle: "Deterministic NLU Layer for Structured Command Execution",
+    thesis:
+      "A deterministic NLU system that reconstructs structured command understanding from classical NLP primitives — dependency parsing, named entity recognition, and rule-based semantic mapping — without LLMs. Explores the exact failure boundary where rule-based extraction breaks and learned generalization becomes necessary.",
+    priority: "supporting",
+    accentColor: "#a78bfa",
+    stack: ["Python", "Stanza", "Dateparser", "Duckling", "FastAPI", "Docker"],
+    github: "https://github.com/kumawat-aditya/Advanced-NLP-Command-Parser.git",
+    metrics: {
+      scale: "8 NLP processing layers → 1 structured JSON output",
+      latency:
+        "Low-latency inference — Stanza models preloaded, zero per-request initialization",
+      reliability:
+        "Deterministic for well-formed input — fails explicitly on ambiguity",
+      automation:
+        "Fully automated intent, role, and ISO 8601 extraction from raw text",
+    },
+    highlights: [
+      "Deterministic pipeline — same input always produces same output",
+      "Dependency tree as single source of truth for extraction",
+      "Explicit failure boundaries — known limits, not silent degradation",
+      "Dual-tier temporal normalization (Duckling + Dateparser fallback)",
+    ],
+    whatItDoes:
+      "Takes raw natural language commands, passes them through an 8-layer deterministic pipeline: tokenization → dependency parsing → NER → POS tagging → semantic role mapping → modifier separation → temporal normalization → structured JSON output. Every extraction decision is traceable to a specific dependency relation or rule — no black-box inference.",
+    architecture: [
+      "Multi-stage text processing pipeline wrapping Stanza statistical model core with a custom deterministic rule engine",
+      "Two-mode execution: FastAPI HTTP server for service operations and interactive REPL for debugging and inspection",
+      "Sidecar containerization — Duckling runs on isolated port for external temporal entity resolution",
+      "Centralized deterministic core maintaining full pipeline traceability across all transformation stages",
+    ],
+    engineering: [
+      "Extracted metadata, task structures, and pragmatics strictly by traversing Stanza's dependency tree as single source of truth",
+      "Merged fragmented time references (e.g., 'tomorrow' + 'morning') into unified strings before normalization for improved temporal accuracy",
+      "Implemented syntactic separation classifying child nodes as modifiers (amod, nummod) or distinct semantic entities (nmod, obl)",
+      "Designed explicit fallback chain: Named Entity Recognition → POS tags → custom mapping rules — each stage has defined failure semantics",
+    ],
+    challenges: [
+      "Cascading failure propagation — a single incorrect dependency parse ruins all downstream semantic role assignments",
+      "Time expression fragmentation across multiple tokens requiring pre-normalization merging",
+      "Distinguishing modifiers from embedded parameters using syntactic rules alone — no semantic context available",
+    ],
+    failures: [
+      "Ungrammatical input produces incorrect dependency trees, causing unrecoverable cascading extraction errors — a known, accepted limitation",
+      "Duckling unavailability forces fallback to less precise Dateparser engine, degrading complex temporal normalization",
+      "Implicit meaning and multi-turn context are architecturally invisible — the pipeline has no memory or inference capacity",
+    ],
+    tradeoffs: [
+      "Absolute predictability and inspectability of rule-based assignments over transformer-based ambiguity tolerance",
+      "Monolithic core logic file to document complete deterministic pipeline flow at the expense of module separation",
+      "NER-first entity resolution over POS-based heuristics — blending statistical probability with deterministic rules at defined boundaries",
+    ],
+    improvements: [
+      "Hybrid mode combining rule-based extraction with lightweight transformer fallback for ambiguous inputs",
+      "Multi-sentence command decomposition",
+      "Confidence scoring per extraction stage for downstream filtering",
+    ],
+    insight:
+      "Rule-based NLP has hard boundaries. This system maps exactly where deterministic extraction fails and learned generalization becomes necessary — demonstrating why modern systems collapse multiple NLP stages into unified neural architectures.",
+    relatedLab: ["rule-based-nlp-boundaries"],
+    tags: ["nlp", "deterministic", "rule-based", "pipeline", "ai-foundations"],
+    proofCapsules: [
+      {
+        claim: "Fully deterministic — same input always produces same output",
+        evidence:
+          "Every extraction decision traces to a specific Stanza dependency relation or explicit rule. No probabilistic sampling, no temperature, no non-deterministic inference paths.",
+        source: "architecture",
+      },
+      {
+        claim:
+          "Explicit failure boundaries — known limits, not silent degradation",
+        evidence:
+          "System fails predictably on ambiguous, multi-turn, or ungrammatical input. Failure modes are documented and architecturally visible, not hidden behind confidence thresholds.",
+        source: "behavior",
+      },
+    ],
+    constraints: [
+      {
+        dimension: "Extraction model",
+        value: "Dependency tree traversal — no learned inference",
+      },
+      {
+        dimension: "Input scope",
+        value:
+          "Single well-formed sentences — degrades sharply on conversational input",
+      },
+      {
+        dimension: "Temporal parsing",
+        value:
+          "Duckling primary, Dateparser fallback — dual-tier with defined degradation",
+      },
+    ],
+    incidents: [],
+    whyThisArchitecture:
+      "Deliberate constraint: build structured command understanding using only classical NLP primitives to map the exact boundary where rule-based systems fail. The dependency tree is the single source of truth — every decision is traceable, every failure is diagnosable. This is the foundation that makes LLM-based alternatives intelligible.",
+    media: {
+      images: [],
+      videos: [],
+      diagrams: [],
     },
   },
 ];

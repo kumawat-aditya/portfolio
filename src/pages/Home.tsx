@@ -88,9 +88,9 @@ export default function Home() {
                 variants={item}
                 className="text-lg md:text-xl text-text-secondary max-w-xl leading-relaxed"
               >
-                State machines with zero double-execution. Data pipelines tuned
-                for commodity hardware. Systems designed to run unsupervised —
-                and recover on their own.
+                State machines with zero double-execution. Multi-service
+                pipelines with strict failure isolation. Systems designed to run
+                unsupervised — and recover on their own.
               </motion.p>
 
               <motion.div variants={item} className="flex flex-wrap gap-4 pt-1">

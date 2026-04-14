@@ -36,6 +36,13 @@ const timeline = [
   },
   {
     year: "2025",
+    title: "Multi-Service AI Pipelines",
+    description:
+      "Built a local-first voice assistant decomposing speech → intent → execution into isolated services. Strict pipeline isolation, explicit hardware contention management, zero cloud dependencies.",
+    tech: ["Python", "Rasa", "Whisper.cpp", "Docker", "FastAPI"],
+  },
+  {
+    year: "2025",
     title: "Scale & Performance",
     description:
       "Processing hundreds of millions of trade combinations on commodity hardware (Ryzen 5 5600X, 16GB RAM). Numba JIT, Parquet chunking, strict memory mapping.",
@@ -77,6 +84,16 @@ const patterns = [
     label: "Constraints before features",
     text: "Quant Discovery Pipeline processes hundreds of millions of combinations on a Ryzen 5 5600X with 16GB RAM. That constraint shaped the entire architecture — chunk-based processing, Numba JIT, Parquet streaming. The constraint was the design.",
     source: "Quant Discovery Pipeline, Stella",
+  },
+  {
+    label: "Pipeline isolation over monolithic convenience",
+    text: "ELISA decomposes voice interaction into isolated services over HTTP — audio I/O, NLU, and business logic each run in separate processes. A Duckling timeout can't crash the speech pipeline. Each layer fails independently, recovers independently, and can be replaced without touching the others.",
+    source: "ELISA, Signal Distribution",
+  },
+  {
+    label: "Deterministic boundaries over probabilistic assumptions",
+    text: "The Classical NLP Command Engine maps exactly where rule-based extraction fails. Every decision traces to a dependency relation. Every failure is diagnosable. Knowing your system's exact failure boundary is more valuable than hiding it behind confidence thresholds.",
+    source: "NLP Command Engine, Lorentzian ML",
   },
 ];
 
@@ -206,8 +223,12 @@ export default function About() {
                     <strong className="text-text-primary">
                       algorithmic trading infrastructure
                     </strong>{" "}
-                    — building systems that coordinate multiple ML agents,
-                    process millions of data rows, and execute trades with
+                    and{" "}
+                    <strong className="text-text-primary">
+                      multi-service AI pipelines
+                    </strong>{" "}
+                    — building systems that coordinate multiple independent
+                    services, process millions of data rows, and execute with
                     deterministic reliability.
                   </p>
                   <p>
@@ -218,7 +239,7 @@ export default function About() {
                     <em>and</em> fast?
                   </p>
                   <p className="text-text-muted text-sm">
-                    B.C.A (2022–2025) · Building full-time alongside academics.
+                    M.C.A (2025–2027) · Building full-time alongside academics.
                   </p>
                 </div>
               </div>
