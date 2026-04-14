@@ -486,6 +486,159 @@
         "throughput": "Continuous, tickless signal generation optimized specifically for closed-candle step processing without global state locks",
         "impact": "Successfully liberated a proprietary TradingView strategy into a robust, deployable programmatic core that actively powers production trading systems."
       }
+    },
+    {
+      "title": "ELISA",
+      "description": "A self-hosted, multi-service voice assistant that replicates the full conversational AI pipeline (speech → intent → execution) using a local-first architecture without relying on large language models.",
+      "github": "https://github.com/kumawat-aditya/elisa-assistant.git",
+      "stack": [
+        "Python 3.9+",
+        "Rasa 3.x",
+        "FastAPI",
+        "Docker",
+        "OpenWakeWord",
+        "WebRTC VAD",
+        "Whisper.cpp",
+        "spaCy",
+        "Duckling",
+        "DIET Classifier",
+        "APScheduler",
+        "Coqui TTS",
+        "SQLite",
+        "WebSocket"
+      ],
+      "tags": [
+        "Voice Assistant",
+        "NLU",
+        "System Architecture",
+        "Local-First",
+        "Microservices",
+        "Conversational AI",
+        "Speech Processing",
+        "NLP Pipeline",
+        "AI Systems Design"
+      ],
+      "highlights": [
+        "Architected a multi-service pipeline isolating physical audio I/O, natural language understanding, and business logic over HTTP REST boundaries.",
+        "Implemented an end-to-end offline speech pipeline (wake word → VAD → STT → NLU → TTS) achieving full voice interaction without external APIs.",
+        "Implemented a local-first speech pipeline using OpenWakeWord, WebRTC VAD, and Whisper.cpp with zero cloud API dependencies.",
+        "Designed a hybrid NLU pipeline combining probabilistic intent classification (DIET) with deterministic temporal entity extraction (Duckling).",
+        "Built a persistent background scheduling system with APScheduler and SQLite, supporting dual-trigger alerts and fuzzy-matched CRUD operations.",
+        "Engineered dynamic hardware management, implementing explicit PyAudio instance release protocols to prevent single-microphone contention.",
+        "Designed a production-style conversational pipeline mimicking modern AI assistants, decomposing speech understanding into deterministic and probabilistic subsystems."
+      ],
+      "details": {
+        "architecture": [
+          "System designed to emulate real-world AI assistant architectures where each layer operates as an independently deployable service.",
+          "Multi-service layered topology consisting of Assistant (Runtime Orchestrator), NLU (Rasa + Duckling), and Logic (FastAPI) layers.",
+          "Unidirectional data flow enforcing strict downward propagation: Assistant -> NLU -> Logic, preventing lateral state entanglement.",
+          "Containerized infrastructure for Coqui TTS and Duckling communicating with the host-native Python orchestration via Docker Compose and bridge networks.",
+          "Dual-featurization pipeline utilizing spaCy 300-dimensional word embeddings and CountVectors for robust semantic and morphological analysis."
+        ],
+        "engineering": [
+          "Integrated WebRTC VAD with aggressiveness level 2 and a ring buffer requiring 80% voiced frames for onset and 90% unvoiced for offset detection.",
+          "Implemented cross-platform app launching by parsing Linux .desktop files and Windows .lnk shortcuts with difflib-based fuzzy matching (0.6 cutoff).",
+          "Configured fallback threshold at 0.3 with 0.1 ambiguity margins to gracefully degrade to deterministic error states instead of misclassifying intents.",
+          "Exposed real-time system state (boot, listening, processing) to a Web UI via an async WebSocket server utilizing thread-safe message queues."
+        ],
+        "system_design": [
+          "Isolated each layer into its own process and Python virtual environment to guarantee zero shared imports and enable independent scaling or component replacement.",
+          "Positioned Duckling temporally late in the NLU pipeline to guarantee deterministic ISO 8601 parsing overrides any conflicting DIET probabilistic extractions.",
+          "Designed the wake word listener to enforce a 3-second cooldown, preventing self-activation loops triggered by residual TTS audio output.",
+          "Implemented a TEDPolicy and MemoizationPolicy for multi-turn conversations alongside strict deterministic rules for direct logic integrations."
+        ]
+      },
+      "insights": {
+        "problem": "Understanding how modern conversational AI systems process raw human speech into structured, executable actions across multiple independent layers without relying on large language models.",
+        "why_it_was_hard": "Managing continuous microphone polling concurrently with speech-to-text recording, alongside coordinating multi-turn contextual state across strictly isolated HTTP services.",
+        "tradeoffs": [
+          "Chose the DIET classifier over pre-trained transformers to eliminate GPU hardware requirements, prioritizing local-execution compatibility over raw model scale.",
+          "Accepted slight HTTP serialization overhead between layers in exchange for absolute process isolation and testability.",
+          "Utilized Duckling for dates/times instead of purely ML-based extraction to guarantee the exact structural precision needed for the APScheduler subsystem."
+        ],
+        "failure_points": [
+          "Single-microphone contention between OpenWakeWord and VAD recording; resolved by forcefully terminating PyAudio streams and yielding the device before invoking callbacks.",
+          "Transient speech recognition failures; mitigated by a 3-attempt state-machine retry loop.",
+          "Subsystem outages; handled via isolation so that if the Logic API fails, NLU gracefully returns error text while preserving conversational intents like greetings.",
+          "Ambiguous user reminder deletions; handled by implementing a 0.5 cutoff fuzzy matching algorithm against active SQLite job stores."
+        ],
+        "real_world_behavior": "Runs continuously as a background multi-process system, handling asynchronous background jobs while executing synchronous voice pipelines that gracefully degrade upon partial component failure.",
+        "what_i_learned": "Modern AI systems are not just larger models but tightly integrated pipelines; building ELISA clarified how LLMs abstract away orchestration complexity by embedding reasoning, memory, and intent understanding into a single unified model."
+      },
+      "metrics": {
+        "scale": "3 distinct service layers, 2 containerized instances, 20 NLU intents, 500-epoch DIET training model",
+        "latency": "~200ms generation latency for short neural TTS utterances; 3-second enforced wake word cooldown",
+        "throughput": "Processes 1 active conversation pipeline synchronously while managing concurrent background task schedulers",
+        "impact": "100% local, telemetry-free voice control system capable of persistent scheduling and desktop application execution"
+      }
+    },
+    {
+      "title": "Classical NLP Command Engine",
+      "description": "A deterministic NLP engine that reconstructs structured command understanding from first principles using dependency parsing, NER, and rule-based semantic mapping — without relying on LLMs.",
+      "github": "https://github.com/kumawat-aditya/Advanced-NLP-Command-Parser.git",
+      "stack": [
+        "Python 3.10+",
+        "Stanza",
+        "Dateparser",
+        "Duckling",
+        "FastAPI",
+        "Docker"
+      ],
+      "tags": [
+        "NLP",
+        "AI Foundations",
+        "Rule-Based Systems",
+        "Dependency Parsing",
+        "Information Extraction"
+      ],
+      "highlights": [
+        "Built a deterministic NLP pipeline that extracts action, agent, semantic roles, and normalized timestamps from raw text using classical NLP primitives.",
+        "Designed an NER-first entity resolution pipeline prioritizing multi-word entity recognition over POS-based fallbacks.",
+        "Built a semantic role mapping engine using dependency relations and preposition-aware heuristics.",
+        "Developed a dual-tier temporal normalization strategy combining Facebook's Duckling sidecar with a custom Dateparser fallback engine.",
+        "Separated modifiers from embedded parameters via syntactic rule checks on dependency relations (e.g., amod vs. nmod/obl)."
+      ],
+      "details": {
+        "architecture": [
+          "Multi-stage text processing pipeline wrapping a Stanza statistical model core with a custom deterministic rule engine.",
+          "Two-mode execution architecture: a FastAPI HTTP server for RESTful service operations and an interactive REPL shell for debugging.",
+          "Centralized deterministic parsing core to maintain full pipeline traceability and simplify debugging of linguistic transformations.",
+          "Sidecar containerization pattern deploying Duckling on an isolated port for external temporal entity resolution."
+        ],
+        "engineering": [
+          "Extracted metadata, task structures, and pragmatics strictly traversing Stanza's dependency tree as the single source of truth.",
+          "Merged fragmented time references (e.g., 'tomorrow' + 'morning') into unified strings prior to normalization to improve temporal accuracy.",
+          "Cached Stanza statistical models at system startup to prevent per-request loading latency.",
+          "Implemented syntactic separation to classify children nodes as modifiers (amod, nummod) or distinct semantic entities (nmod, obl)."
+        ],
+        "system_design": [
+          "Relied entirely on explicit dependency mapping rather than Semantic Role Labeling (SRL) ML models to maintain absolute predictability and inspectability.",
+          "Designed an explicit fallback chain for entity resolution: Named Entity Recognition -> POS tags -> custom mapping rules.",
+          "Structured the application with a thin API wrapper over a purely logic-driven core to ensure testing capabilities independent of network state."
+        ]
+      },
+      "insights": {
+        "problem": "Investigating the limits of classical, rule-based NLP primitives in extracting structured, machine-readable JSON commands without relying on the generalized inference of LLMs.",
+        "why_it_was_hard": "Time expression fragmentation and the inherent cascading failure risk where a single incorrect dependency parse ruins the entire downstream semantic role assignment.",
+        "tradeoffs": [
+          "Prioritized absolute predictability and inspectability of rule-based assignments over the higher tolerance for ambiguity inherent to transformer models.",
+          "Chose to build a monolithic core logic file to explicitly document the complete deterministic pipeline flow at the expense of strict module separation.",
+          "Relied on Stanza's statistical NER models first before falling back to manual POS heuristics, blending statistical probability with deterministic rules."
+        ],
+        "failure_points": [
+          "Inevitably fails at resolving linguistic ambiguity, implicit meaning, and multi-turn contextual tracking.",
+          "Ungrammatical sentences produce incorrect dependency trees, causing unrecoverable cascading extraction errors.",
+          "Duckling unavailability forces a fallback to the less robust Dateparser engine, degrading complex temporal normalization."
+        ],
+        "real_world_behavior": "Performs deterministically and predictably for well-formed, single-sentence commands, but degrades sharply when exposed to ambiguous or conversational language.",
+        "what_i_learned": "Rule-based pipeline NLP cannot match modern LLM capability in handling edge cases and implicit meaning, demonstrating clear boundaries between deterministic linguistic extraction and learned generalization. This highlighted why modern systems collapse multiple NLP stages into unified neural architectures instead of modular pipelines."
+      },
+      "metrics": {
+        "scale": "8 distinct NLP processing layers mapping to 1 core JSON structure",
+        "latency": "Low-latency inference enabled by preloaded Stanza models with no per-request initialization overhead",
+        "throughput": "Synchronous request processing driven by deterministic state-machine evaluation",
+        "impact": "Successfully reconstructs intent, roles, and ISO 8601 timestamps purely from classical NLP architectures without cloud APIs"
+      }
     }
   ],
 
