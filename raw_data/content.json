@@ -6,6 +6,7 @@
     "email": "kumawataditya105@gmail.com",
     "availability": "Based in Jaipur, India · Open to remote opportunities",
     "education": [
+      "M.C.A (Masters of Computer Application) 2025-2027",
       "B.C.A (Bachelor of Computer Application) 2022-2025",
       "Commerce Maths 2020-2022"
     ],
@@ -716,9 +717,40 @@
 
   "experience": [
     {
+      "company": "Fudr",
+      "role": "Software Engineer I",
+      "duration": "Jul 2026 – Present",
+      "summary": [
+        "Developing backend features and product enhancements for a production SaaS platform within a cross-functional engineering team.",
+        "Contributing to scalable backend services, API development, and internal engineering workflows while becoming familiar with the product architecture.",
+        "Collaborating with senior engineers to deliver reliable, maintainable, and production-ready software."
+      ],
+      "impact": [
+        "Currently onboarding into the codebase and development processes.",
+        "Supporting ongoing feature development and engineering initiatives.",
+        "Building domain knowledge while contributing to production systems."
+      ],
+      "environment": "Product-based engineering environment focused on scalable software development, collaborative delivery, and continuous product improvement.",
+      "signals": [
+        "Works on production software",
+        "Collaborates in cross-functional teams",
+        "Adapts quickly to large existing codebases"
+      ],
+      "details": [
+        {
+          "title": "Current Responsibilities",
+          "items": [
+            "Contributing to backend feature development and bug fixes.",
+            "Participating in code reviews, sprint planning, and team discussions.",
+            "Learning product architecture, engineering standards, and deployment workflows."
+          ]
+        }
+      ]
+    },
+    {
       "company": "Trade Amplification",
       "role": "Trading Systems Developer",
-      "duration": "Aug 2024 – Present",
+      "duration": "Aug 2024 – June 2026",
       "summary": [
         "Engineered deterministic, real-time trading systems managing live options and futures execution via REST/WebSocket APIs and MT5 integration.",
         "Designed and operated event-driven distributed infrastructure for signal ingestion, stateful execution, and dynamic hedging.",
@@ -963,6 +995,30 @@
         "FastAPI",
         "WebSockets",
         "REST Integrations"
+      ]
+    },
+    {
+      "year": "Mid 2026",
+      "title": "Product Engineering at Scale",
+      "subtitle": "Fudr",
+      "description": "Transitioned from building client-specific systems to developing and maintaining a production product used by a broader customer base. The focus shifted toward long-term maintainability, collaborative engineering, and shipping reliable features within an established codebase.",
+      "points": [
+        "Working within an established production codebase and engineering workflow",
+        "Collaborating through code reviews, sprint planning, and cross-functional development",
+        "Contributing backend features while learning domain-specific product architecture",
+        "Adopting engineering practices focused on maintainability, testing, and incremental delivery",
+        "Building experience in product-driven software development"
+      ],
+      "tech": [
+        "Backend Engineering",
+        "java",
+        "Spring Boot",
+        "Pub/Sub",
+        "BigQuery",
+        "REST APIs",
+        "Git",
+        "Agile",
+        "Collaborative Development"
       ]
     }
   ]
