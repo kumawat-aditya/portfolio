@@ -14,6 +14,10 @@
    ========================================================================= */
 
 @theme {
+  /* colour VALUES live in src/config/theme.json and are written onto <html>
+     by the selected theme. these are fallbacks so Tailwind still generates
+     the utilities, and so the page has a palette if the config is missing. */
+
   /* --- surface ----------------------------------------------------------- */
   --color-paper: #e6e0d2;
   --color-paper-raised: #f0ebe0;
@@ -32,6 +36,22 @@
   --color-vermillion: #c2402a; /* state change, failure, emphasis (large) */
   --color-vermillion-ink: #a8331f; /* same voice, small text (5:1) */
   --color-live: #2e6b4c; /* the heartbeat */
+
+  /* --- atmosphere -------------------------------------------------------- */
+  --color-paper-wash-light: rgb(255 255 255 / 0.5);
+  --color-paper-wash-deep: rgb(150 138 112 / 0.16);
+  --color-night-glow: rgba(90, 168, 123, 0.055);
+
+  /* --- machine scene (sits on night, so the inks are a step brighter) ---- */
+  --color-machine-paper: #e9e3d5;
+  --color-machine-plate: #191710;
+  --color-machine-line: #877f68;
+  --color-machine-edge: #6f6a58;
+  --color-machine-dim: #494434;
+  --color-machine-note: #8b8574;
+  --color-machine-live: #5aa87b;
+  --color-machine-alarm: #e0603f;
+  --color-machine-aside: #e07a5f;
 
   /* --- type ------------------------------------------------------------- */
   --font-display: var(--font-fraunces), "Times New Roman", serif;
@@ -84,12 +104,12 @@
     /* paper is never pure: a faint fibre wash sits under everything */
     background-image: radial-gradient(
         ellipse 120% 80% at 12% 0%,
-        rgb(255 255 255 / 0.5),
+        var(--color-paper-wash-light),
         transparent 60%
       ),
       radial-gradient(
         ellipse 90% 70% at 88% 100%,
-        rgb(150 138 112 / 0.16),
+        var(--color-paper-wash-deep),
         transparent 55%
       );
     background-attachment: fixed;

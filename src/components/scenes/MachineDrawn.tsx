@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { FAILING_INDEX, LOOP, WATCHER } from "@/components/three/machineData";
 import { gsap, useSceneTimeline } from "@/lib/motion";
+import { colors } from "@/lib/theme";
 
 /* ============================================================================
    THE MACHINE — drawn
@@ -46,7 +47,7 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
       pulse.setAttribute("x", String(point.x - 3.5));
       pulse.setAttribute("y", String(point.y - 3.5));
       pulse.setAttribute("opacity", String(alive));
-      pulse.setAttribute("fill", stalled > 0.5 ? "#e0603f" : "#5aa87b");
+      pulse.setAttribute("fill", stalled > 0.5 ? colors.machine.alarm : colors.machine.live);
       frame = requestAnimationFrame(tick);
     };
 
@@ -111,32 +112,32 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
         { x: 26, y: 16, rotate: 5, duration: 0.8, ease: "power2.in" },
         3.5,
       )
-      .to("[data-drawn-stage='3'] [data-ink]", { fill: "#e0603f", duration: 0.4 }, 3.5)
-      .to("[data-drawn-stage='3'] [data-edge]", { stroke: "#e0603f", duration: 0.4 }, 3.5)
+      .to("[data-drawn-stage='3'] [data-ink]", { fill: colors.machine.alarm, duration: 0.4 }, 3.5)
+      .to("[data-drawn-stage='3'] [data-edge]", { stroke: colors.machine.alarm, duration: 0.4 }, 3.5)
       .to("[data-drawn-stage='4']", { opacity: 0.3, duration: 0.6 }, 3.7)
       .fromTo("[data-drawn-break]", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 3.8)
       // 4. the watcher stops watching and acts
       .to("[data-drawn-sight='3']", { opacity: 0.95, duration: 0.4 }, 4.6)
       .to(
         "[data-drawn-sight='3'] line",
-        { strokeDasharray: "40 0", stroke: "#e0603f", duration: 0.4 },
+        { strokeDasharray: "40 0", stroke: colors.machine.alarm, duration: 0.4 },
         4.6,
       )
-      .to("[data-drawn-watcher] [data-edge]", { stroke: "#e0603f", duration: 0.3 }, 4.6)
+      .to("[data-drawn-watcher] [data-edge]", { stroke: colors.machine.alarm, duration: 0.3 }, 4.6)
       // 5. reset
       .to(
         "[data-drawn-stage='3']",
         { x: 0, y: 0, rotate: 0, duration: 0.9, ease: "back.out(2)" },
         5.3,
       )
-      .to("[data-drawn-stage='3'] [data-ink]", { fill: "#e9e3d5", duration: 0.5 }, 5.5)
-      .to("[data-drawn-stage='3'] [data-edge]", { stroke: "#6f6a58", duration: 0.5 }, 5.5)
+      .to("[data-drawn-stage='3'] [data-ink]", { fill: colors.machine.paper, duration: 0.5 }, 5.5)
+      .to("[data-drawn-stage='3'] [data-edge]", { stroke: colors.machine.edge, duration: 0.5 }, 5.5)
       .to("[data-drawn-stage='4']", { opacity: 1, duration: 0.5 }, 5.5)
       .to("[data-drawn-break]", { opacity: 0, duration: 0.3 }, 5.5)
       .to(runtime.current, { stalled: 0, duration: 0.01 }, 5.8)
-      .to("[data-drawn-sight='3'] line", { stroke: "#6f6a58", duration: 0.4 }, 6)
+      .to("[data-drawn-sight='3'] line", { stroke: colors.machine.edge, duration: 0.4 }, 6)
       .to("[data-drawn-sight='3']", { opacity: 0.22, duration: 0.4 }, 6)
-      .to("[data-drawn-watcher] [data-edge]", { stroke: "#6f6a58", duration: 0.4 }, 6);
+      .to("[data-drawn-watcher] [data-edge]", { stroke: colors.machine.edge, duration: 0.4 }, 6);
 
     return () => timeline.scrollTrigger?.kill();
   }, [reduced]);
@@ -160,7 +161,7 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
           data-drawn-path
           d={LOOP_PATH}
           fill="none"
-          stroke="#6f6a58"
+          stroke={colors.machine.edge}
           strokeWidth="1"
           pathLength={1}
           strokeDasharray="1"
@@ -176,7 +177,7 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
               y1="462"
               x2={RUN_X - 12}
               y2={STAGE_Y[index]}
-              stroke="#6f6a58"
+              stroke={colors.machine.edge}
               strokeWidth="1"
               strokeDasharray="3 5"
             />
@@ -187,13 +188,13 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
         <g data-drawn-break opacity="0">
           <path
             d={`M ${RUN_X - 7} ${STAGE_Y[FAILING_INDEX] + 22} l 14 -8`}
-            stroke="#e0603f"
+            stroke={colors.machine.alarm}
             strokeWidth="1.4"
             strokeLinecap="round"
           />
           <path
             d={`M ${RUN_X - 7} ${STAGE_Y[FAILING_INDEX] + 30} l 14 -8`}
-            stroke="#e0603f"
+            stroke={colors.machine.alarm}
             strokeWidth="1.4"
             strokeLinecap="round"
           />
@@ -208,8 +209,8 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
               y={STAGE_Y[index] - 5}
               width="10"
               height="10"
-              fill="#0c0b09"
-              stroke="#6f6a58"
+              fill={colors.surface.night}
+              stroke={colors.machine.edge}
               strokeWidth="1"
             />
             <text
@@ -217,7 +218,7 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
               x={RUN_X - 18}
               y={STAGE_Y[index] - 1}
               textAnchor="end"
-              fill="#e9e3d5"
+              fill={colors.machine.paper}
               style={{
                 fontFamily: "var(--font-plex-mono)",
                 fontSize: 11,
@@ -231,7 +232,7 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
               x={RUN_X - 18}
               y={STAGE_Y[index] + 12}
               textAnchor="end"
-              fill="#8b8574"
+              fill={colors.machine.note}
               style={{
                 fontFamily: "var(--font-plex-mono)",
                 fontSize: 8.5,
@@ -251,14 +252,14 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
             y="457"
             width="10"
             height="10"
-            fill="#0c0b09"
-            stroke="#6f6a58"
+            fill={colors.surface.night}
+            stroke={colors.machine.edge}
             strokeWidth="1"
           />
           <text
             x="121"
             y="461"
-            fill="#e9e3d5"
+            fill={colors.machine.paper}
             style={{
               fontFamily: "var(--font-plex-mono)",
               fontSize: 11,
@@ -271,7 +272,7 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
           <text
             x="121"
             y="474"
-            fill="#8b8574"
+            fill={colors.machine.note}
             style={{
               fontFamily: "var(--font-plex-mono)",
               fontSize: 8.5,
@@ -287,7 +288,7 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
           ref={pulseRef}
           width="7"
           height="7"
-          fill="#5aa87b"
+          fill={colors.machine.live}
           opacity="0"
           x="-10"
           y="-10"

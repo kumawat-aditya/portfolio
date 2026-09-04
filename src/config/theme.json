@@ -1,0 +1,43 @@
+{
+  "colorTheme": [
+    {
+      "name": "base",
+      "scheme": "light",
+      "surface": {
+        "paper": "#e6e0d2",
+        "paperRaised": "#f0ebe0",
+        "paperDeep": "#d6cdb9",
+        "night": "#0c0b09",
+        "nightRaised": "#16150f"
+      },
+      "ink": {
+        "default": "#15130f",
+        "soft": "#4e4739",
+        "faint": "#6b6354",
+        "rule": "#b9b09c"
+      },
+      "accent": {
+        "graphite": "#28405a",
+        "vermillion": "#c2402a",
+        "vermillionInk": "#a8331f",
+        "live": "#2e6b4c"
+      },
+      "atmosphere": {
+        "paperWashLight": "rgb(255 255 255 / 0.5)",
+        "paperWashDeep": "rgb(150 138 112 / 0.16)",
+        "nightGlow": "rgba(90, 168, 123, 0.055)"
+      },
+      "machine": {
+        "paper": "#e9e3d5",
+        "plate": "#191710",
+        "line": "#877f68",
+        "edge": "#6f6a58",
+        "dim": "#494434",
+        "note": "#8b8574",
+        "live": "#5aa87b",
+        "alarm": "#e0603f",
+        "aside": "#e07a5f"
+      }
+    }
+  ]
+}

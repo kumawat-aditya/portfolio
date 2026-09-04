@@ -3,6 +3,7 @@ import { Caveat, Fraunces, IBM_Plex_Mono } from "next/font/google";
 import { Instrument } from "@/components/chrome/Instrument";
 import { Grain } from "@/components/chrome/Grain";
 import { person } from "@/content/site";
+import { activeTheme, activeThemeName, themeCssVars } from "@/lib/theme";
 import "./globals.css";
 
 /* three typefaces, three jobs:
@@ -45,15 +46,20 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#e6e0d2",
-  colorScheme: "light",
+  themeColor: activeTheme.surface.paper,
+  colorScheme: activeTheme.scheme,
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${plexMono.variable} ${caveat.variable}`}>
+    <html
+      lang="en"
+      data-color-theme={activeThemeName}
+      className={`${fraunces.variable} ${plexMono.variable} ${caveat.variable}`}
+      style={themeCssVars}
+    >
       <body className="antialiased">
         <a
           href="#work"

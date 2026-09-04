@@ -38,7 +38,7 @@ const MachineCanvas = dynamic(() => import("@/components/three/MachineCanvas"), 
 
 const TONE = {
   normal: "text-live",
-  alarm: "text-[#e0603f]",
+  alarm: "text-machine-alarm",
   recovered: "text-live",
 } as const;
 
@@ -105,7 +105,7 @@ export function Machine() {
         className="wedge-in absolute inset-0 bg-night"
         style={{
           backgroundImage:
-            "radial-gradient(ellipse 70% 55% at 50% 45%, rgba(90,168,123,0.055), transparent 70%)",
+            "radial-gradient(ellipse 70% 55% at 50% 45%, var(--color-night-glow), transparent 70%)",
         }}
       />
 
@@ -152,7 +152,7 @@ export function Machine() {
                 <span
                   aria-hidden="true"
                   className={`size-[5px] shrink-0 ${
-                    current.tone === "alarm" ? "bg-[#e0603f]" : "bg-live"
+                    current.tone === "alarm" ? "bg-machine-alarm" : "bg-live"
                   }`}
                 />
                 <span
@@ -169,7 +169,7 @@ export function Machine() {
               {current.aside ? (
                 <MarginNote
                   lean={-1.8}
-                  className="mt-4 block !text-[#e07a5f]"
+                  className="mt-4 block text-machine-aside!"
                 >
                   {current.aside}
                 </MarginNote>

@@ -5,6 +5,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
 import * as THREE from "three";
 import { getBeatPhase } from "@/lib/heartbeat";
+import { colors } from "@/lib/theme";
 import { FAILING_INDEX, LOOP, WATCHER, ease, mix, span } from "./machineData";
 
 /* ============================================================================
@@ -30,12 +31,12 @@ import { FAILING_INDEX, LOOP, WATCHER, ease, mix, span } from "./machineData";
  */
 /* eslint-disable react-hooks/immutability */
 
-const PAPER = new THREE.Color("#e9e3d5");
-const PLATE = new THREE.Color("#191710");
-const LINE = new THREE.Color("#877f68");
-const DIM = new THREE.Color("#494434");
-const LIVE = new THREE.Color("#5aa87b");
-const ALARM = new THREE.Color("#e0603f");
+const PAPER = new THREE.Color(colors.machine.paper);
+const PLATE = new THREE.Color(colors.machine.plate);
+const LINE = new THREE.Color(colors.machine.line);
+const DIM = new THREE.Color(colors.machine.dim);
+const LIVE = new THREE.Color(colors.machine.live);
+const ALARM = new THREE.Color(colors.machine.alarm);
 
 const PLATE_W = 1.62;
 const PLATE_H = 0.62;
