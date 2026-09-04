@@ -14,7 +14,8 @@
         "default": "#15130f",
         "soft": "#4e4739",
         "faint": "#6b6354",
-        "rule": "#b9b09c"
+        "rule": "#b9b09c",
+        "onNight": "#e6e0d2"
       },
       "accent": {
         "graphite": "#28405a",
@@ -25,7 +26,8 @@
       "atmosphere": {
         "paperWashLight": "rgb(255 255 255 / 0.5)",
         "paperWashDeep": "rgb(150 138 112 / 0.16)",
-        "nightGlow": "rgba(90, 168, 123, 0.055)"
+        "nightGlow": "rgba(90, 168, 123, 0.055)",
+        "grainOpacity": "0.32"
       },
       "machine": {
         "paper": "#e9e3d5",
@@ -37,6 +39,47 @@
         "live": "#5aa87b",
         "alarm": "#e0603f",
         "aside": "#e07a5f"
+      }
+    },
+    {
+      "name": "afterhours",
+      "scheme": "dark",
+      "surface": {
+        "paper": "#191622",
+        "paperRaised": "#262230",
+        "paperDeep": "#100e16",
+        "night": "#07060c",
+        "nightRaised": "#101018"
+      },
+      "ink": {
+        "default": "#ebe3d4",
+        "soft": "#c4b8a6",
+        "faint": "#9d9284",
+        "rule": "#5e586c",
+        "onNight": "#ebe3d4"
+      },
+      "accent": {
+        "graphite": "#93c0d0",
+        "vermillion": "#f2745c",
+        "vermillionInk": "#ff8f78",
+        "live": "#e6b056"
+      },
+      "atmosphere": {
+        "paperWashLight": "rgb(168 118 220 / 0.16)",
+        "paperWashDeep": "rgb(0 0 0 / 0.42)",
+        "nightGlow": "rgba(230, 176, 86, 0.08)",
+        "grainOpacity": "0.2"
+      },
+      "machine": {
+        "paper": "#e8dfcf",
+        "plate": "#12111a",
+        "line": "#6d7c88",
+        "edge": "#5e6b76",
+        "dim": "#3a424c",
+        "note": "#9a93a0",
+        "live": "#f0c06a",
+        "alarm": "#ff6b52",
+        "aside": "#ff9a78"
       }
     }
   ]

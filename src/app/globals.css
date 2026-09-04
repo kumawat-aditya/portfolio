@@ -30,6 +30,7 @@
   --color-ink-soft: #4e4739;
   --color-ink-faint: #6b6354; /* 4.5:1 — smallest usable label colour */
   --color-rule: #b9b09c; /* hairlines only, never text */
+  --color-on-night: #e6e0d2; /* captions on the night wedge */
 
   /* --- accents ----------------------------------------------------------- */
   --color-graphite: #28405a; /* diagrams, structure, blueprint */
@@ -41,6 +42,7 @@
   --color-paper-wash-light: rgb(255 255 255 / 0.5);
   --color-paper-wash-deep: rgb(150 138 112 / 0.16);
   --color-night-glow: rgba(90, 168, 123, 0.055);
+  --grain-opacity: 0.32;
 
   /* --- machine scene (sits on night, so the inks are a step brighter) ---- */
   --color-machine-paper: #e9e3d5;
@@ -128,7 +130,7 @@
   }
 
   .on-night :focus-visible {
-    outline-color: var(--color-paper);
+    outline-color: var(--color-on-night);
   }
 
   h1,
@@ -252,11 +254,19 @@
 
 [data-room="night"] .instrument .voice-readout,
 [data-room="night"] .instrument {
-  color: color-mix(in srgb, var(--color-paper) 52%, transparent);
+  color: color-mix(in srgb, var(--color-on-night) 52%, transparent);
 }
 
 [data-room="night"] .instrument .text-rule {
-  color: color-mix(in srgb, var(--color-paper) 26%, transparent);
+  color: color-mix(in srgb, var(--color-on-night) 26%, transparent);
+}
+
+.misprint-plate {
+  mix-blend-mode: multiply;
+}
+
+[data-scheme="dark"] .misprint-plate {
+  mix-blend-mode: plus-lighter;
 }
 
 /* ============================================================================

@@ -72,7 +72,7 @@ export function SpecimenDrawer({
       }}
     >
       <Dialog.Portal>
-        <Dialog.Overlay className="data-[state=closed]:animate-[veil-out_240ms_ease-in] data-[state=open]:animate-[veil-in_320ms_ease-out] fixed inset-0 z-[110] bg-ink/55" />
+        <Dialog.Overlay className="data-[state=closed]:animate-[veil-out_240ms_ease-in] data-[state=open]:animate-[veil-in_320ms_ease-out] fixed inset-0 z-[110] bg-night/70" />
         <Dialog.Content
           aria-describedby={undefined}
           className="data-[state=closed]:animate-[drawer-out_280ms_cubic-bezier(0.6,0.05,0.15,1)] data-[state=open]:animate-[drawer-in_520ms_cubic-bezier(0.16,1,0.3,1)] fixed inset-x-0 bottom-0 z-[111] flex h-[90svh] flex-col bg-paper-raised"

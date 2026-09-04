@@ -36,6 +36,8 @@ export type ColorTheme = {
     faint: string;
     /** hairlines only, never text */
     rule: string;
+    /** light pigment for captions sitting on the night wedge */
+    onNight: string;
   };
   accent: {
     /** diagrams, structure, blueprint */
@@ -54,6 +56,8 @@ export type ColorTheme = {
     paperWashDeep: string;
     /** faint live glow inside the night wedge */
     nightGlow: string;
+    /** grain overlay strength — dark grounds need less tooth */
+    grainOpacity: string;
   };
   machine: {
     /** labels sitting on dark plates */
@@ -112,6 +116,7 @@ export function themeToCssVars(theme: ColorTheme): CSSProperties {
     "--color-ink-soft": theme.ink.soft,
     "--color-ink-faint": theme.ink.faint,
     "--color-rule": theme.ink.rule,
+    "--color-on-night": theme.ink.onNight,
     "--color-graphite": theme.accent.graphite,
     "--color-vermillion": theme.accent.vermillion,
     "--color-vermillion-ink": theme.accent.vermillionInk,
@@ -119,6 +124,7 @@ export function themeToCssVars(theme: ColorTheme): CSSProperties {
     "--color-paper-wash-light": theme.atmosphere.paperWashLight,
     "--color-paper-wash-deep": theme.atmosphere.paperWashDeep,
     "--color-night-glow": theme.atmosphere.nightGlow,
+    "--grain-opacity": theme.atmosphere.grainOpacity,
     "--color-machine-paper": theme.machine.paper,
     "--color-machine-plate": theme.machine.plate,
     "--color-machine-line": theme.machine.line,

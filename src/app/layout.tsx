@@ -57,6 +57,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-color-theme={activeThemeName}
+      data-scheme={activeTheme.scheme}
       className={`${fraunces.variable} ${plexMono.variable} ${caveat.variable}`}
       style={themeCssVars}
     >

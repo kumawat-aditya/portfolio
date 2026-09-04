@@ -20,8 +20,9 @@ export function Grain() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-[90] opacity-[0.32] mix-blend-overlay"
+      className="pointer-events-none fixed inset-0 z-[90] mix-blend-overlay"
       style={{
+        opacity: "var(--grain-opacity)",
         backgroundImage: `url("data:image/svg+xml;utf8,${TILE.replace(/#/g, "%23").replace(/"/g, "'")}")`,
         backgroundRepeat: "repeat",
       }}

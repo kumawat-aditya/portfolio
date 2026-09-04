@@ -164,7 +164,7 @@ export function Machine() {
                 </span>
               </div>
 
-              <p className="voice-display text-say text-paper/95">{current.said}</p>
+              <p className="voice-display text-say text-on-night/95">{current.said}</p>
 
               {current.aside ? (
                 <MarginNote

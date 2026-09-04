@@ -189,7 +189,7 @@ export function Readout({
     ink: "text-ink",
     alarm: "text-vermillion-ink",
     live: "text-live",
-    paper: "text-paper/70",
+    paper: "text-on-night/70",
   };
   return (
     <span className={`voice-readout ${tones[tone]} ${className}`}>{children}</span>
@@ -259,7 +259,7 @@ export function Misprint({
     <span className={`relative inline-block ${className}`}>
       <span
         aria-hidden="true"
-        className={`absolute inset-0 select-none ${plate} opacity-60 mix-blend-multiply`}
+        className={`absolute inset-0 select-none ${plate} misprint-plate opacity-60`}
         style={{ transform: `translate(${offset}, ${offset})` }}
       >
         {children}
@@ -289,7 +289,7 @@ export function SceneTag({
       <span
         aria-hidden="true"
         className={`h-px w-8 translate-y-[-0.2em] ${
-          tone === "paper" ? "bg-paper/30" : "bg-rule"
+          tone === "paper" ? "bg-on-night/30" : "bg-rule"
         }`}
       />
       <Readout tone={tone}>{children}</Readout>
