@@ -99,7 +99,7 @@ export function Zombie() {
       <div
         ref={scope}
         aria-hidden="true"
-        className="pointer-events-none fixed top-[58svh] right-0 z-[80] select-none"
+        className="pointer-events-none fixed top-[calc(58*var(--vh))] right-0 z-[80] select-none"
       >
         <div className="relative">
           <div data-orphan className="translate-x-full opacity-0">
@@ -123,7 +123,7 @@ export function Zombie() {
 
           <span
             data-verdict
-            className="voice-readout absolute top-0 right-[3vw] w-max whitespace-nowrap text-ink-faint opacity-0"
+            className="voice-readout absolute top-0 right-[calc(3*var(--vw))] w-max whitespace-nowrap text-ink-faint opacity-0"
           >
             watchdog · 1 orphan cleared
           </span>

@@ -75,13 +75,16 @@ export function SpecimenDrawer({
         <Dialog.Overlay className="data-[state=closed]:animate-[veil-out_240ms_ease-in] data-[state=open]:animate-[veil-in_320ms_ease-out] fixed inset-0 z-[110] bg-night/70" />
         <Dialog.Content
           aria-describedby={undefined}
-          className="data-[state=closed]:animate-[drawer-out_280ms_cubic-bezier(0.6,0.05,0.15,1)] data-[state=open]:animate-[drawer-in_520ms_cubic-bezier(0.16,1,0.3,1)] fixed inset-x-0 bottom-0 z-[111] flex h-[90svh] flex-col bg-paper-raised"
-          style={{ clipPath: "polygon(0 2.6vw, 100% 0, 100% 100%, 0 100%)" }}
+          className="data-[state=closed]:animate-[drawer-out_280ms_cubic-bezier(0.6,0.05,0.15,1)] data-[state=open]:animate-[drawer-in_520ms_cubic-bezier(0.16,1,0.3,1)] fixed inset-x-0 bottom-0 z-[111] flex h-[calc(90*var(--vh))] flex-col bg-paper-raised"
+          style={{
+            clipPath:
+              "polygon(0 calc(2.6 * var(--vw)), 100% 0, 100% 100%, 0 100%)",
+          }}
         >
           {project ? (
             <>
               {/* ---- drawer front ------------------------------------ */}
-              <div className="flex shrink-0 items-start justify-between gap-6 px-[6vw] pt-[5.5vw] pb-4 sm:pt-[3.6vw]">
+              <div className="flex shrink-0 items-start justify-between gap-6 px-[calc(6*var(--vw))] pt-[calc(5.5*var(--vw))] pb-4 sm:pt-[calc(3.6*var(--vw))]">
                 <Readout className="pt-1">
                   spec. {String(index + 1).padStart(2, "0")} / {total}
                 </Readout>
@@ -97,7 +100,7 @@ export function SpecimenDrawer({
               </div>
 
               {/* ---- contents ---------------------------------------- */}
-              <div className="quiet-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-[6vw] pb-[14vh]">
+              <div className="quiet-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-[calc(6*var(--vw))] pb-[calc(14*var(--vh))]">
                 <Dialog.Title className="voice-display text-loud max-w-[26ch] text-ink">
                   {project.name}
                 </Dialog.Title>
@@ -109,7 +112,7 @@ export function SpecimenDrawer({
                   {project.description}
                 </p>
 
-                <div className="mt-12 grid gap-x-[6vw] gap-y-2 md:grid-cols-2">
+                <div className="mt-12 grid gap-x-[calc(6*var(--vw))] gap-y-2 md:grid-cols-2">
                   <div>
                     <Field label="the problem">
                       <p className="voice-prose max-w-[56ch]">{project.problem}</p>

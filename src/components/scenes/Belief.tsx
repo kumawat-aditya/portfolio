@@ -89,9 +89,9 @@ export function Belief() {
       ref={scope}
       data-belief
       aria-label="A correction"
-      className="relative flex min-h-[100svh] flex-col justify-center px-[6vw] py-[14vh]"
+      className="relative flex min-h-[calc(100*var(--vh))] flex-col justify-center px-[calc(6*var(--vw))] py-[calc(14*var(--vh))]"
     >
-      <SceneTag index="02" className="absolute top-[8vh] left-[6vw]">
+      <SceneTag index="02" className="absolute top-[calc(8*var(--vh))] left-[calc(6*var(--vw))]">
         a correction
       </SceneTag>
 
@@ -164,7 +164,7 @@ export function Belief() {
             width={46}
             className="mt-1 shrink-0 text-vermillion opacity-80 md:mt-0 md:ml-6"
           />
-          <span className="voice-margin block text-[clamp(1.15rem,2.3vw,1.9rem)] leading-[1.1]">
+          <span className="voice-margin block text-[clamp(1.15rem,calc(2.3*var(--vw)),1.9rem)] leading-[1.1]">
             the boundaries
             <br />
             between them
@@ -176,7 +176,7 @@ export function Belief() {
           Arrives last, so it rewards staying with the scene. */}
       <figure
         data-evidence
-        className="mt-[9vh] flex max-w-[52ch] gap-4 opacity-0 md:mt-[12vh]"
+        className="mt-[calc(9*var(--vh))] flex max-w-[52ch] gap-4 opacity-0 md:mt-[calc(12*var(--vh))]"
       >
         <HandMark
           kind="bracket"
@@ -198,7 +198,7 @@ export function Belief() {
       {/* tertiary: the honest bit, small, far away from everything else */}
       <MarginNote
         lean={1.8}
-        className="mt-[12vh] block max-w-[26ch] self-end text-right md:absolute md:right-[6vw] md:bottom-[11vh] md:mt-0"
+        className="mt-[calc(12*var(--vh))] block max-w-[26ch] self-end text-right md:absolute md:right-[calc(6*var(--vw))] md:bottom-[calc(11*var(--vh))] md:mt-0"
       >
         I still write the bug first.
         <br />I just find it faster now.

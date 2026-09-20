@@ -19,12 +19,12 @@ export function Breath() {
   return (
     <section
       aria-label="A quiet moment"
-      className="relative flex min-h-[82svh] flex-col justify-center px-[6vw]"
+      className="relative flex min-h-[calc(82*var(--vh))] flex-col justify-center px-[calc(6*var(--vw))]"
     >
       {/* a rule that starts at the edge of the page and stops in mid-air */}
       <Rule className="absolute top-1/2 left-0 w-[46%] md:w-[58%]" />
 
-      <div className="mt-[6vh] max-w-[30ch] md:ml-[52%] md:max-w-[26ch]">
+      <div className="mt-[calc(6*var(--vh))] max-w-[30ch] md:ml-[52%] md:max-w-[26ch]">
         <p className="voice-display text-say text-ink">
           Most of what I&rsquo;ve built is doing that right now.
         </p>
@@ -34,7 +34,7 @@ export function Breath() {
       </div>
 
       {/* the payoff for the thing that has been counting since you arrived */}
-      <div className="absolute bottom-[14vh] left-[6vw] flex items-end gap-1 md:bottom-[18vh]">
+      <div className="absolute bottom-[calc(14*var(--vh))] left-[calc(6*var(--vw))] flex items-end gap-1 md:bottom-[calc(18*var(--vh))]">
         <HandMark
           kind="arrow-down-left"
           width={34}

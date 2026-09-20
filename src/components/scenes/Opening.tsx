@@ -45,7 +45,7 @@ export function Opening() {
       ref={scope}
       data-opening
       aria-label="Arrival"
-      className="relative flex min-h-[100svh] flex-col justify-between overflow-clip px-[6vw] pt-6 pb-24 sm:pt-8"
+      className="relative flex min-h-[calc(100*var(--vh))] flex-col justify-between overflow-clip px-[calc(6*var(--vw))] pt-6 pb-24 sm:pt-8"
     >
       {/* ---- masthead: the facts, delivered like a specimen sheet header --- */}
       <header className="relative z-20">
@@ -64,7 +64,7 @@ export function Opening() {
            The right column is one vertical instrument: local time, an aside,
            then a plumb line hanging off it with a live angle. It gives the
            empty side of the composition a reason to be empty. */}
-      <div className="pointer-events-none absolute top-[13vh] right-[6vw] z-20 hidden w-[15rem] md:block lg:w-[17rem]">
+      <div className="pointer-events-none absolute top-[calc(13*var(--vh))] right-[calc(6*var(--vw))] z-20 hidden w-[15rem] md:block lg:w-[17rem]">
         <div
           data-opening-aside
           className="transition-opacity duration-1000 ease-out"
@@ -78,7 +78,7 @@ export function Opening() {
           </p>
         </div>
 
-        <div className="relative mt-[7vh]">
+        <div className="relative mt-[calc(7*var(--vh))]">
           <Readout className="block">plumb</Readout>
           <PlumbBob className="top-7 left-0" />
         </div>
@@ -95,13 +95,13 @@ export function Opening() {
           </span>
           <span
             data-greet="im"
-            className="ml-[8vw] block text-giant will-change-transform"
+            className="ml-[calc(8*var(--vw))] block text-giant will-change-transform"
           >
             I&rsquo;m
           </span>
           <span
             data-greet="name"
-            className="-ml-[1.5vw] block text-mega will-change-transform"
+            className="-ml-[calc(1.5*var(--vw))] block text-mega will-change-transform"
           >
             Aditya.
           </span>
@@ -110,7 +110,7 @@ export function Opening() {
         {/* on narrow screens the rail collapses back under the greeting */}
         <div
           data-opening-aside
-          className="mt-[5vh] max-w-[34ch] transition-opacity duration-1000 ease-out md:hidden"
+          className="mt-[calc(5*var(--vh))] max-w-[34ch] transition-opacity duration-1000 ease-out md:hidden"
           style={{ opacity: jaipur ? 1 : 0 }}
         >
           <Readout tone="ink" className="block tabular-nums">

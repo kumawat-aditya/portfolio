@@ -291,15 +291,15 @@ export function Evolution() {
   );
 
   const columns =
-    "md:grid-cols-[clamp(72px,12vw,168px)_minmax(0,1fr)_clamp(128px,15vw,196px)]";
+    "md:grid-cols-[clamp(4.5rem,calc(12*var(--vw)),10.5rem)_minmax(0,1fr)_clamp(8rem,calc(15*var(--vw)),12.25rem)]";
 
   return (
     <section
       ref={scope}
       aria-label="How the work changed"
-      className="relative px-[6vw] pt-[14vh] pb-[10vh]"
+      className="relative px-[calc(6*var(--vw))] pt-[calc(14*var(--vh))] pb-[calc(10*var(--vh))]"
     >
-      <header className="relative mx-auto flex max-w-[1100px] flex-wrap items-end justify-between gap-8">
+      <header className="relative mx-auto flex max-w-[68.75rem] flex-wrap items-end justify-between gap-8">
         <div>
           <SceneTag index="06">one line, four years</SceneTag>
           <h2 className="voice-display text-loud mt-4 text-ink">
@@ -324,7 +324,7 @@ export function Evolution() {
         </dl>
       </header>
 
-      <div className="relative mx-auto mt-[10vh] max-w-[1100px]">
+      <div className="relative mx-auto mt-[calc(10*var(--vh))] max-w-[68.75rem]">
         {/* ---- the line, sized from the rows it describes ------------------ */}
         {geometry ? (
           <svg
@@ -379,18 +379,18 @@ export function Evolution() {
             <li
               key={`${era.year}-${era.title}`}
               data-era
-              className={`grid items-start gap-x-[clamp(28px,4vw,60px)] py-[clamp(28px,5vh,52px)] ${columns}`}
+              className={`grid items-start gap-x-[clamp(1.75rem,calc(4*var(--vw)),3.75rem)] py-[clamp(1.75rem,calc(5*var(--vh)),3.25rem)] ${columns}`}
             >
               <p
                 data-era-year
-                className="voice-display pl-14 text-[clamp(1.5rem,2.6vw,2.3rem)] leading-none text-ink md:pl-0 md:text-right"
+                className="voice-display pl-14 text-[clamp(1.5rem,calc(2.6*var(--vw)),2.3rem)] leading-none text-ink md:pl-0 md:text-right"
               >
                 {era.year}
               </p>
 
               <div
                 data-era-body
-                className="mt-3 pl-14 md:mt-0 md:ml-[clamp(24px,3.6vw,60px)] md:pl-0"
+                className="mt-3 pl-14 md:mt-0 md:ml-[clamp(1.5rem,calc(3.6*var(--vw)),3.75rem)] md:pl-0"
                 style={
                   geometry
                     ? {
@@ -429,10 +429,10 @@ export function Evolution() {
           {/* the row the line leaves through */}
           <li
             data-era-tail
-            className={`grid items-start gap-x-[clamp(28px,4vw,60px)] pt-[clamp(36px,7vh,72px)] pb-[clamp(48px,9vh,96px)] ${columns}`}
+            className={`grid items-start gap-x-[clamp(1.75rem,calc(4*var(--vw)),3.75rem)] pt-[clamp(2.25rem,calc(7*var(--vh)),4.5rem)] pb-[clamp(3rem,calc(9*var(--vh)),6rem)] ${columns}`}
           >
             <span aria-hidden="true" className="hidden md:block" />
-            <div className="pl-14 md:ml-[clamp(24px,3.6vw,60px)] md:pl-0">
+            <div className="pl-14 md:ml-[clamp(1.5rem,calc(3.6*var(--vw)),3.75rem)] md:pl-0">
               <MarginNote lean={-2.2}>still figuring this one out.</MarginNote>
               <Readout className="mt-3 block">
                 now · {currentRole.role} at {currentRole.company}

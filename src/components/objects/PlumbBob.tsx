@@ -33,8 +33,16 @@ export function PlumbBob({ className = "" }: { className?: string }) {
 
   /* the thread is as long as the room allows */
   useEffect(() => {
-    const measure = () =>
-      setLength(Math.round(Math.max(190, Math.min(400, window.innerHeight * 0.4))));
+    const measure = () => {
+      const fit = Number.parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue("--fit"),
+      ) || 1;
+      setLength(
+        Math.round(
+          Math.max(190 * fit, Math.min(400 * fit, window.innerHeight * 0.4)),
+        ),
+      );
+    };
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);

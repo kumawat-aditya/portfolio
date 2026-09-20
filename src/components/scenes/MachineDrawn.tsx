@@ -148,11 +148,11 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
     // caption print on top of each other on a phone
     <div
       ref={scope}
-      className="flex h-full w-full items-center justify-center pt-[9svh] pb-[28svh]"
+      className="flex h-full w-full items-center justify-center pt-[calc(9*var(--vh))] pb-[calc(28*var(--vh))]"
     >
       <svg
         viewBox="0 0 330 560"
-        className="h-full max-h-[76svh] w-full"
+        className="h-full max-h-[calc(76*var(--vh))] w-full"
         aria-hidden="true"
       >
         {/* the circuit, drawn as one continuous path */}

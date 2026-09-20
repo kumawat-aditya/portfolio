@@ -40,25 +40,25 @@ const PLACEMENT = [
     cell: "md:col-start-9 md:col-span-4 md:row-start-1",
     title: "text-say",
     lean: -1.3,
-    offset: "md:mt-[26vh]",
+    offset: "md:mt-[calc(26*var(--vh))]",
   },
   {
     cell: "md:col-start-2 md:col-span-7 md:row-start-2",
     title: "text-loud",
     lean: 0.5,
-    offset: "md:-mt-[6vh]",
+    offset: "md:-mt-[calc(6*var(--vh))]",
   },
   {
     cell: "md:col-start-9 md:col-span-4 md:row-start-2",
     title: "text-say",
     lean: 1.6,
-    offset: "md:mt-[16vh]",
+    offset: "md:mt-[calc(16*var(--vh))]",
   },
   {
     cell: "md:col-start-1 md:col-span-11 md:row-start-3",
     title: "text-giant",
     lean: 0,
-    offset: "md:mt-[6vh]",
+    offset: "md:mt-[calc(6*var(--vh))]",
   },
 ] as const;
 
@@ -99,7 +99,7 @@ function Specimen({
   return (
     <article
       data-specimen
-      className={`group relative ${place.cell} ${place.offset} mt-[12vh] first:mt-0 md:mt-0`}
+      className={`group relative ${place.cell} ${place.offset} mt-[calc(12*var(--vh))] first:mt-0 md:mt-0`}
       style={{ transform: `rotate(${place.lean}deg)` }}
     >
       <div className="transition-transform duration-500 ease-[var(--ease-instrument)] group-hover:-translate-y-1.5">
@@ -185,7 +185,7 @@ export function WorkWall() {
       ref={scope}
       id="work"
       aria-label="Selected work"
-      className="relative px-[6vw] pt-[12vh] pb-[16vh]"
+      className="relative px-[calc(6*var(--vw))] pt-[calc(12*var(--vh))] pb-[calc(16*var(--vh))]"
     >
       {/* the wall itself */}
       <div
@@ -207,10 +207,10 @@ export function WorkWall() {
         </MarginNote>
       </header>
 
-      <Rule className="relative mt-8 mb-[10vh]" />
+      <Rule className="relative mt-8 mb-[calc(10*var(--vh))]" />
 
       {/* ---- the five ---------------------------------------------------- */}
-      <div className="relative grid md:grid-cols-12 md:gap-x-[3vw]">
+      <div className="relative grid md:grid-cols-12 md:gap-x-[calc(3*var(--vw))]">
         {featuredProjects.map((project, index) => (
           <Specimen
             key={project.slug}
@@ -222,7 +222,7 @@ export function WorkWall() {
       </div>
 
       {/* ---- and the rest of the shelf ----------------------------------- */}
-      <div data-shelf className="relative mt-[18vh]">
+      <div data-shelf className="relative mt-[calc(18*var(--vh))]">
         <div className="flex items-end gap-1">
           <Readout>the rest of the shelf</Readout>
           <HandMark
@@ -237,7 +237,7 @@ export function WorkWall() {
         <ul className="relative mt-5 bg-paper-raised/70">
           <span
             aria-hidden="true"
-            className="absolute inset-y-0 -left-[6vw] -right-[6vw] -z-10 bg-paper-raised/70"
+            className="absolute inset-y-0 -left-[calc(6*var(--vw))] -right-[calc(6*var(--vw))] -z-10 bg-paper-raised/70"
           />
           {shelfProjects.map((project, i) => {
             const index = featuredProjects.length + i;
@@ -252,7 +252,7 @@ export function WorkWall() {
                   <Readout className="w-14 shrink-0 pt-1 md:pt-0">
                     spec. {String(index + 1).padStart(2, "0")}
                   </Readout>
-                  <span className="voice-display w-full max-w-none text-[clamp(1.15rem,2.2vw,1.7rem)] leading-none text-ink transition-colors group-hover:text-vermillion-ink md:w-[13em] md:shrink-0">
+                  <span className="voice-display w-full max-w-none text-[clamp(1.15rem,calc(2.2*var(--vw)),1.7rem)] leading-none text-ink transition-colors group-hover:text-vermillion-ink md:w-[13em] md:shrink-0">
                     {project.name}
                   </span>
                   <Readout tone="ink" className="tabular-nums md:flex-1">

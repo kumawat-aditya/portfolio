@@ -40,19 +40,19 @@ export function Closing() {
   return (
     <footer
       aria-label="Ways in"
-      className="relative flex min-h-[92svh] flex-col justify-between overflow-clip px-[6vw] pt-[12vh] pb-[16vh]"
+      className="relative flex min-h-[calc(92*var(--vh))] flex-col justify-between overflow-clip px-[calc(6*var(--vw))] pt-[calc(12*var(--vh))] pb-[calc(16*var(--vh))]"
     >
       <div>
         <SceneTag index="07">the door, left open</SceneTag>
 
         {/* the last line uses the whole room, because there is nothing after it */}
-        <h2 className="voice-display text-giant mt-[8vh] text-ink">
+        <h2 className="voice-display text-giant mt-[calc(8*var(--vh))] text-ink">
           <span className="block">The lights</span>
           <span className="block md:pl-[34%]">stay on.</span>
         </h2>
       </div>
 
-      <div className="mt-[10vh]">
+      <div className="mt-[calc(10*var(--vh))]">
         <PulseTrace className="mb-9" />
 
         <div className="flex flex-col gap-y-10 md:flex-row md:items-end md:justify-between md:gap-x-16">
@@ -100,7 +100,7 @@ export function Closing() {
           </div>
         </div>
 
-        <p className="voice-readout mt-[10vh] text-ink-faint">
+        <p className="voice-readout mt-[calc(10*var(--vh))] text-ink-faint">
           {person.name} · {person.location} · built by hand, mostly at night
         </p>
       </div>

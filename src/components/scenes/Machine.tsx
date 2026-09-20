@@ -97,7 +97,7 @@ export function Machine() {
       data-machine
       aria-label="Under the hood"
       className="on-night relative"
-      style={{ height: "420svh" }}
+      style={{ height: "calc(420 * var(--vh))" }}
     >
       {/* the room, cut into the page at an angle */}
       <div
@@ -111,7 +111,7 @@ export function Machine() {
 
       <div
         ref={stageRef}
-        className="sticky top-0 flex h-[100svh] flex-col justify-between overflow-clip px-[6vw] pt-[7vh] pb-[15vh]"
+        className="sticky top-0 flex h-[calc(100*var(--vh))] flex-col justify-between overflow-clip px-[calc(6*var(--vw))] pt-[calc(7*var(--vh))] pb-[calc(15*var(--vh))]"
       >
         {/* ---- the drawing --------------------------------------------- */}
         <div className="pointer-events-none absolute inset-0">
