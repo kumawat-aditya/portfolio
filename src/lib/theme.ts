@@ -7,6 +7,10 @@ import themeFile from "@/config/theme.json";
    ----------------------------------------------------------------------------
    Palettes live in src/config/theme.json (`colorTheme` array).
    Which palette is live is chosen in src/config/site.json (`colorTheme` name).
+   Visitors can also cycle rooms by pulling the plumb.
+
+   Rooms:
+     base / afterhours / noon / monsoon / blueprint / proof / watch
 
    To add a theme: duplicate the `base` object in the array, rename it, change
    the colours. Then set `"colorTheme": "that-name"` in site.json.
@@ -81,9 +85,46 @@ export type ColorTheme = {
   };
 };
 
-const catalog = themeFile.colorTheme as ColorTheme[];
+export const catalog = themeFile.colorTheme as ColorTheme[];
 
 const available = () => catalog.map((theme) => theme.name).join(", ");
+
+/** how the rooms introduce themselves — presentation, not new facts */
+export const roomVoice: Record<string, { title: string; note: string }> = {
+  base: {
+    title: "paper",
+    note: "the room as it arrived.",
+  },
+  afterhours: {
+    title: "after hours",
+    note: "the shop lights are off.",
+  },
+  noon: {
+    title: "noon",
+    note: "Jaipur in full sun. the paper went yellow.",
+  },
+  monsoon: {
+    title: "monsoon",
+    note: "the sheet took on water and did not quite dry.",
+  },
+  blueprint: {
+    title: "blueprint",
+    note: "before it was a site it was a drawing.",
+  },
+  proof: {
+    title: "proof",
+    note: "one more pass before the plate.",
+  },
+  watch: {
+    title: "watch",
+    note: "the loop is still running. nobody else is.",
+  },
+};
+
+export const ROOM_STORAGE_KEY = "aditya-room";
+export const ROOM_UNLOCK_KEY = "aditya-room-drawer";
+export const ROOM_PULLS_KEY = "aditya-room-pulls";
+export const PULLS_TO_DRAWER = 5;
 
 function pickTheme(name: string): ColorTheme {
   const found = catalog.find((theme) => theme.name === name);
@@ -138,3 +179,42 @@ export function themeToCssVars(theme: ColorTheme): CSSProperties {
 }
 
 export const themeCssVars = themeToCssVars(activeTheme);
+
+export function applyTheme(name: string) {
+  const theme = pickTheme(name);
+  const root = document.documentElement;
+  root.dataset.colorTheme = theme.name;
+  root.dataset.scheme = theme.scheme;
+  root.style.colorScheme = theme.scheme;
+
+  const vars = themeToCssVars(theme);
+  for (const [key, value] of Object.entries(vars)) {
+    if (typeof value === "string") root.style.setProperty(key, value);
+  }
+
+  try {
+    localStorage.setItem(ROOM_STORAGE_KEY, theme.name);
+  } catch {
+    /* private mode — the room still changes for this visit */
+  }
+
+  return theme;
+}
+
+export function nextThemeName(current: string): string {
+  const index = catalog.findIndex((theme) => theme.name === current);
+  const from = index >= 0 ? index : 0;
+  return catalog[(from + 1) % catalog.length]?.name ?? current;
+}
+
+/** payload for a blocking inline script so a stored room does not flash paper */
+export const themeHydrateCatalog = Object.fromEntries(
+  catalog.map((theme) => [
+    theme.name,
+    { scheme: theme.scheme, vars: themeToCssVars(theme) },
+  ]),
+);
+
+export function themeHydrateScript(): string {
+  return `(function(){try{var k=${JSON.stringify(ROOM_STORAGE_KEY)};var n=localStorage.getItem(k);var c=${JSON.stringify(themeHydrateCatalog)};if(!n||!c[n])return;var h=document.documentElement;h.setAttribute("data-color-theme",n);h.setAttribute("data-scheme",c[n].scheme);h.style.colorScheme=c[n].scheme;var v=c[n].vars;for(var p in v){if(Object.prototype.hasOwnProperty.call(v,p))h.style.setProperty(p,v[p]);}}catch(e){}})();`;
+}

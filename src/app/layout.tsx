@@ -2,8 +2,14 @@ import type { Metadata, Viewport } from "next";
 import { Caveat, Fraunces, IBM_Plex_Mono } from "next/font/google";
 import { Instrument } from "@/components/chrome/Instrument";
 import { Grain } from "@/components/chrome/Grain";
+import { ThemeRoot } from "@/components/chrome/ThemeRoot";
 import { person } from "@/content/site";
-import { activeTheme, activeThemeName, themeCssVars } from "@/lib/theme";
+import {
+  activeTheme,
+  activeThemeName,
+  themeCssVars,
+  themeHydrateScript,
+} from "@/lib/theme";
 import "./globals.css";
 
 /* three typefaces, three jobs:
@@ -62,15 +68,20 @@ export default function RootLayout({
       style={themeCssVars}
     >
       <body className="antialiased">
-        <a
-          href="#work"
-          className="voice-machine sr-only focus:not-sr-only focus:fixed focus:top-6 focus:left-6 focus:z-[120] focus:bg-ink focus:px-4 focus:py-2 focus:text-paper-raised"
-        >
-          Skip to the work
-        </a>
-        {children}
-        <Instrument />
-        <Grain />
+        <script
+          dangerouslySetInnerHTML={{ __html: themeHydrateScript() }}
+        />
+        <ThemeRoot initialName={activeThemeName}>
+          <a
+            href="#work"
+            className="voice-machine sr-only focus:not-sr-only focus:fixed focus:top-6 focus:left-6 focus:z-[120] focus:bg-ink focus:px-4 focus:py-2 focus:text-paper-raised"
+          >
+            Skip to the work
+          </a>
+          {children}
+          <Instrument />
+          <Grain />
+        </ThemeRoot>
       </body>
     </html>
   );

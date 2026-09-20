@@ -81,6 +81,211 @@
         "alarm": "#ff6b52",
         "aside": "#ff9a78"
       }
+    },
+    {
+      "name": "noon",
+      "scheme": "light",
+      "surface": {
+        "paper": "#efe3c4",
+        "paperRaised": "#f6edd4",
+        "paperDeep": "#e0d0a4",
+        "night": "#1a1610",
+        "nightRaised": "#242018"
+      },
+      "ink": {
+        "default": "#2a2214",
+        "soft": "#5c4e38",
+        "faint": "#6e5f45",
+        "rule": "#c4b48a",
+        "onNight": "#efe3c4"
+      },
+      "accent": {
+        "graphite": "#3d4a32",
+        "vermillion": "#c44a22",
+        "vermillionInk": "#a33a18",
+        "live": "#4a6230"
+      },
+      "atmosphere": {
+        "paperWashLight": "rgb(255 248 220 / 0.55)",
+        "paperWashDeep": "rgb(180 140 70 / 0.18)",
+        "nightGlow": "rgba(196, 74, 34, 0.07)",
+        "grainOpacity": "0.28"
+      },
+      "machine": {
+        "paper": "#f3ead0",
+        "plate": "#1c1810",
+        "line": "#8a7a52",
+        "edge": "#6e6240",
+        "dim": "#4a4230",
+        "note": "#8a8068",
+        "live": "#7a9a4a",
+        "alarm": "#e06038",
+        "aside": "#d07040"
+      }
+    },
+    {
+      "name": "monsoon",
+      "scheme": "light",
+      "surface": {
+        "paper": "#d5ddd8",
+        "paperRaised": "#e3eae6",
+        "paperDeep": "#c2cdc8",
+        "night": "#121a1c",
+        "nightRaised": "#1a2426"
+      },
+      "ink": {
+        "default": "#1a2422",
+        "soft": "#3e4c49",
+        "faint": "#4e5c58",
+        "rule": "#a3b0ab",
+        "onNight": "#d5ddd8"
+      },
+      "accent": {
+        "graphite": "#2a4a55",
+        "vermillion": "#a83d3d",
+        "vermillionInk": "#8c3030",
+        "live": "#2d6b5a"
+      },
+      "atmosphere": {
+        "paperWashLight": "rgb(220 235 240 / 0.45)",
+        "paperWashDeep": "rgb(90 120 118 / 0.16)",
+        "nightGlow": "rgba(80, 160, 140, 0.07)",
+        "grainOpacity": "0.38"
+      },
+      "machine": {
+        "paper": "#e0e8e4",
+        "plate": "#141c1e",
+        "line": "#6a7c78",
+        "edge": "#586866",
+        "dim": "#3a4846",
+        "note": "#7a8884",
+        "live": "#5aab90",
+        "alarm": "#d06058",
+        "aside": "#c07068"
+      }
+    },
+    {
+      "name": "blueprint",
+      "scheme": "dark",
+      "surface": {
+        "paper": "#243a4a",
+        "paperRaised": "#2e4a5c",
+        "paperDeep": "#1a2d3a",
+        "night": "#0c1820",
+        "nightRaised": "#142430"
+      },
+      "ink": {
+        "default": "#e4ddd0",
+        "soft": "#c0b8a8",
+        "faint": "#a8b4bc",
+        "rule": "#4a6270",
+        "onNight": "#e4ddd0"
+      },
+      "accent": {
+        "graphite": "#9ec4d4",
+        "vermillion": "#e07050",
+        "vermillionInk": "#f4a080",
+        "live": "#7aab8a"
+      },
+      "atmosphere": {
+        "paperWashLight": "rgb(120 170 190 / 0.14)",
+        "paperWashDeep": "rgb(0 10 20 / 0.4)",
+        "nightGlow": "rgba(158, 196, 212, 0.08)",
+        "grainOpacity": "0.22"
+      },
+      "machine": {
+        "paper": "#e8e0d0",
+        "plate": "#102028",
+        "line": "#6a8898",
+        "edge": "#5a7484",
+        "dim": "#3a505c",
+        "note": "#8aa0ac",
+        "live": "#8ec09a",
+        "alarm": "#ee7a58",
+        "aside": "#f09a78"
+      }
+    },
+    {
+      "name": "proof",
+      "scheme": "light",
+      "surface": {
+        "paper": "#eadcc4",
+        "paperRaised": "#f3ead4",
+        "paperDeep": "#d4c4a6",
+        "night": "#161410",
+        "nightRaised": "#201c18"
+      },
+      "ink": {
+        "default": "#1a1612",
+        "soft": "#4a4034",
+        "faint": "#655848",
+        "rule": "#c4b496",
+        "onNight": "#eadcc4"
+      },
+      "accent": {
+        "graphite": "#2c3540",
+        "vermillion": "#b42318",
+        "vermillionInk": "#9a1e14",
+        "live": "#3d5c3a"
+      },
+      "atmosphere": {
+        "paperWashLight": "rgb(255 250 235 / 0.4)",
+        "paperWashDeep": "rgb(140 110 70 / 0.14)",
+        "nightGlow": "rgba(180, 35, 24, 0.06)",
+        "grainOpacity": "0.42"
+      },
+      "machine": {
+        "paper": "#f0e6d0",
+        "plate": "#1a1612",
+        "line": "#7a6e58",
+        "edge": "#645a48",
+        "dim": "#423c30",
+        "note": "#7a7060",
+        "live": "#6a8a60",
+        "alarm": "#d04030",
+        "aside": "#c05040"
+      }
+    },
+    {
+      "name": "watch",
+      "scheme": "dark",
+      "surface": {
+        "paper": "#12110f",
+        "paperRaised": "#1c1b18",
+        "paperDeep": "#0a0908",
+        "night": "#050504",
+        "nightRaised": "#10100e"
+      },
+      "ink": {
+        "default": "#d8d0c4",
+        "soft": "#b0a898",
+        "faint": "#8a8378",
+        "rule": "#3a3834",
+        "onNight": "#d8d0c4"
+      },
+      "accent": {
+        "graphite": "#7a8a94",
+        "vermillion": "#e0603f",
+        "vermillionInk": "#f07858",
+        "live": "#5aa87b"
+      },
+      "atmosphere": {
+        "paperWashLight": "rgb(90 168 123 / 0.06)",
+        "paperWashDeep": "rgb(0 0 0 / 0.5)",
+        "nightGlow": "rgba(90, 168, 123, 0.09)",
+        "grainOpacity": "0.16"
+      },
+      "machine": {
+        "paper": "#e6e0d2",
+        "plate": "#0c0c0a",
+        "line": "#6a7068",
+        "edge": "#585e56",
+        "dim": "#3a3c38",
+        "note": "#8a8880",
+        "live": "#5aa87b",
+        "alarm": "#e0603f",
+        "aside": "#e07a5f"
+      }
     }
   ]
 }
