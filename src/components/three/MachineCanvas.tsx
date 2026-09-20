@@ -157,6 +157,9 @@ function Assembly({ progress }: { progress: RefObject<number> }) {
 
     /* ---- phase windows (mirrored in machineData BEATS) ------------------ */
     const separate = ease(span(p, 0.15, 0.42));
+    /** beat 0: stacked parts must read as one object before separation starts */
+    const fused = ease(1 - span(p, 0.04, 0.2));
+    const partVis = Math.max(separate, fused);
     const failing = span(p, 0.56, 0.68);
     const resetting = span(p, 0.73, 0.86);
     const recovered = span(p, 0.86, 0.95);
@@ -275,15 +278,17 @@ function Assembly({ progress }: { progress: RefObject<number> }) {
         }
         if (isFailed) color.copy(ALARM);
         lamp.color.copy(color);
-        lamp.opacity = separate * (isFailed || lit > 0 ? 1 : 0.75);
+        lamp.opacity = partVis * fused * 0.35 * (isFailed || lit > 0 ? 1 : 0.75);
       }
 
-      if (plate) plate.opacity = separate * (isDownstream ? 0.25 : 0.78);
+      if (plate) plate.opacity = partVis * (isDownstream ? 0.25 : 0.78);
 
       const inkOpacity =
-        separate * (isDownstream ? 0.3 : 1) * (isWatcher ? 0.86 : 1);
+        separate *
+        (isDownstream ? 0.3 : 1) *
+        (isWatcher ? 0.86 : 1);
       if (outline) {
-        outline.material.opacity = inkOpacity * 0.85;
+        outline.material.opacity = Math.max(fused * 0.72, inkOpacity * 0.85);
         (outline.material as THREE.LineBasicMaterial).color.copy(
           isFailed ? ALARM : LINE,
         );
@@ -307,7 +312,7 @@ function Assembly({ progress }: { progress: RefObject<number> }) {
         dropArray[5] = group.position.z;
         drop.geometry.attributes.position.needsUpdate = true;
         drop.geometry.computeBoundingSphere();
-        drop.material.opacity = separate * 0.3 * (isFailed ? 2 : 1);
+        drop.material.opacity = partVis * 0.3 * (isFailed ? 2 : 1);
         drop.material.color.copy(isFailed ? ALARM : DIM);
       }
     });
@@ -322,7 +327,7 @@ function Assembly({ progress }: { progress: RefObject<number> }) {
     baseArray[4] = BASELINE;
     baseArray[5] = -2.5;
     draw.baseline.geometry.attributes.position.needsUpdate = true;
-    draw.baseline.material.opacity = separate * 0.3;
+    draw.baseline.material.opacity = partVis * 0.3;
 
     /* ---- 6. the watcher's sightlines ------------------------------------ */
     const watcherGroup = nodeRefs.current[all.length - 1];

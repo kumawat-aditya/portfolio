@@ -78,12 +78,19 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
     });
 
     timeline
+      // 0. one object — a single block before anything separates
+      .fromTo(
+        "[data-drawn-monolith]",
+        { opacity: 0.88 },
+        { opacity: 0, duration: 0.55 },
+        0,
+      )
       // 1. one object → a circuit
       .fromTo(
         "[data-drawn-path]",
         { strokeDashoffset: 1, opacity: 0 },
         { strokeDashoffset: 0, opacity: 0.42, duration: 1.6 },
-        0,
+        0.35,
       )
       .fromTo(
         "[data-drawn-stage]",
@@ -155,6 +162,20 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
         className="h-full max-h-[calc(76*var(--vh))] w-full"
         aria-hidden="true"
       >
+        {/* the closed stack before the loop is revealed */}
+        <rect
+          data-drawn-monolith
+          x={RUN_X - 28}
+          y={STAGE_Y[0] - 18}
+          width="56"
+          height={STAGE_Y[4] - STAGE_Y[0] + 36}
+          rx="2"
+          fill={colors.surface.night}
+          stroke={colors.machine.edge}
+          strokeWidth="1.2"
+          opacity="0.88"
+        />
+
         {/* the circuit, drawn as one continuous path */}
         <path
           ref={pathRef}
