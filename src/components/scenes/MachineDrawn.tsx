@@ -60,6 +60,7 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
     if (!section) return;
 
     if (isReduced) {
+      gsap.set("[data-drawn-monolith]", { opacity: 0 });
       gsap.set("[data-drawn-path]", { strokeDashoffset: 0, opacity: 0.4 });
       gsap.set("[data-drawn-stage]", { opacity: 1 });
       gsap.set("[data-drawn-watcher]", { opacity: 1 });
