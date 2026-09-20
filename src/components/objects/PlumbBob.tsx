@@ -143,11 +143,11 @@ export function PlumbBob({ className = "" }: { className?: string }) {
     <div
       ref={pivotRef}
       aria-hidden="true"
-      className={`pointer-events-none absolute top-0 w-0 ${className}`}
+      className={`pointer-events-none absolute top-0 left-0 w-0 ${className}`}
     >
       {/* true vertical, for the weight to disagree with */}
       <div
-        className="absolute top-0 left-0 w-px"
+        className="absolute top-0 left-1/2 w-px -translate-x-1/2"
         style={{
           height: length + 74,
           backgroundImage:
@@ -177,14 +177,14 @@ export function PlumbBob({ className = "" }: { className?: string }) {
 
       <div
         ref={armRef}
-        className="origin-top will-change-transform"
+        className="absolute top-0 left-1/2 flex w-0 -translate-x-1/2 origin-top flex-col items-center will-change-transform"
         style={{ transform: "rotate(2.9deg)" }}
       >
-        <div className="mx-auto w-px bg-graphite/70" style={{ height: length }} />
+        <div className="w-px bg-graphite/70" style={{ height: length }} />
         <svg
           viewBox="0 0 24 66"
           width="30"
-          className="mx-auto -mt-px block text-ink"
+          className="-mt-px block shrink-0 text-ink"
         >
           <path d="M9.2 0h5.6v4.8H9.2z" fill="currentColor" />
           <path
