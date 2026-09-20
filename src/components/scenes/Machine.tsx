@@ -102,7 +102,7 @@ export function Machine() {
       {/* the room, cut into the page at an angle */}
       <div
         aria-hidden="true"
-        className="wedge-in absolute inset-0 bg-night"
+        className="wedge-in absolute top-0 bottom-0 bleed-viewport bg-night"
         style={{
           backgroundImage:
             "radial-gradient(ellipse 70% 55% at 50% 45%, var(--color-night-glow), transparent 70%)",

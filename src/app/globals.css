@@ -98,6 +98,7 @@
     --vh: min(1svh, calc(var(--fit) * 10.8px));
     font-size: calc(16px * var(--fit));
     min-height: 100%;
+    overflow-x: clip;
     background-color: var(--color-paper);
     /* fibre wash on <html> so letterboxed side margins match the centred column */
     background-image: radial-gradient(
@@ -203,6 +204,15 @@
 /* ============================================================================
    SURFACE TREATMENTS
    ========================================================================= */
+
+/* full viewport width from inside the centred body column (2K+ letterbox) */
+@utility bleed-viewport {
+  left: 50%;
+  right: auto;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: -50vw;
+}
 
 /* graph paper — the room has structure you can just about see */
 @utility field-grid {

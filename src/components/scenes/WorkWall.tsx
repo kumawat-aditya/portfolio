@@ -190,7 +190,7 @@ export function WorkWall() {
       {/* the wall itself */}
       <div
         aria-hidden="true"
-        className="field-grid pointer-events-none absolute inset-0 opacity-70"
+        className="field-grid pointer-events-none absolute top-0 bottom-0 bleed-viewport opacity-70"
       />
 
       <header className="relative flex flex-wrap items-end justify-between gap-6">
@@ -237,7 +237,7 @@ export function WorkWall() {
         <ul className="relative mt-5 bg-paper-raised/70">
           <span
             aria-hidden="true"
-            className="absolute inset-y-0 -left-[calc(6*var(--vw))] -right-[calc(6*var(--vw))] -z-10 bg-paper-raised/70"
+            className="bleed-viewport absolute inset-y-0 -z-10 bg-paper-raised/70"
           />
           {shelfProjects.map((project, i) => {
             const index = featuredProjects.length + i;
