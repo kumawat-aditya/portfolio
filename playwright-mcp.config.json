@@ -1,0 +1,11 @@
+{
+  "browser": {
+    "browserName": "chromium",
+    "launchOptions": {
+      "executablePath": "/usr/bin/chromium"
+    },
+    "contextOptions": {
+      "viewport": { "width": 1920, "height": 1080 }
+    }
+  }
+}
