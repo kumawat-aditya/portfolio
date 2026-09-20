@@ -1,0 +1,34 @@
+{
+  "families": [
+    {
+      "id": "carpenter-pencil",
+      "name": "Carpenter pencil",
+      "size": 52,
+      "hotspot": [38, 6]
+    },
+    {
+      "id": "ruling-pen",
+      "name": "Ruling pen",
+      "size": 52,
+      "hotspot": [37, 10]
+    },
+    {
+      "id": "eraser-crumb",
+      "name": "Eraser crumb",
+      "size": 88,
+      "hotspot": [42, 36]
+    },
+    {
+      "id": "torn-paper",
+      "name": "Torn paper",
+      "size": 52,
+      "hotspot": [36, 14]
+    },
+    {
+      "id": "system",
+      "name": "System",
+      "size": 0,
+      "hotspot": [0, 0]
+    }
+  ]
+}

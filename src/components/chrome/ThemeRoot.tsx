@@ -10,6 +10,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { CursorLayer } from "@/components/chrome/CursorLayer";
+import { activeCursorId, applyCursor } from "@/lib/cursors";
 import {
   applyTheme,
   catalog,
@@ -67,7 +69,10 @@ export function ThemeRoot({
       const stored = localStorage.getItem(ROOM_STORAGE_KEY);
       if (stored && catalog.some((theme) => theme.name === stored)) {
         applyTheme(stored);
+        applyCursor(activeCursorId);
         setName(stored);
+      } else {
+        applyCursor(activeCursorId);
       }
       setUnlocked(localStorage.getItem(ROOM_UNLOCK_KEY) === "1");
       const storedPulls = Number(sessionStorage.getItem(ROOM_PULLS_KEY) || "0") || 0;
@@ -80,6 +85,7 @@ export function ThemeRoot({
 
   const choose = useCallback((next: string) => {
     const theme = applyTheme(next);
+    applyCursor(activeCursorId);
     setName(theme.name);
   }, []);
 
@@ -87,6 +93,7 @@ export function ThemeRoot({
     setName((current) => {
       const next = nextThemeName(current);
       applyTheme(next);
+      applyCursor(activeCursorId);
       return next;
     });
 
@@ -127,6 +134,7 @@ export function ThemeRoot({
   return (
     <ThemeContext.Provider value={value}>
       {children}
+      <CursorLayer />
       <RoomDrawer
         open={drawerOpen}
         current={name}

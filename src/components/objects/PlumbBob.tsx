@@ -218,7 +218,8 @@ export function PlumbBob({ className = "" }: { className?: string }) {
         <button
           type="button"
           aria-label="Pull the plumb to change the room"
-          className="pointer-events-auto -mt-px block cursor-grab touch-none border-0 bg-transparent p-0 text-ink active:cursor-grabbing"
+          data-cursor-target="pointer"
+          className="pointer-events-auto relative z-10 -mt-px -mx-3 block cursor-pointer touch-none border-0 bg-transparent p-3 text-ink"
           onPointerDown={(event) => {
             event.preventDefault();
             heldRef.current = true;

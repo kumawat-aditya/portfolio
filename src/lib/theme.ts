@@ -14,6 +14,9 @@ import themeFile from "@/config/theme.json";
 
    To add a theme: duplicate the `base` object in the array, rename it, change
    the colours. Then set `"colorTheme": "that-name"` in site.json.
+
+   The pointer is chosen the same way: `"cursor"` in site.json, families in
+   src/config/cursors.json. The mark follows the mouse so it can move.
    ========================================================================= */
 
 export type ColorTheme = {

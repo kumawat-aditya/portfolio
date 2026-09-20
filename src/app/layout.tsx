@@ -4,6 +4,7 @@ import { Instrument } from "@/components/chrome/Instrument";
 import { Grain } from "@/components/chrome/Grain";
 import { ThemeRoot } from "@/components/chrome/ThemeRoot";
 import { person } from "@/content/site";
+import { activeCursorId } from "@/lib/cursors";
 import {
   activeTheme,
   activeThemeName,
@@ -64,6 +65,7 @@ export default function RootLayout({
       lang="en"
       data-color-theme={activeThemeName}
       data-scheme={activeTheme.scheme}
+      data-cursor={activeCursorId === "system" ? undefined : activeCursorId}
       className={`${fraunces.variable} ${plexMono.variable} ${caveat.variable}`}
       style={themeCssVars}
     >

@@ -305,6 +305,287 @@
 }
 
 /* ============================================================================
+   CURSOR — a leftover from the desk, not an OS arrow
+   ----------------------------------------------------------------------------
+   Family is chosen in site.json (`cursor`). The OS pointer is hidden on fine
+   pointers; CursorLayer draws a mark that can change size, colour, and shape.
+   ========================================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-cursor][data-cursor-active],
+  html[data-cursor][data-cursor-active] * {
+    cursor: none !important;
+  }
+}
+
+.cursor-mark {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--color-ink);
+  transform-origin: var(--cursor-ox, 50%) var(--cursor-oy, 50%);
+  transition:
+    color 160ms var(--ease-instrument),
+    transform 180ms var(--ease-resist);
+}
+
+html[data-room="night"] .cursor-mark {
+  color: var(--color-on-night);
+}
+
+.cursor-stroke {
+  stroke: currentColor;
+  fill: none;
+}
+
+.cursor-fill {
+  fill: var(--color-paper-raised);
+}
+
+.cursor-lead {
+  fill: #3a3428;
+}
+
+.cursor-speck,
+.cursor-deposit,
+.cursor-drip,
+.cursor-tip,
+.cursor-text-i {
+  fill: currentColor;
+}
+
+.cursor-slash,
+.cursor-deposit,
+.cursor-drip,
+.cursor-tip,
+.cursor-orbit,
+.cursor-text-i {
+  opacity: 0;
+}
+
+.cursor-slash {
+  stroke: currentColor;
+  fill: none;
+}
+
+.cursor-orbit {
+  stroke: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.cursor-mark[data-state="pointer"] {
+  color: var(--color-vermillion);
+  transform: scale(1.12);
+}
+
+.cursor-mark[data-state="pressed"] {
+  color: var(--color-vermillion);
+  transform: scale(0.9);
+}
+
+.cursor-mark[data-state="wait"] {
+  color: var(--color-live);
+}
+
+.cursor-mark[data-state="blocked"] {
+  color: var(--color-machine-alarm);
+}
+
+.cursor-mark[data-state="pointer"] .cursor-lead,
+.cursor-mark[data-state="pressed"] .cursor-lead {
+  fill: currentColor;
+}
+
+.cursor-mark[data-state="pointer"] .cursor-tip {
+  opacity: 1;
+}
+
+.cursor-mark[data-state="pressed"] .cursor-deposit,
+.cursor-mark[data-state="pressed"] .cursor-drip {
+  opacity: 0.85;
+}
+
+.cursor-mark[data-state="blocked"] .cursor-slash {
+  opacity: 1;
+}
+
+.cursor-mark[data-state="wait"] .cursor-orbit {
+  opacity: 0.55;
+  animation: cursor-orbit 1s linear infinite;
+}
+
+.cursor-mark[data-state="text"] .cursor-body {
+  opacity: 0;
+}
+
+.cursor-mark[data-state="text"] .cursor-text-i {
+  opacity: 1;
+}
+
+.cursor-mark[data-family="carpenter-pencil"][data-state="pointer"] .cursor-body {
+  transform-origin: 24px 4px;
+  animation: cursor-pencil-buzz 0.32s var(--ease-resist) infinite;
+}
+
+.cursor-mark[data-family="carpenter-pencil"][data-state="pressed"] .cursor-body {
+  transform-origin: 24px 4px;
+  transform: translate(1.2px, 2px) scale(1, 0.78);
+}
+
+.cursor-blade-a,
+.cursor-blade-b {
+  transition: transform 180ms var(--ease-instrument);
+}
+
+.cursor-mark[data-family="ruling-pen"][data-state="pointer"] .cursor-blade-a {
+  transform: translate(-1.1px, 0.4px);
+}
+
+.cursor-mark[data-family="ruling-pen"][data-state="pointer"] .cursor-blade-b {
+  transform: translate(1.2px, -0.5px);
+}
+
+.cursor-mark[data-family="ruling-pen"][data-state="pressed"] .cursor-blade-a,
+.cursor-mark[data-family="ruling-pen"][data-state="pressed"] .cursor-blade-b {
+  transform: translate(0, 0);
+}
+
+.cursor-mark[data-family="ruling-pen"][data-state="wait"] .cursor-body {
+  transform-origin: 22px 8px;
+  animation: cursor-ruling-buzz 0.12s linear infinite;
+}
+
+.cursor-mark[data-family="ruling-pen"][data-state="pointer"] .cursor-tip {
+  animation: cursor-tip-pulse 0.7s var(--ease-instrument) infinite;
+}
+
+.cursor-mark[data-family="eraser-crumb"][data-state="default"] .cursor-speck-a,
+.cursor-mark[data-family="eraser-crumb"][data-state="pointer"] .cursor-speck-a {
+  animation: cursor-crumb-a 1.4s var(--ease-instrument) infinite;
+}
+
+.cursor-mark[data-family="eraser-crumb"][data-state="default"] .cursor-speck-b,
+.cursor-mark[data-family="eraser-crumb"][data-state="pointer"] .cursor-speck-b {
+  animation: cursor-crumb-b 1.7s var(--ease-instrument) infinite;
+}
+
+.cursor-mark[data-family="eraser-crumb"][data-state="pointer"] .cursor-chunk {
+  transform-origin: 16px 16px;
+  animation: cursor-chunk-wobble 1.05s ease-in-out infinite;
+}
+
+.cursor-mark[data-family="eraser-crumb"][data-state="pressed"] .cursor-chunk {
+  transform-origin: 16px 16px;
+  transform: scale(0.82) rotate(-12deg);
+}
+
+.cursor-mark[data-family="eraser-crumb"][data-state="wait"] .cursor-speck {
+  animation: cursor-crumb-wait 0.9s linear infinite;
+}
+
+.cursor-mark[data-family="torn-paper"][data-state="pointer"] .cursor-tear {
+  clip-path: inset(0 0 8% 0);
+  animation: cursor-tear-clip 0.9s var(--ease-resist) infinite alternate;
+}
+
+.cursor-mark[data-family="torn-paper"][data-state="pressed"] .cursor-tear {
+  transform-origin: 22px 8px;
+  transform: skewX(-8deg) scale(0.92);
+}
+
+.cursor-mark[data-family="torn-paper"][data-state="wait"] .cursor-tear {
+  animation: cursor-tear-shiver 0.18s linear infinite;
+}
+
+@keyframes cursor-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cursor-pencil-buzz {
+  0%,
+  100% {
+    transform: rotate(-1.6deg);
+  }
+  50% {
+    transform: rotate(1.8deg);
+  }
+}
+
+@keyframes cursor-ruling-buzz {
+  0%,
+  100% {
+    transform: translate(-0.4px, 0);
+  }
+  50% {
+    transform: translate(0.5px, 0);
+  }
+}
+
+@keyframes cursor-tip-pulse {
+  0%,
+  100% {
+    r: 1.3;
+    opacity: 0.7;
+  }
+  50% {
+    r: 2.1;
+    opacity: 1;
+  }
+}
+
+@keyframes cursor-crumb-a {
+  50% {
+    transform: translate(-2px, 1.5px);
+  }
+}
+
+@keyframes cursor-crumb-b {
+  50% {
+    transform: translate(2.4px, -1.8px);
+  }
+}
+
+@keyframes cursor-chunk-wobble {
+  0%,
+  100% {
+    transform: translate(-0.45px, 0);
+  }
+  25% {
+    transform: translate(0, -0.32px);
+  }
+  50% {
+    transform: translate(0.45px, 0);
+  }
+  75% {
+    transform: translate(0, 0.32px);
+  }
+}
+
+@keyframes cursor-crumb-wait {
+  50% {
+    transform: translate(3px, -2px);
+  }
+}
+
+@keyframes cursor-tear-clip {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 14% 6%);
+  }
+}
+
+@keyframes cursor-tear-shiver {
+  50% {
+    transform: translate(0.6px, -0.5px);
+  }
+}
+
+/* ============================================================================
    MOTION HYGIENE
    ========================================================================= */
 
