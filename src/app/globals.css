@@ -97,7 +97,21 @@
     --vw: min(1vw, calc(var(--fit) * 19.2px));
     --vh: min(1svh, calc(var(--fit) * 10.8px));
     font-size: calc(16px * var(--fit));
+    min-height: 100%;
     background-color: var(--color-paper);
+    /* fibre wash on <html> so letterboxed side margins match the centred column */
+    background-image: radial-gradient(
+        ellipse 140vmax 100vmax at 12% 0%,
+        var(--color-paper-wash-light),
+        transparent 62%
+      ),
+      radial-gradient(
+        ellipse 120vmax 90vmax at 88% 100%,
+        var(--color-paper-wash-deep),
+        transparent 58%
+      );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     -webkit-text-size-adjust: 100%;
     scroll-behavior: auto;
   }
@@ -105,24 +119,13 @@
   body {
     max-width: calc(1920px * var(--fit));
     margin-inline: auto;
-    background-color: var(--color-paper);
+    min-height: 100svh;
+    background-color: transparent;
     color: var(--color-ink);
     font-family: var(--font-mono);
     font-size: var(--text-read);
     line-height: 1.6;
     overflow-x: clip;
-    /* paper is never pure: a faint fibre wash sits under everything */
-    background-image: radial-gradient(
-        ellipse 120% 80% at 12% 0%,
-        var(--color-paper-wash-light),
-        transparent 60%
-      ),
-      radial-gradient(
-        ellipse 90% 70% at 88% 100%,
-        var(--color-paper-wash-deep),
-        transparent 55%
-      );
-    background-attachment: fixed;
   }
 
   ::selection {
