@@ -9,33 +9,34 @@ import {
 import { gsap, useSceneTimeline } from "@/lib/motion";
 import { belief } from "@/content/site";
 
+const evidenceWords = belief.evidence.quote.split(/\s+/);
+
 /* ============================================================================
    02 — A CORRECTION                                                 [curious]
    ----------------------------------------------------------------------------
    The page holds still and corrects itself in front of you.
 
-   The sentence starts naive, gets struck through, and someone writes the real
-   answer above it in pen. It's an editor's mark, not an animation preset — and
-   it's the actual thing content.json says he learned in 2024:
-   "systems fail not because of code, but because of improper state and
-   boundary structures."
+   The sentence starts naive. A pen crosses the wrong ending, keeps going, and
+   the real answer is written at the end of that line — one gesture, not a
+   loop back to the mistake. Then a system he built is quoted as proof, word
+   by word, and only after that does the honest aside arrive.
 
-   This is the one scene that pins. Holding the viewport still is what makes it
-   feel like a thought rather than a slide.
+   Holding the viewport still is what makes it feel like a thought rather than
+   a slide.
    ========================================================================= */
 
 export function Belief() {
   const scope = useSceneTimeline(({ scope: section }) => {
     const media = gsap.matchMedia(section);
 
-    // reduced motion: land on the corrected state and never move
     media.add("(prefers-reduced-motion: reduce)", () => {
-      gsap.set("[data-strike] path", { strokeDashoffset: 0 });
+      gsap.set("[data-strike] path", { strokeDashoffset: 0, opacity: 1 });
       gsap.set(
-        ["[data-insertion]", "[data-caret]", "[data-stamp]", "[data-evidence]"],
-        { opacity: 1, y: 0 },
+        ["[data-insertion]", "[data-stamp]", "[data-evidence]", "[data-aside]"],
+        { opacity: 1, y: 0, rotate: 0 },
       );
       gsap.set("[data-wrong]", { opacity: 0.4 });
+      gsap.set("[data-evidence-word]", { opacity: 1 });
     });
 
     media.add("(prefers-reduced-motion: no-preference)", () => {
@@ -46,35 +47,62 @@ export function Belief() {
             scrollTrigger: {
               trigger: section,
               start: pin ? "top top" : "top 80%",
-              // unpinned, the section is travelling while the correction is
-              // being made, so the whole sequence has to finish well before the
-              // section leaves — otherwise the last beat lands off-screen and
-              // nobody on a phone ever sees the evidence
-              end: pin ? "+=155%" : "bottom 90%",
+              end: pin ? "+=250%" : "bottom 90%",
               pin,
               scrub: 0.7,
               anticipatePin: pin ? 1 : 0,
             },
           })
-          // the pen goes through it
-          .to("[data-strike] path", { strokeDashoffset: 0, duration: 1.1 })
+          // pen crosses the wrong ending, then a short continuation of that
+          // same wave, then the head is drawn from where the line stopped.
+          // offsets are real path lengths — a unitless pathLength fights GSAP
+          // and the stroke pops in instead of drawing
+          .to("[data-strike-core]", { strokeDashoffset: 0, duration: 1.1 })
           .to("[data-wrong]", { opacity: 0.4, duration: 0.8 }, 0.3)
-          // a caret, because something is missing
-          .to("[data-caret]", { opacity: 1, duration: 0.35 }, 0.9)
-          // and the real answer, written in
+          .to("[data-strike-extend]", { strokeDashoffset: 0, duration: 0.52 }, 1.14)
+          .to("[data-strike-arrow]", { opacity: 1, duration: 0.04 }, 1.7)
+          .to("[data-strike-arrow]", { strokeDashoffset: 0, duration: 0.26 }, 1.7)
           .fromTo(
             "[data-insertion]",
             { opacity: 0, y: 14, rotate: -4.5 },
-            { opacity: 1, y: 0, rotate: -2.2, duration: 1 },
-            1.1,
+            { opacity: 1, y: 0, rotate: -2.2, duration: 0.75 },
+            2.02,
           )
-          .to("[data-stamp]", { opacity: 1, duration: 0.5 }, 1.9)
+          .to("[data-stamp]", { opacity: 1, duration: 0.4 }, 3.35)
           .fromTo(
             "[data-evidence]",
-            { opacity: 0, y: 16 },
-            { opacity: 1, y: 0, duration: 0.9 },
-            2.3,
+            { opacity: 0, y: 18 },
+            { opacity: 1, y: 0, duration: 0.55 },
+            3.65,
+          )
+          // opacity only — the resting colour is the prose colour, not a
+          // brighter ink the tween has to invent
+          .fromTo(
+            "[data-evidence-word]",
+            { opacity: 0.34 },
+            { opacity: 1, duration: 0.22, stagger: 0.065 },
+            4.0,
+          )
+          .fromTo(
+            "[data-aside]",
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.5 },
+            5.25,
           );
+
+      // measure in user units so the dash matches the stroke GSAP scrubs
+      section.querySelectorAll("[data-strike] path").forEach((node) => {
+        const path = node as SVGGeometryElement;
+        const length = path.getTotalLength();
+        if (!length) return;
+        // gap longer than the stroke, offset parked inside that gap,
+        // so an endpoint cannot paint before the pen moves
+        gsap.set(path, {
+          strokeDasharray: `${length} ${length + 2}`,
+          strokeDashoffset: length + 1,
+        });
+      });
+      gsap.set("[data-strike-arrow]", { opacity: 0 });
 
       const desktop = window.matchMedia("(min-width: 768px)");
       const timeline = build(desktop.matches);
@@ -96,17 +124,14 @@ export function Belief() {
       </SceneTag>
 
       <div className="relative">
-        {/* max-width lives on the heading, where `ch` resolves against the
-            display face rather than against the mono body text */}
         <h2 className="voice-display text-loud max-w-[13ch] text-ink sm:max-w-none">
           Systems fail because
           <br className="hidden sm:block" />{" "}
-          <span className="whitespace-nowrap">
+          <span className="relative mb-[4.75rem] block whitespace-nowrap md:mb-0 md:inline-block">
             <span className="relative inline-block">
               <span data-wrong className="text-ink">
                 bad code
               </span>
-              {/* the strike, drawn on scroll */}
               <svg
                 data-strike
                 aria-hidden="true"
@@ -115,33 +140,63 @@ export function Belief() {
                 className="pointer-events-none absolute inset-x-[-3%] top-[44%] h-[0.5em] w-[106%] overflow-visible text-vermillion"
               >
                 <path
+                  data-strike-core
                   d="M1 11C36 5 92 14 150 6c17-2 34-3 48-1"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                  vectorEffect="non-scaling-stroke"
-                  strokeDasharray="230"
-                  strokeDashoffset="230"
+                  strokeWidth="1.14"
+                  strokeLinecap="butt"
+                  strokeDasharray="400"
+                  strokeDashoffset="400"
                 />
               </svg>
-              {/* caret: something belongs here */}
+              {/* same viewBox height and the same x-scale as the strike, so
+                  the wave that leaves "bad code" is the same pen, not a new one.
+                  x=0 here is the strike's end point (198, 5). */}
               <svg
-                data-caret
+                data-strike
                 aria-hidden="true"
-                viewBox="0 0 24 14"
-                className="absolute -bottom-[0.3em] left-[42%] w-[0.4em] text-vermillion opacity-0"
+                viewBox="-8 0 112 18"
+                preserveAspectRatio="none"
+                className="pointer-events-none absolute top-[44%] hidden h-[0.5em] overflow-visible text-vermillion md:block"
+                style={{
+                  left: "calc(106% * 190 / 200 - 3%)",
+                  width: "calc(106% * 112 / 200)",
+                }}
               >
                 <path
-                  d="M2 13 11.6 2 22 12.4"
+                  data-strike-extend
+                  d="M-5 4.29C24 8.43 48 13.2 90 7.1"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
+                  strokeWidth="1.14"
+                  strokeLinecap="butt"
+                  strokeDasharray="400"
+                  strokeDashoffset="400"
+                />
+                <path
+                  data-strike-arrow
+                  d="M80.4 11.17 90 7.1 78.4 6.11"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.14"
+                  strokeLinecap="butt"
                   strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
+                  strokeDasharray="400"
+                  strokeDashoffset="400"
+                  opacity="0"
                 />
               </svg>
+              <span
+                data-insertion
+                className="pointer-events-none absolute top-full left-0 mt-5 origin-left opacity-0 md:top-[0.08em] md:left-[calc(149.64%+0.32em)] md:mt-0 md:w-max"
+              >
+                <span className="voice-margin block whitespace-nowrap text-[clamp(1.15rem,calc(2.3*var(--vw)),1.9rem)] leading-[1.15]">
+                  the boundaries
+                  <br />
+                  between them
+                </span>
+              </span>
             </span>
             .
           </span>
@@ -152,28 +207,8 @@ export function Belief() {
             corrected · early 2024 · has not needed correcting since
           </Readout>
         </div>
-
-        {/* the insertion: written out in the margin with an arrow back to the
-            words it replaces, the way you'd actually annotate a page */}
-        <div
-          data-insertion
-          className="pointer-events-none mt-10 flex origin-top-left items-start gap-2 opacity-0 md:absolute md:top-[-1.5em] md:right-0 md:mt-0 md:w-[15rem] md:flex-col-reverse md:items-start lg:w-[18rem]"
-        >
-          <HandMark
-            kind="arrow-down-left"
-            width={46}
-            className="mt-1 shrink-0 text-vermillion opacity-80 md:mt-0 md:ml-6"
-          />
-          <span className="voice-margin block text-[clamp(1.15rem,calc(2.3*var(--vw)),1.9rem)] leading-[1.1]">
-            the boundaries
-            <br />
-            between them
-          </span>
-        </div>
       </div>
 
-      {/* secondary discovery: he didn't decide this, a system taught him.
-          Arrives last, so it rewards staying with the scene. */}
       <figure
         data-evidence
         className="mt-[calc(9*var(--vh))] flex max-w-[52ch] gap-4 opacity-0 md:mt-[calc(12*var(--vh))]"
@@ -184,25 +219,37 @@ export function Belief() {
           className="shrink-0 self-stretch text-rule"
         />
         <div>
-          <blockquote className="voice-prose text-ink-soft">
-            &ldquo;{belief.evidence.quote}&rdquo;
+          <blockquote className="voice-prose">
+            <span data-evidence-word className="opacity-35">
+              &ldquo;
+            </span>
+            {evidenceWords.map((word, i) => (
+              <span key={`${word}-${i}`} data-evidence-word className="opacity-35">
+                {word}
+                {i < evidenceWords.length - 1 ? " " : ""}
+              </span>
+            ))}
+            <span data-evidence-word className="opacity-35">
+              &rdquo;
+            </span>
           </blockquote>
           <figcaption className="mt-2.5">
             <Readout>
-              what {belief.evidence.from.toLowerCase()} taught him
+              what {belief.evidence.from.toLowerCase()} taught me
             </Readout>
           </figcaption>
         </div>
       </figure>
 
-      {/* tertiary: the honest bit, small, far away from everything else */}
-      <MarginNote
-        lean={1.8}
-        className="mt-[calc(12*var(--vh))] block max-w-[26ch] self-end text-right md:absolute md:right-[calc(6*var(--vw))] md:bottom-[calc(11*var(--vh))] md:mt-0"
+      <span
+        data-aside
+        className="mt-[calc(12*var(--vh))] block max-w-[26ch] self-end text-right opacity-0 md:absolute md:right-[calc(6*var(--vw))] md:bottom-[calc(11*var(--vh))] md:mt-0"
       >
-        I still write the bug first.
-        <br />I just find it faster now.
-      </MarginNote>
+        <MarginNote lean={1.8} className="block text-right">
+          I still write the bug first.
+          <br />I just find it faster now.
+        </MarginNote>
+      </span>
     </section>
   );
 }
