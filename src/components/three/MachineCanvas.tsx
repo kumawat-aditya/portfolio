@@ -6,7 +6,16 @@ import { Text } from "@react-three/drei";
 import * as THREE from "three";
 import { getBeatPhase } from "@/lib/heartbeat";
 import { colors } from "@/lib/theme";
-import { FAILING_INDEX, LOOP, WATCHER, ease, mix, span } from "./machineData";
+import {
+  FAILING_INDEX,
+  LOOP,
+  SYSTEM_NAME,
+  WATCHER,
+  chaseToGate,
+  ease,
+  mix,
+  span,
+} from "./machineData";
 
 /* ============================================================================
    THE MACHINE — WebGL
@@ -87,6 +96,14 @@ function Assembly({ progress }: { progress: RefObject<number> }) {
   const lampRefs = useRef<(THREE.MeshBasicMaterial | null)[]>([]);
   const labelRefs = useRef<(THREE.Mesh | null)[]>([]);
   const noteRefs = useRef<(THREE.Mesh | null)[]>([]);
+  const titleRef = useRef<THREE.Mesh>(null);
+  // once the fail beat starts, the pulse rushes forward along the loop
+  // and only parks when that rush reaches ACT
+  const stallRef = useRef({ caught: false, chasing: false, phase: 0, speed: 1 });
+  const titleZ = useMemo(
+    () => stackedAt(LOOP.length, LOOP.length + 1).z + 0.004,
+    [],
+  );
 
   /* --- imperative line work: hairlines are cheaper and more on-brand than
          any tube or extruded stroke, and they update per frame for free ---- */
@@ -217,20 +234,20 @@ function Assembly({ progress }: { progress: RefObject<number> }) {
 
     /* ---- 3. the pulse: one lap per real second, from the site heartbeat -- */
     const nodeT = FAILING_INDEX / LOOP.length;
-    const stalledAt = nodeT - 0.055;
     const alive = span(p, 0.38, 0.44);
-
-    let beat = getBeatPhase();
-    if (failing > 0.35 && resetting < 0.6) {
-      // it doesn't stop dead — it keeps arriving at a door nobody opens
-      beat = stalledAt + Math.sin(state.clock.elapsedTime * 9) * 0.006;
-    }
+    const stalling = failing > 0.35 && resetting < 0.6;
+    const stall = stallRef.current;
+    const live = getBeatPhase();
+    const phase = chaseToGate(stall, stalling, live, nodeT, d);
+    const beat = stall.caught
+      ? nodeT + Math.sin(state.clock.elapsedTime * 9) * 0.006
+      : phase;
 
     draw.curve.getPoint((beat + 1) % 1, w);
     draw.head.position.copy(w);
-    const headVisible = alive * (1 - failing * 0.35);
+    const headVisible = alive * (1 - (stall.caught ? failing * 0.35 : 0));
     draw.head.material.opacity = headVisible;
-    draw.head.material.color.copy(failing > 0.35 && resetting < 0.6 ? ALARM : LIVE);
+    draw.head.material.color.copy(stall.caught ? ALARM : LIVE);
     draw.head.rotation.y += d * 1.6;
     draw.head.rotation.x += d * 1.1;
 
@@ -364,6 +381,9 @@ function Assembly({ progress }: { progress: RefObject<number> }) {
        enough to believe it is one thing, and end far enough to see it isn't.
        The assembly is held high in the frame so the captions always have the
        bottom band to themselves. */
+    const title = titleRef.current?.material as THREE.MeshBasicMaterial | undefined;
+    if (title) title.opacity = fused * (1 - separate);
+
     if (groupRef.current) {
       const g = groupRef.current;
       g.rotation.y = mix(-0.52, 0.14, ease(span(p, 0, 1))) + state.pointer.x * 0.06;
@@ -390,6 +410,28 @@ function Assembly({ progress }: { progress: RefObject<number> }) {
       {draw.sightlines.map((line, i) => (
         <primitive key={`sight-${i}`} object={line} />
       ))}
+
+      <Text
+        ref={(mesh) => {
+          titleRef.current = mesh as unknown as THREE.Mesh;
+        }}
+        font="/fonts/plex-mono-500.woff"
+        fontSize={0.1}
+        letterSpacing={0.06}
+        whiteSpace="nowrap"
+        anchorX="left"
+        anchorY="middle"
+        position={[-PLATE_W / 2 + 0.26, -0.01, titleZ]}
+      >
+        {SYSTEM_NAME}
+        <meshBasicMaterial
+          attach="material"
+          color={PAPER}
+          transparent
+          opacity={0.92}
+          toneMapped={false}
+        />
+      </Text>
 
       {all.map((node, i) => (
         <group

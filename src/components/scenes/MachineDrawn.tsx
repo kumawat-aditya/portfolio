@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { FAILING_INDEX, LOOP, WATCHER } from "@/components/three/machineData";
+import {
+  FAILING_INDEX,
+  LOOP,
+  SYSTEM_NAME,
+  WATCHER,
+  chaseToGate,
+} from "@/components/three/machineData";
 import { gsap, useSceneTimeline } from "@/lib/motion";
 import { colors } from "@/lib/theme";
 
@@ -37,17 +43,22 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
 
     const total = path.getTotalLength();
     const stallAt = (STAGE_Y[FAILING_INDEX] - RUN_TOP - 26) / total;
+    const stall = { caught: false, chasing: false, phase: 0, speed: 1 };
     let frame = 0;
+    let last = performance.now();
 
     const tick = () => {
+      const now = performance.now();
+      const delta = Math.min(0.05, (now - last) / 1000);
+      last = now;
       const { alive, stalled } = runtime.current;
-      const lap = (performance.now() / 1000) % 1;
-      const t = stalled > 0.5 ? stallAt : lap;
-      const point = path.getPointAtLength(t * total);
+      const lap = (now / 1000) % 1;
+      const phase = chaseToGate(stall, stalled > 0.5, lap, stallAt, delta);
+      const point = path.getPointAtLength(phase * total);
       pulse.setAttribute("x", String(point.x - 3.5));
       pulse.setAttribute("y", String(point.y - 3.5));
       pulse.setAttribute("opacity", String(alive));
-      pulse.setAttribute("fill", stalled > 0.5 ? colors.machine.alarm : colors.machine.live);
+      pulse.setAttribute("fill", stall.caught ? colors.machine.alarm : colors.machine.live);
       frame = requestAnimationFrame(tick);
     };
 
@@ -164,18 +175,34 @@ export function MachineDrawn({ reduced }: { reduced: boolean }) {
         aria-hidden="true"
       >
         {/* the closed stack before the loop is revealed */}
-        <rect
-          data-drawn-monolith
-          x={RUN_X - 28}
-          y={STAGE_Y[0] - 18}
-          width="56"
-          height={STAGE_Y[4] - STAGE_Y[0] + 36}
-          rx="2"
-          fill={colors.surface.night}
-          stroke={colors.machine.edge}
-          strokeWidth="1.2"
-          opacity="0.88"
-        />
+        <g data-drawn-monolith opacity="0.88">
+          <rect
+            x={RUN_X - 28}
+            y={STAGE_Y[0] - 18}
+            width="56"
+            height={STAGE_Y[4] - STAGE_Y[0] + 36}
+            rx="2"
+            fill={colors.surface.night}
+            stroke={colors.machine.edge}
+            strokeWidth="1.2"
+          />
+          <text
+            x={RUN_X}
+            y={(STAGE_Y[0] + STAGE_Y[4]) / 2}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fill={colors.machine.paper}
+            transform={`rotate(-90 ${RUN_X} ${(STAGE_Y[0] + STAGE_Y[4]) / 2})`}
+            style={{
+              fontFamily: "var(--font-plex-mono)",
+              fontSize: 11,
+              letterSpacing: 2.2,
+              fontWeight: 500,
+            }}
+          >
+            {SYSTEM_NAME}
+          </text>
+        </g>
 
         {/* the circuit, drawn as one continuous path */}
         <path

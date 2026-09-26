@@ -1,10 +1,9 @@
 /* ============================================================================
    THE MACHINE — shape and story
    ----------------------------------------------------------------------------
-   The loop from the systems in content.json: a fixed 1Hz tick ingests data,
-   evaluates state, emits actions, broadcasts the result, and comes back round.
-   A watchdog sits off to one side doing nothing except watching, until it has
-   to do everything.
+   ANT Meta Bots, as one object and then as its loop: a fixed 1Hz tick
+   ingests, evaluates, acts, broadcasts, and comes back round. The watchdog
+   sits off to one side until the phase order depends on it.
 
    Shared by the WebGL scene and the drawn (mobile / reduced-motion) scene so
    both tell exactly the same story.
@@ -26,6 +25,9 @@ export type MachineNode = {
  * Laid out wide and shallow: the drawing lives in the upper two thirds of the
  * frame so the bottom band stays free for the captions.
  */
+/** the name on the fused object, before the loop comes apart */
+export const SYSTEM_NAME = "ANT META BOTS";
+
 export const LOOP: MachineNode[] = [
   { id: "tick", label: "TICK", note: "1s", at: [-4.7, 1.55, -0.3] },
   { id: "ingest", label: "INGEST", note: "feed", at: [-1.15, 2.3, -1.7] },
@@ -38,7 +40,7 @@ export const LOOP: MachineNode[] = [
 export const WATCHER: MachineNode = {
   id: "watchdog",
   label: "WATCHDOG",
-  note: "10s timeout",
+  note: "phases",
   at: [-4.25, -1.3, 1.5],
 };
 
@@ -66,7 +68,7 @@ export const BEATS: Beat[] = [
   {
     from: 0,
     to: 0.17,
-    log: "system · 1 object",
+    log: "ant meta bots · 1 object",
     said: "From the outside it looks like one thing.",
   },
   {
@@ -93,7 +95,7 @@ export const BEATS: Beat[] = [
   {
     from: 0.71,
     to: 0.87,
-    log: "watchdog · hard reset · t+10s",
+    log: "watchdog · holds the phase order",
     said: "The thing that was doing nothing does the only thing that matters.",
     tone: "alarm",
   },
@@ -121,3 +123,52 @@ export const span = (p: number, a: number, b: number) =>
 export const ease = (t: number) => t * t * t * (t * (t * 6 - 15) + 10);
 
 export const mix = (a: number, b: number, t: number) => a + (b - a) * t;
+
+export type StallChase = {
+  caught: boolean;
+  chasing: boolean;
+  phase: number;
+  speed: number;
+};
+
+/**
+ * Once `stalling` is true, move `stall` forward to `gate`.
+ * Speed starts at one lap per second and climbs, and it keeps that pace
+ * until the gate. A full lap left finishes in about a third of a second.
+ * Returns the phase to draw. Caller adds any parked wobble.
+ */
+export const chaseToGate = (
+  stall: StallChase,
+  stalling: boolean,
+  live: number,
+  gate: number,
+  delta: number,
+) => {
+  if (!stalling) {
+    stall.caught = false;
+    stall.chasing = false;
+    stall.speed = 1;
+    return live;
+  }
+  if (stall.caught) return gate;
+  if (!stall.chasing) {
+    stall.chasing = true;
+    stall.phase = live;
+    stall.speed = 1;
+  }
+
+  const remain = (gate - stall.phase + 1) % 1;
+  if (remain <= 0.004) {
+    stall.caught = true;
+    return gate;
+  }
+
+  const stepBudget = Math.min(0.05, Math.max(delta, 0));
+  // climb from one lap per second toward a rush, and keep that pace until
+  // the gate. Capping by the shrinking remainder would bleed the speed off.
+  stall.speed = Math.min(4, stall.speed + stepBudget * 18);
+  const step = Math.min(remain, stall.speed * stepBudget);
+  stall.phase = (stall.phase + step) % 1;
+  if (step >= remain - 1e-5) stall.caught = true;
+  return stall.caught ? gate : stall.phase;
+};

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { MarginNote, Readout, SceneTag } from "@/components/primitives/marks";
 import { MachineDrawn } from "./MachineDrawn";
 import { BEATS } from "@/components/three/machineData";
+import { projects } from "@/content/site";
 import {
   gsap,
   useCapableViewport,
@@ -28,13 +29,15 @@ const MachineCanvas = dynamic(() => import("@/components/three/MachineCanvas"), 
    → the loop runs → one stage stops answering → the thing that had been doing
    nothing resets it → nobody was awake for any of it.
 
-   Every beat here is something content.json actually describes: the 1s
-   cooperative loop, the action queue, the WebSocket broadcast, and the EA
-   timeout watcher that force-resets state after ten seconds of silence.
+   The object is ANT Meta Bots: four subsystems on one 1-second loop.
+   The drawing is that loop coming apart, stalling, and being held again.
 
    Desktop gets WebGL. Everything else gets a drawn version of the same story —
    not a still, not a fallback message. A different composition.
    ========================================================================= */
+
+const hood = projects.find((project) => project.slug === "ant-meta-bots");
+if (!hood) throw new Error("content layer is missing ant-meta-bots");
 
 const TONE = {
   normal: "text-live",
@@ -132,9 +135,9 @@ export function Machine() {
             under the hood
           </SceneTag>
           <Readout tone="paper" className="hidden text-right sm:block">
-            elastic dca v4 / ant meta bots
+            {hood.name.toLowerCase()}
             <br />
-            <span className="opacity-60">drawn from content.json</span>
+            <span className="opacity-60">{hood.readout}</span>
           </Readout>
         </div>
 
