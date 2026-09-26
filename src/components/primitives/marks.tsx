@@ -14,6 +14,7 @@ type HandMarkKind =
   | "arrow-down-left"
   | "arrow-up-right"
   | "arrow-right"
+  | "arrow-left"
   | "underline"
   | "ring"
   | "bracket";
@@ -90,6 +91,18 @@ export function HandMark({
           <path d="M44.5 2.4c2.6 2 5 3.6 7.5 4.7-2.3 1.6-4.4 3.6-6.3 6" {...shared} />
         </svg>
       );
+    case "arrow-left":
+      return (
+        <svg
+          viewBox="0 0 72 22"
+          width={width}
+          className={className}
+          aria-hidden="true"
+        >
+          <path d="M70 11.6C50 9.4 28 8.8 6 12.2" {...shared} />
+          <path d="M16 5.2c-3 2.4-5.8 4.2-9.2 5.6 2.6 1.5 5 3.8 7.2 6.6" {...shared} />
+        </svg>
+      );
     case "underline":
       return (
         <svg
@@ -136,6 +149,70 @@ export function HandMark({
         </svg>
       );
   }
+}
+
+/**
+ * A handwritten aside whose arrow points at the corner ticker.
+ * The tip of `arrow-down-left` is what gets seated — see `seatOnInstrument`.
+ */
+export function CornerCallout({ children }: { children: ReactNode }) {
+  return (
+    <div
+      data-corner-callout
+      className="pointer-events-none absolute top-0 left-0 z-[120] flex flex-col items-start"
+    >
+      <MarginNote lean={-1.2} className="ml-9 whitespace-nowrap leading-tight">
+        {children}
+      </MarginNote>
+      <HandMark
+        kind="arrow-down-left"
+        width={46}
+        className="-mt-2 text-vermillion"
+      />
+    </div>
+  );
+}
+
+/** Tip of arrow-down-left, as a fraction of its viewBox. */
+const ARROW_TIP = { x: 7.4 / 40, y: 30.8 / 40 };
+
+/**
+ * Shifts a corner callout so the arrow tip rests on the fixed ticker.
+ * The shift is in the callout's own space: it travels with its section and
+ * only meets the ticker when that section sits at the top of the viewport.
+ */
+export function seatOnInstrument(section: HTMLElement, anchor: HTMLElement) {
+  const instrument = document.querySelector<HTMLElement>(".instrument");
+  const arrow = anchor.querySelector<SVGSVGElement>("svg");
+  if (!instrument || !arrow) return;
+
+  const pin = instrument.getBoundingClientRect();
+  const frame = section.getBoundingClientRect();
+  const host = anchor.getBoundingClientRect();
+  const mark = arrow.getBoundingClientRect();
+
+  // Skip torn-down measurements. ScrollTrigger's refresh temporarily lies
+  // about where the fixed ticker is, and a bad write parks the note offscreen.
+  if (pin.height < 8 || pin.top < 0 || pin.top > window.innerHeight) return;
+  if (mark.width < 4) return;
+
+  // SVG has no offsetLeft. The tip's place inside the callout is the
+  // difference of two viewport boxes, so scrolling cancels out.
+  const tipX = mark.left - host.left + mark.width * ARROW_TIP.x;
+  const tipY = mark.top - host.top + mark.height * ARROW_TIP.y;
+
+  // Sit the point on the first line of the readout, not in the margin beside it.
+  // Horizontal uses the section's viewport edge so a centred column still meets
+  // the ticker, which is fixed to the viewport corner.
+  const aimX = pin.left - frame.left + Math.min(36, Math.max(22, pin.width * 0.32));
+  const aimY = pin.top + 9;
+  const top = aimY - tipY;
+
+  if (!Number.isFinite(top) || top < 0 || top > section.offsetHeight) return;
+
+  anchor.style.left = `${aimX - tipX}px`;
+  anchor.style.top = `${top}px`;
+  anchor.style.bottom = "auto";
 }
 
 /**

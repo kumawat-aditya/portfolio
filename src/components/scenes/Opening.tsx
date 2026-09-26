@@ -1,9 +1,15 @@
 "use client";
 
-import { HandMark, MarginNote, Readout, Rule } from "@/components/primitives/marks";
+import { useLayoutEffect } from "react";
+import {
+  CornerCallout,
+  Readout,
+  Rule,
+  seatOnInstrument,
+} from "@/components/primitives/marks";
 import { PlumbBob } from "@/components/objects/PlumbBob";
 import { useJaipur } from "@/lib/clock";
-import { gsap, useSceneTimeline } from "@/lib/motion";
+import { gsap, ScrollTrigger, useSceneTimeline } from "@/lib/motion";
 import { person } from "@/content/site";
 
 /* ============================================================================
@@ -39,6 +45,27 @@ export function Opening() {
       .to("[data-opening-aside]", { yPercent: -60, opacity: 0 }, 0)
       .to("[data-opening-hint]", { opacity: 0, duration: 0.25 }, 0);
   });
+
+  useLayoutEffect(() => {
+    const section = scope.current;
+    const anchor = section?.querySelector<HTMLElement>("[data-corner-callout]");
+    if (!section || !anchor) return;
+
+    let alive = true;
+    const place = () => {
+      if (alive) seatOnInstrument(section, anchor);
+    };
+    place();
+    window.addEventListener("resize", place);
+    ScrollTrigger.addEventListener("refresh", place);
+    document.fonts?.ready.then(place);
+
+    return () => {
+      alive = false;
+      window.removeEventListener("resize", place);
+      ScrollTrigger.removeEventListener("refresh", place);
+    };
+  }, [scope]);
 
   return (
     <section
@@ -122,19 +149,15 @@ export function Opening() {
         </div>
       </div>
 
-      {/* ---- the only instruction on the page ----------------------------- */}
+      {/* the aside belongs to the ticker, not to the page margin */}
+      <div data-opening-hint>
+        <CornerCallout>it&rsquo;s quiet for a while.</CornerCallout>
+      </div>
+
       <footer
         data-opening-hint
-        className="relative z-10 flex items-end justify-between gap-6"
+        className="relative z-10 flex items-end justify-end"
       >
-        <div className="flex items-end gap-3">
-          <HandMark
-            kind="arrow-down-right"
-            width={30}
-            className="mb-1 text-vermillion opacity-70"
-          />
-          <MarginNote lean={-1.6}>it&rsquo;s quiet for a while.</MarginNote>
-        </div>
         <Readout className="hidden shrink-0 pb-1 sm:block">
           this page: 1 heartbeat, 0 trackers
         </Readout>

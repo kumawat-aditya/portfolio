@@ -15,7 +15,7 @@ import { Zombie } from "@/components/interruptions/Zombie";
      quiet     Opening    a greeting, a hanging weight, the local time
      curious   Belief     the page corrects itself in front of you
      dense     Machine    the room goes dark; a system fails and recovers
-     quiet     Breath     almost nothing, so the last scene means something
+     quiet     Breath     the corner sticks; one sentence crosses the quiet
      dense     WorkWall   nine systems as instrument labels
      playful   Zombie     a stray position wanders in and gets cleaned up
      curious   Evolution  four years drawn as one line learning to be straight
