@@ -207,9 +207,10 @@ export function PlumbBob({ className = "" }: { className?: string }) {
       >
         <div
           ref={threadRef}
-          className="w-px bg-graphite/70"
+          className="w-px shrink-0 bg-graphite/70"
           style={{
             height: length + stretch,
+            marginBottom: -1,
             transition: stretch
               ? "height 180ms var(--ease-resist)"
               : "height 520ms var(--ease-arrive)",
@@ -219,7 +220,7 @@ export function PlumbBob({ className = "" }: { className?: string }) {
           type="button"
           aria-label="Pull the plumb to change the room"
           data-cursor-target="pointer"
-          className="pointer-events-auto relative z-10 -mt-px -mx-3 block cursor-pointer touch-none border-0 bg-transparent p-3 text-ink"
+          className="pointer-events-auto relative z-10 -mx-3 block cursor-pointer touch-none border-0 bg-transparent px-3 pb-2 pt-0 leading-none text-ink before:absolute before:-inset-x-3 before:-top-3 before:bottom-0 before:content-['']"
           onPointerDown={(event) => {
             event.preventDefault();
             heldRef.current = true;
