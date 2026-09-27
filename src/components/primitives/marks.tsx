@@ -15,6 +15,7 @@ type HandMarkKind =
   | "arrow-up-right"
   | "arrow-right"
   | "arrow-left"
+  | "arrow-left-short"
   | "underline"
   | "ring"
   | "bracket";
@@ -103,6 +104,18 @@ export function HandMark({
           <path d="M16 5.2c-3 2.4-5.8 4.2-9.2 5.6 2.6 1.5 5 3.8 7.2 6.6" {...shared} />
         </svg>
       );
+    case "arrow-left-short":
+      return (
+        <svg
+          viewBox="0 0 38 22"
+          width={width}
+          className={className}
+          aria-hidden="true"
+        >
+          <path d="M36 10.6C27 9.2 16 9.4 6 12.2" {...shared} />
+          <path d="M16 5.2c-3 2.4-5.8 4.2-9.2 5.6 2.6 1.5 5 3.8 7.2 6.6" {...shared} />
+        </svg>
+      );
     case "underline":
       return (
         <svg
@@ -161,10 +174,10 @@ export type CalloutVariant = "arrival" | "quiet";
 
 const CALLOUT: Record<
   CalloutVariant,
-  { tip: { x: number; y: number }; across: number; down: number }
+  { tip: { x: number; y: number }; across: number; down: number; outset?: number }
 > = {
   arrival: { tip: { x: 7.4 / 40, y: 30 / 40 }, across: 0.86, down: 0.22 },
-  quiet: { tip: { x: 6 / 72, y: 12.2 / 22 }, across: 0.96, down: 0.45 },
+  quiet: { tip: { x: 6 / 38, y: 12.2 / 22 }, across: 1, down: 0.5, outset: 12 },
 };
 
 export function CornerCallout({
@@ -197,12 +210,12 @@ export function CornerCallout({
     <div
       data-corner-callout
       data-callout="quiet"
-      className="pointer-events-none absolute top-0 left-0 z-[120] flex items-center gap-3"
+      className="pointer-events-none absolute top-0 left-0 z-[120] flex items-center gap-2"
     >
       <HandMark
-        kind="arrow-left"
-        width={68}
-        className="w-[3.4rem] text-vermillion"
+        kind="arrow-left-short"
+        width={40}
+        className="w-[2.35rem] text-vermillion"
       />
       <MarginNote lean={1.2} className="whitespace-nowrap leading-tight">
         {children}
@@ -233,11 +246,11 @@ export function seatOnInstrument(
   if (pin.height < 8 || pin.top < 0 || pin.top > window.innerHeight) return;
   if (mark.width < 4) return;
 
-  const { tip, across, down } = CALLOUT[variant];
+  const { tip, across, down, outset = 0 } = CALLOUT[variant];
   const tipX = mark.left - host.left + mark.width * tip.x;
   const tipY = mark.top - host.top + mark.height * tip.y;
 
-  const aimX = pin.left - frame.left + pin.width * across;
+  const aimX = pin.left - frame.left + pin.width * across + outset;
   const aimY = pin.top + pin.height * down;
   const left = aimX - tipX;
   const top = aimY - tipY;

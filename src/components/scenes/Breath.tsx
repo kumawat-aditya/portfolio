@@ -72,9 +72,13 @@ export function Breath() {
     window.visualViewport?.addEventListener("resize", place);
     ScrollTrigger.addEventListener("refresh", place);
     document.fonts?.ready.then(place);
+    const readout = document.querySelector(".instrument");
+    const watch = new ResizeObserver(place);
+    if (readout) watch.observe(readout);
 
     return () => {
       alive = false;
+      watch.disconnect();
       window.removeEventListener("resize", place);
       window.visualViewport?.removeEventListener("resize", place);
       ScrollTrigger.removeEventListener("refresh", place);
