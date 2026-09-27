@@ -65,16 +65,18 @@ export function Breath() {
 
     let alive = true;
     const place = () => {
-      if (alive) seatOnInstrument(section, anchor);
+      if (alive) seatOnInstrument(section, anchor, "quiet");
     };
     place();
     window.addEventListener("resize", place);
+    window.visualViewport?.addEventListener("resize", place);
     ScrollTrigger.addEventListener("refresh", place);
     document.fonts?.ready.then(place);
 
     return () => {
       alive = false;
       window.removeEventListener("resize", place);
+      window.visualViewport?.removeEventListener("resize", place);
       ScrollTrigger.removeEventListener("refresh", place);
     };
   }, [scope]);
@@ -100,7 +102,9 @@ export function Breath() {
         </Readout>
       </div>
 
-      <CornerCallout>that corner isn&rsquo;t decoration.</CornerCallout>
+      <CornerCallout variant="quiet">
+        that corner isn&rsquo;t decoration.
+      </CornerCallout>
     </section>
   );
 }

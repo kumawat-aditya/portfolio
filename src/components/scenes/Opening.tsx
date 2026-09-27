@@ -53,16 +53,18 @@ export function Opening() {
 
     let alive = true;
     const place = () => {
-      if (alive) seatOnInstrument(section, anchor);
+      if (alive) seatOnInstrument(section, anchor, "arrival");
     };
     place();
     window.addEventListener("resize", place);
+    window.visualViewport?.addEventListener("resize", place);
     ScrollTrigger.addEventListener("refresh", place);
     document.fonts?.ready.then(place);
 
     return () => {
       alive = false;
       window.removeEventListener("resize", place);
+      window.visualViewport?.removeEventListener("resize", place);
       ScrollTrigger.removeEventListener("refresh", place);
     };
   }, [scope]);
@@ -151,7 +153,9 @@ export function Opening() {
 
       {/* the aside belongs to the ticker, not to the page margin */}
       <div data-opening-hint>
-        <CornerCallout>it&rsquo;s quiet for a while.</CornerCallout>
+        <CornerCallout variant="arrival">
+          it&rsquo;s quiet for a while.
+        </CornerCallout>
       </div>
 
       <footer

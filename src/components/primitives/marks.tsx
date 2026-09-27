@@ -152,36 +152,75 @@ export function HandMark({
 }
 
 /**
- * A handwritten aside whose arrow points at the corner ticker.
- * The tip of `arrow-down-left` is what gets seated — see `seatOnInstrument`.
+ * Two margin notes, two compositions.
+ * Arrival drops a diagonal onto the counter from above.
+ * The quiet scene sits beside it and points in from the right.
+ * The stroke leaves the words and the head meets the ticker.
  */
-export function CornerCallout({ children }: { children: ReactNode }) {
+export type CalloutVariant = "arrival" | "quiet";
+
+const CALLOUT: Record<
+  CalloutVariant,
+  { tip: { x: number; y: number }; across: number; down: number }
+> = {
+  arrival: { tip: { x: 7.4 / 40, y: 30 / 40 }, across: 0.86, down: 0.22 },
+  quiet: { tip: { x: 6 / 72, y: 12.2 / 22 }, across: 0.96, down: 0.45 },
+};
+
+export function CornerCallout({
+  children,
+  variant,
+}: {
+  children: ReactNode;
+  variant: CalloutVariant;
+}) {
+  if (variant === "arrival") {
+    return (
+      <div
+        data-corner-callout
+        data-callout="arrival"
+        className="pointer-events-none absolute top-0 left-0 z-[120] flex flex-col items-start gap-2.5"
+      >
+        <MarginNote lean={-1.6} className="whitespace-nowrap leading-tight">
+          {children}
+        </MarginNote>
+        <HandMark
+          kind="arrow-down-left"
+          width={42}
+          className="mr-1 w-[2.6rem] text-vermillion"
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       data-corner-callout
-      className="pointer-events-none absolute top-0 left-0 z-[120] flex flex-col items-start"
+      data-callout="quiet"
+      className="pointer-events-none absolute top-0 left-0 z-[120] flex items-center gap-3"
     >
-      <MarginNote lean={-1.2} className="ml-9 whitespace-nowrap leading-tight">
+      <HandMark
+        kind="arrow-left"
+        width={68}
+        className="w-[3.4rem] text-vermillion"
+      />
+      <MarginNote lean={1.2} className="whitespace-nowrap leading-tight">
         {children}
       </MarginNote>
-      <HandMark
-        kind="arrow-down-left"
-        width={46}
-        className="-mt-2 text-vermillion"
-      />
     </div>
   );
 }
 
-/** Tip of arrow-down-left, as a fraction of its viewBox. */
-const ARROW_TIP = { x: 7.4 / 40, y: 30.8 / 40 };
-
 /**
- * Shifts a corner callout so the arrow tip rests on the fixed ticker.
- * The shift is in the callout's own space: it travels with its section and
- * only meets the ticker when that section sits at the top of the viewport.
+ * Seats a callout so its own arrow tip meets its own point on the ticker.
+ * X is against the section, so a letterboxed column still finds the
+ * viewport-fixed instrument. Y is authored as if the scene fills the viewport.
  */
-export function seatOnInstrument(section: HTMLElement, anchor: HTMLElement) {
+export function seatOnInstrument(
+  section: HTMLElement,
+  anchor: HTMLElement,
+  variant: CalloutVariant,
+) {
   const instrument = document.querySelector<HTMLElement>(".instrument");
   const arrow = anchor.querySelector<SVGSVGElement>("svg");
   if (!instrument || !arrow) return;
@@ -191,26 +230,22 @@ export function seatOnInstrument(section: HTMLElement, anchor: HTMLElement) {
   const host = anchor.getBoundingClientRect();
   const mark = arrow.getBoundingClientRect();
 
-  // Skip torn-down measurements. ScrollTrigger's refresh temporarily lies
-  // about where the fixed ticker is, and a bad write parks the note offscreen.
   if (pin.height < 8 || pin.top < 0 || pin.top > window.innerHeight) return;
   if (mark.width < 4) return;
 
-  // SVG has no offsetLeft. The tip's place inside the callout is the
-  // difference of two viewport boxes, so scrolling cancels out.
-  const tipX = mark.left - host.left + mark.width * ARROW_TIP.x;
-  const tipY = mark.top - host.top + mark.height * ARROW_TIP.y;
+  const { tip, across, down } = CALLOUT[variant];
+  const tipX = mark.left - host.left + mark.width * tip.x;
+  const tipY = mark.top - host.top + mark.height * tip.y;
 
-  // Sit the point on the first line of the readout, not in the margin beside it.
-  // Horizontal uses the section's viewport edge so a centred column still meets
-  // the ticker, which is fixed to the viewport corner.
-  const aimX = pin.left - frame.left + Math.min(36, Math.max(22, pin.width * 0.32));
-  const aimY = pin.top + 9;
+  const aimX = pin.left - frame.left + pin.width * across;
+  const aimY = pin.top + pin.height * down;
+  const left = aimX - tipX;
   const top = aimY - tipY;
 
-  if (!Number.isFinite(top) || top < 0 || top > section.offsetHeight) return;
+  if (!Number.isFinite(left) || !Number.isFinite(top)) return;
+  if (top < 0 || top > section.offsetHeight) return;
 
-  anchor.style.left = `${aimX - tipX}px`;
+  anchor.style.left = `${left}px`;
   anchor.style.top = `${top}px`;
   anchor.style.bottom = "auto";
 }
